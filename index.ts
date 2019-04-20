@@ -1,0 +1,1 @@
+export { QrcodeGenerator } from './src/qrcode';
