@@ -1,1 +1,1 @@
-export { QrcodeGenerator } from './src/qrcode';
+export { QRCodeGenerator } from './src/qrcode';

@@ -14,29 +14,48 @@
    limitations under the License.
  */
 
- import qrcode from 'qrcode-generator';
+import qrcode from 'qrcode-generator';
 
-export class QrcodeGenerator {
+export class QRCodeGenerator {
 
-    private dataset: string;
+    protected dataset: string;
+    protected readonly errorCorrectLevel: any = 'L'; // Error correction level ('L', 'M', 'Q', 'H')
+    protected readonly typeNumber: any = 0; // Type number (1 ~ 40), or 0 for auto detection
+    protected readonly qrCellSizePixel: number = 5;
+    protected readonly qrMarginPixel: number  = 5;
 
+    /**
+     * QR's Json object in string format.
+     *
+     * @param dataset {string}
+     */
     constructor(dataset:string){
         this.dataset = dataset;
     }
 
+    /**
+     * Generate QR code in ASCII format.
+     *
+     * @return  {string} Return ASCII format, use in Terminal.
+     */
     public toQR (): string {
-        let qr = qrcode(0, 'L');
+        let qr = qrcode(this.typeNumber, this.errorCorrectLevel);
         qr.addData(this.dataset.replace(/ /g,''));
         qr.make();
 
         return qr.createASCII();
     }
 
-    public toImgBase64() : string {
-        let qr = qrcode(0, 'L');
+    /**
+     * Generate QRcode image Base64.
+     *
+     * @return  {string} Retrun image data in Base64.
+     */
+    public toBase64() : string {
+        let qr = qrcode(this.typeNumber, this.errorCorrectLevel);
         qr.addData(this.dataset.replace(/ /g,''));
         qr.make();
 
-        return qr.createDataURL(5,5);
+        return qr.createDataURL(this.qrCellSizePixel,this.qrMarginPixel);
     }
 };
