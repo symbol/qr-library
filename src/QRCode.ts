@@ -16,6 +16,7 @@
 import {
     QRCode as QRCodeImpl,
     QR8BitByte,
+    ErrorCorrectLevel,
 } from 'qrcode-generator-ts';
 
 import {
@@ -81,7 +82,8 @@ export abstract class QRCode implements QRCodeInterface {
 
         // prepare QR generation
         const qr = new QRCodeImpl();
-        qr.setTypeNumber(40);
+        qr.setTypeNumber(QRCodeSettings.VERSION_NUMBER);
+        qr.setErrorCorrectLevel(QRCodeSettings.CORRECTION_LEVEL);
 
         // get JSON representation
         const json = this.toJSON();

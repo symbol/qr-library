@@ -73,4 +73,4 @@ export class QRCodeGenerator {
     ): TransactionQR {
         return new TransactionQR(transaction, networkType, chainId);
     }
-};
+}
