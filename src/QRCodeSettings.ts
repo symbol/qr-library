@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
+import {
+    ErrorCorrectLevel,
+} from 'qrcode-generator-ts';
+
 // internal dependencies
 import {QRCodeType} from '../index';
 
@@ -23,6 +27,28 @@ import {QRCodeType} from '../index';
  * @since 0.2.0
  */
 export class QRCodeSettings {
+
+    /**
+     * The Error correction level.
+     *
+     * @var {ErrorCorrectLevel}
+     */
+    public static CORRECTION_LEVEL = ErrorCorrectLevel.L;
+
+    /**
+     * The QR Code version number.
+     * 
+     * With `40-L` configuration, the QR Code can contain
+     * up to `2953` bytes. As defined in the following link,
+     * this is the maximum storage capacity for our types
+     * or QR Codes:
+     * 
+     *     https://en.wikipedia.org/wiki/QR_code#Design
+     *
+     * @see https://en.wikipedia.org/wiki/QR_code#Design
+     * @var {string}
+     */
+    public static VERSION_NUMBER = 40;
 
     /**
      * The QR Code cell size in pixels.

@@ -24,38 +24,26 @@ import {
     PlainMessage,
     NetworkType,
 } from 'nem2-sdk';
+import {
+    QRCode as QRCodeImpl,
+    QR8BitByte,
+    ErrorCorrectLevel,
+} from 'qrcode-generator-ts';
 
 // internal dependencies
-import { QRCodeGenerator } from "../index";
+import { 
+    QRCodeInterface,
+    QRCode,
+    QRCodeType,
+    QRCodeSettings,
+    TransactionQR,
+} from "../index";
 
-// vectors data
-import {
-    ExpectedObjectBase64,
-} from './vectors/index';
+describe('TransactionQR -->', () => {
 
-describe('QRCodeGenerator -->', () => {
+    describe('toJSON() should', () => {
 
-    describe('createExportObject() should', () => {
-        it('generate correct Base64 representation for {test: test}', () => {
-            // Arrange:
-            const object = {"test": "test"};
-            const qrcode = QRCodeGenerator.createExportObject(object, NetworkType.TEST_NET, 'no-chain-id');
-
-            // Act:
-            const base64 = qrcode.toBase64();
-
-            // Assert:
-            expect(base64).to.not.be.equal('');
-            expect(base64.length).to.not.be.equal(0);
-            expect(base64).to.be.equal(ExpectedObjectBase64);
-        });
-    });
-
-    describe('createTransactionRequest() should', () => {
-
-        //XXX set default TESTNET and CHAIN_ID
-
-        it('generate correct Base64 representation for TransferTransaction', () => {
+        it('include mandatory NIP-7 QR Code base fields', () => {
             // Arrange:
             const transfer = TransferTransaction.create(
                 Deadline.create(),
@@ -69,13 +57,17 @@ describe('QRCodeGenerator -->', () => {
             );
 
             // Act:
-            const requestTx = QRCodeGenerator.createTransactionRequest(transfer);
-            const actualBase64 = requestTx.toBase64();
+            const requestTx = new TransactionQR(transfer, NetworkType.TEST_NET, '');
+            const actualJSON = requestTx.toJSON();
+            const actualObject = JSON.parse(actualJSON);
 
             // Assert:
-            expect(actualBase64).to.not.be.equal('');
-            expect(actualBase64.length).to.not.be.equal(0);
-            expect(requestTx.toJSON()).to.have.lengthOf.below(2953);
+            expect(actualObject).to.have.property('v');
+            expect(actualObject).to.have.property('type');
+            expect(actualObject).to.have.property('network_id');
+            expect(actualObject).to.have.property('chain_id');
+            expect(actualObject).to.have.property('data');
         });
     });
+
 });
