@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
-import {Transaction} from "nem2-sdk";
-import qrcode from 'qrcode-generator';
+import {
+    NetworkType,
+    Transaction,
+} from "nem2-sdk";
+import {QRCode} from 'qrcode-generator-ts';
 
 // internal dependencies
 import {
     QRCodeInterface,
-    TransactionRequestQR,
+    AccountQR,
+    ContactQR,
+    ObjectQR,
+    TransactionQR,
 } from '../index';
 
 /**
@@ -30,11 +36,6 @@ import {
  */
 export class QRCodeGenerator {
 
-    protected readonly errorCorrectLevel: any = 'L'; // Error correction level ('L', 'M', 'Q', 'H')
-    protected readonly typeNumber: any = 0; // Type number (1 ~ 40), or 0 for auto detection
-    protected readonly qrCellSizePixel: number = 5;
-    protected readonly qrMarginPixel: number  = 5;
-
     /**
      * Factory/Singleton pattern, constructor is private.
      *
@@ -43,14 +44,33 @@ export class QRCodeGenerator {
     private constructor() {}
 
     /**
+     * Create a JSON object QR Code from a JSON object.
+     *
+     * @param   object          {Object}
+     * @param   networkType     {NetworkType}
+     * @param   chainId         {string}
+     */
+    public static createExportObject(
+        object: Object,
+        networkType: NetworkType = NetworkType.TEST_NET,
+        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+    ): ObjectQR {
+        return new ObjectQR(object, networkType, chainId);
+    }
+
+    /**
      * Create a Transaction Request QR Code from a Transaction
      * instance.
      *
      * @param   transaction     {Transaction}
+     * @param   networkType     {NetworkType}
+     * @param   chainId         {string}
      */
     public static createTransactionRequest(
-        transaction: Transaction
-    ): TransactionRequestQR {
-        return new TransactionRequestQR(transaction);
+        transaction: Transaction,
+        networkType: NetworkType = NetworkType.TEST_NET,
+        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+    ): TransactionQR {
+        return new TransactionQR(transaction, networkType, chainId);
     }
 };

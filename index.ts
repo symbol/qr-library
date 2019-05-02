@@ -16,6 +16,9 @@
 export { QRCodeType } from './src/QRCodeType';
 export { QRCodeSettings } from './src/QRCodeSettings';
 export { QRCodeInterface } from './src/QRCodeInterface';
-export { QRCodeBase } from './src/QRCodeBase';
-export { TransactionRequestQR } from './src/TransactionRequestQR';
+export { QRCode } from './src/QRCode';
+export { AccountQR } from './src/AccountQR';
+export { ContactQR } from './src/ContactQR';
+export { ObjectQR } from './src/ObjectQR';
+export { TransactionQR } from './src/TransactionQR';
 export { QRCodeGenerator } from './src/QRCodeGenerator';

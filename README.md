@@ -6,9 +6,9 @@
 
 :warning: **This package is currently still in development, please do not use in production.** *The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.*
 
-NEM2 QR Library generator to genereate QRcode by string (JSON format) for the Catapult (NEM2) platform.
+NEM2 QR Library generator to generate QR codes for Catapult (NEM2) accounts and transactions.
 
-This is a PoC to validate the proposed [NIP? QR Library - Definition](https://github.com/nemtech/NIP/issues/3). When stable, the repository will be moved to the [nemtech](https://github.com/nemtech) organization.
+This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](https://github.com/nemtech/NIP/issues/3). When stable, the repository will be moved to the [nemtech](https://github.com/nemtech) organization.
 
 ## Installation
 
@@ -34,8 +34,10 @@ const transfer = TransferTransaction.create(
 );
 
 // create QR Code base64
-const base64 = QRCodeGenerator.fromTransaction(transfer).toBase64();
-console.log(base64);
+const request = QRCodeGenerator.createTransactionRequest(transfer);
+
+// get base64 notation for <img> HTML attribute
+const base64 = request.toBase64();
 ```
 
 The produced Base64 encoded payload can be used to display the QR Code. An example of display can be done easily with HTML, as follows:

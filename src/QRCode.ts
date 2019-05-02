@@ -13,7 +13,14 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
-import * as QRCode from 'qrcode-generator';
+import {
+    QRCode as QRCodeImpl,
+    QR8BitByte,
+} from 'qrcode-generator-ts';
+
+import {
+    NetworkType,
+} from 'nem2-sdk';
 
 // internal dependencies
 import {
@@ -22,7 +29,7 @@ import {
     QRCodeSettings,
 } from "../index";
 
-export abstract class QRCodeBase implements QRCodeInterface {
+export abstract class QRCode implements QRCodeInterface {
 
     /**
      * Construct a QR Code instance out of its base64
@@ -36,6 +43,16 @@ export abstract class QRCodeBase implements QRCodeInterface {
                  * @var {QRCodeType}
                  */
                 public readonly type: QRCodeType,
+                /**
+                 * The network ID.
+                 * @var {number}
+                 */
+                public readonly networkType: NetworkType,
+                /**
+                 * The chain ID.
+                 * @var {string}
+                 */
+                public readonly chainId: string,
                 /**
                  * The base64 representation of the QR Code content.
                  * @var {string}
@@ -58,21 +75,19 @@ export abstract class QRCodeBase implements QRCodeInterface {
      * The `build()` method should return the QRCode
      * representation of the QR Code content.
      *
-     * @return {QRCode}
+     * @return {QRCodeImpl}
      */
-    public build(): QRCode {
+    public build(): QRCodeImpl {
 
         // prepare QR generation
-        const qr = qrcode(
-            QRCodeSettings.QRCODE_LOWLEVEL_TYPE as TypeNumber,
-            QRCodeSettings.CORRECTION_LEVEL as ErrorCorrectionLevel
-        );
+        const qr = new QRCodeImpl();
+        qr.setTypeNumber(40);
 
         // get JSON representation
         const json = this.toJSON();
 
         // build QR code
-        qr.addData(json);
+        qr.addData(new QR8BitByte(json));
         qr.make();
         return qr;
     }
@@ -88,41 +103,7 @@ export abstract class QRCodeBase implements QRCodeInterface {
         const qr = this.build();
 
         // get base64 representation
-        return qr.createDataURL(
-            QRCodeSettings.CELL_PIXEL_SIZE,
-            QRCodeSettings.MARGIN_PIXEL
-        );
-    }
-
-    /**
-     * Generate QRcode SVG tag (HTML).
-     *
-     * @return  {string} Retrun SVG HTML tag for QR Code.
-     */
-    public toSVG() : string {
-
-        // build QR Code
-        const qr = this.build();
-
-        // get HTML SVG tag
-        return qr.createSvgTag(
-            QRCodeSettings.CELL_PIXEL_SIZE,
-            QRCodeSettings.MARGIN_PIXEL
-        );
-    }
-
-    /**
-     * Generate QRcode IMG tag (HTML).
-     *
-     * @return  {string} Retrun IMG HTML tag for QR Code.
-     */
-    public toIMG() : string {
-
-        // build QR Code
-        const qr = this.build();
-
-        // get HTML IMG tag
-        return qr.createImgTag(
+        return qr.toDataURL(
             QRCodeSettings.CELL_PIXEL_SIZE,
             QRCodeSettings.MARGIN_PIXEL
         );

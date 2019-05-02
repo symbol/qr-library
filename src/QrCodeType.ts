@@ -16,5 +16,7 @@
 export enum QRCodeType {
     AddContact = 1,
     ExportAccount = 2,
-    TransactionRequest = 3,
+    RequestTransaction = 3,
+    RequestCosignature = 4,
+    ExportObject = 5,
 }

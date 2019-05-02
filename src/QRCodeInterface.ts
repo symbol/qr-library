@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
-import * as QRCode from 'qrcode-generator';
+import {QRCode} from 'qrcode-generator-ts';
 
 // internal dependencies
 import {QRCodeType} from '../index';
@@ -60,20 +60,4 @@ export interface QRCodeInterface {
      * @return {string}
      */
     toBase64(): string;
-
-    /**
-     * The `toSVG()` method should return the HTML representation
-     * of a SVG tag to display the QR Code.
-     *
-     * @return {string}
-     */
-    toSVG(): string;
-
-    /**
-     * The `toIMG()` method should return the HTML representation
-     * of a <IMG /> tag to display the QR Code.
-     *
-     * @return {string}
-     */
-    toIMG(): string;
 }
