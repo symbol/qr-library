@@ -13,12 +13,4 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
-export { QRCodeType } from './src/QRCodeType';
-export { QRCodeSettings } from './src/QRCodeSettings';
-export { QRCodeInterface } from './src/QRCodeInterface';
-export { QRCode } from './src/QRCode';
-export { AccountQR } from './src/AccountQR';
-export { ContactQR } from './src/ContactQR';
-export { ObjectQR } from './src/ObjectQR';
-export { TransactionQR } from './src/TransactionQR';
-export { QRCodeGenerator } from './src/QRCodeGenerator';
+export { ExpectedObjectBase64 } from './OBJECT';

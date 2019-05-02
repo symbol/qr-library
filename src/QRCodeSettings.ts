@@ -13,12 +13,28 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
-export { QRCodeType } from './src/QRCodeType';
-export { QRCodeSettings } from './src/QRCodeSettings';
-export { QRCodeInterface } from './src/QRCodeInterface';
-export { QRCode } from './src/QRCode';
-export { AccountQR } from './src/AccountQR';
-export { ContactQR } from './src/ContactQR';
-export { ObjectQR } from './src/ObjectQR';
-export { TransactionQR } from './src/TransactionQR';
-export { QRCodeGenerator } from './src/QRCodeGenerator';
+// internal dependencies
+import {QRCodeType} from '../index';
+
+/**
+ * Class `QRCodeSettings` describes rules for the generation
+ * of NIP-7 compliant QR Codes.
+ *
+ * @since 0.2.0
+ */
+export class QRCodeSettings {
+
+    /**
+     * The QR Code cell size in pixels.
+     *
+     * @var {number}
+     */
+    public static CELL_PIXEL_SIZE: number = 5;
+
+    /**
+     * The QR Code Margin in pixels.
+     *
+     * @var {number}
+     */
+    public static MARGIN_PIXEL: number = 5;
+}
