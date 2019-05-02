@@ -1,6 +1,6 @@
 {
   "name": "nem2-qr-library",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "nem2 library to handle QR Codes",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
