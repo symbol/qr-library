@@ -23,11 +23,11 @@ import { QRCodeGenerator } from 'nem2-qr-library';
 
 // (Optional) create transfer transaction (or read from network)
 const transfer = TransferTransaction.create(
-  Deadline.create(), 
+  Deadline.create(),
   Address.createFromPublicKey(
     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
     NetworkType.MIJIN_TEST
-  ), 
+  ),
   [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
   new PlainMessage('Welcome to NEM!'),
   NetworkType.MIJIN_TEST
@@ -38,6 +38,22 @@ const request = QRCodeGenerator.createTransactionRequest(transfer);
 
 // get base64 notation for <img> HTML attribute
 const base64 = request.toBase64();
+```
+
+### Generate QRCode for a custom object
+
+```typescript
+import { QRCodeGenerator } from 'nem2-qr-library';
+
+// define custom object to suit your application use case.
+const object = {"obj": "test"};
+
+// create QR Code base64
+const request = QRCodeGenerator.createExportObject(object, NetworkType.TEST_NET);
+
+// get base64 notation for <img> HTML attribute
+const base64 = request.toBase64();
+
 ```
 
 The produced Base64 encoded payload can be used to display the QR Code. An example of display can be done easily with HTML, as follows:
