@@ -23,6 +23,7 @@ import {
     UInt64,
     PlainMessage,
     NetworkType,
+    PublicAccount,
 } from 'nem2-sdk';
 
 // internal dependencies
@@ -34,6 +35,7 @@ import {
 } from './vectors/index';
 import { TransactionQR } from "../src/TransactionQR";
 import { QRCodeType } from "../src/QRCodeType";
+import { ContactQR } from "../src/ContactQR";
 
 describe('QRCodeGenerator -->', () => {
 
@@ -81,6 +83,26 @@ describe('QRCodeGenerator -->', () => {
         });
     });
 
+    describe('createContact() should', ()=> {
+
+        it('generate correct Base64 representation for TransferTransaction', () => {
+            // Arrange:
+            const account = PublicAccount.createFromPublicKey(
+                'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                NetworkType.MIJIN_TEST
+            );
+
+            // Act:
+            const createContact = QRCodeGenerator.createContact(account);
+            const actualBase64 = createContact.toBase64();
+
+            // Assert:
+            expect(actualBase64).to.not.be.equal('');
+            expect(actualBase64.length).to.not.be.equal(0);
+            expect(createContact.toJSON()).to.have.lengthOf.below(2953);
+        });
+    });
+
     describe('fromJson() should', () => {
 
         it('Read data From TransactionQR', () => {
@@ -108,9 +130,28 @@ describe('QRCodeGenerator -->', () => {
             expect(transactionObj.type).to.deep.equal(QRCodeType.RequestTransaction);
         });
 
+        it.only('Read data From ContactQR', () => {
+            // Arrange:
+            const account = PublicAccount.createFromPublicKey(
+                'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                NetworkType.MIJIN_TEST
+            );
+
+            const createContact = QRCodeGenerator.createContact(account,NetworkType.MIJIN_TEST);
+            const contactJSON = createContact.toJSON();
+
+
+            // Act:
+            const contactObj: ContactQR = QRCodeGenerator.fromJSON(contactJSON);
+
+            // Assert:
+            expect(contactObj).to.not.be.equal('');
+            expect(contactObj.account.address).to.deep.equal(account.address);
+            expect(contactObj.type).to.deep.equal(QRCodeType.AddContact);
+        });
 
         it('Read data From AccountQR', () => {});
-        it('Read data From ContactQR', () => {});
+
         it('Read data From ObjectQR', () => {});
     });
 });

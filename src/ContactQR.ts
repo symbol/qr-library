@@ -31,7 +31,7 @@ export class ContactQR extends QRCode implements QRCodeInterface {
     /**
      * Construct a Contact QR Code out of the
      * nem2-sdk Account or PublicAccount instance.
-     * 
+     *
      * @param   account         {Account|PublicAccount}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
@@ -67,9 +67,11 @@ export class ContactQR extends QRCode implements QRCodeInterface {
             'type': this.type,
             'network_id': this.networkType,
             'chain_id': this.chainId,
-            'data': 'not implemented yet',
+            'data': {
+                'address': this.account
+            },
         };
 
-        return JSON.stringify(jsonSchema);
+        return JSON.stringify(jsonSchema).trim();
     }
 }

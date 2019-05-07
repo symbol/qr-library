@@ -17,6 +17,8 @@ import {
     NetworkType,
     Transaction,
     TransactionMapping,
+    Account,
+    PublicAccount
 } from "nem2-sdk";
 import {QRCode} from 'qrcode-generator-ts';
 
@@ -54,7 +56,7 @@ export class QRCodeGenerator {
      */
     public static createExportObject(
         object: Object,
-        networkType: NetworkType = NetworkType.TEST_NET,
+        networkType: NetworkType = NetworkType.MIJIN_TEST,
         chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
     ): ObjectQR {
         return new ObjectQR(object, networkType, chainId);
@@ -70,10 +72,26 @@ export class QRCodeGenerator {
      */
     public static createTransactionRequest(
         transaction: Transaction,
-        networkType: NetworkType = NetworkType.TEST_NET,
+        networkType: NetworkType = NetworkType.MIJIN_TEST,
         chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
     ): TransactionQR {
         return new TransactionQR(transaction, networkType, chainId);
+    }
+
+    /**
+     * Create a Transaction Request QR Code from a Transaction
+     * instance.
+     *
+     * @param   transaction     {Transaction}
+     * @param   networkType     {NetworkType}
+     * @param   chainId         {string}
+     */
+    public static createContact(
+        account: Account | PublicAccount,
+        networkType: NetworkType = NetworkType.MIJIN_TEST,
+        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+    ): ContactQR {
+        return new ContactQR(account, networkType, chainId);
     }
 
     /**
@@ -90,7 +108,7 @@ export class QRCodeGenerator {
 
         switch(jsonObj.type) {
             case QRCodeType.AddContact: {
-                new ContactQR(jsonObj.data.account, jsonObj.network_id, jsonObj.chainId)
+                return new ContactQR(jsonObj.data.address, jsonObj.network_id, jsonObj.chainId)
             }
             case QRCodeType.ExportAccount: {
                return new AccountQR(jsonObj.data.account,jsonObj.network_id, jsonObj.chainId)
@@ -105,7 +123,7 @@ export class QRCodeGenerator {
                 break;
             }
             case QRCodeType.ExportObject: {
-                new ObjectQR(jsonObj.data.object, jsonObj.network_id, jsonObj.chainId);
+                return new ObjectQR(jsonObj.data.object, jsonObj.network_id, jsonObj.chainId);
             }
          }
     }
