@@ -16,12 +16,14 @@
 import {
     NetworkType,
     Transaction,
+    TransactionMapping,
 } from "nem2-sdk";
 import {QRCode} from 'qrcode-generator-ts';
 
 // internal dependencies
 import {
     QRCodeInterface,
+    QRCodeType,
     AccountQR,
     ContactQR,
     ObjectQR,
@@ -31,7 +33,7 @@ import {
 /**
  * Class `QRCodeGenerator` describes a NIP-7 compliant QR Code
  * generator (factory).
- * 
+ *
  * @since 0.2.0
  */
 export class QRCodeGenerator {
@@ -72,5 +74,39 @@ export class QRCodeGenerator {
         chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
     ): TransactionQR {
         return new TransactionQR(transaction, networkType, chainId);
+    }
+
+    /**
+     * Read JSON Content from QRcode.
+     * @param   json    {string}
+     */
+    static fromJSON(json:string) :any{
+
+        if (json == null || json == '') {
+            throw Error('QR json object is missing');
+        }
+
+        const jsonObj = JSON.parse(json || '');
+
+        switch(jsonObj.type) {
+            case QRCodeType.AddContact: {
+                new ContactQR(jsonObj.data.account, jsonObj.network_id, jsonObj.chainId)
+            }
+            case QRCodeType.ExportAccount: {
+               return new AccountQR(jsonObj.data.account,jsonObj.network_id, jsonObj.chainId)
+            }
+            case QRCodeType.RequestTransaction: {
+                let txMapping: Transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
+
+                return new TransactionQR(txMapping, jsonObj.network_id, jsonObj.chainId)
+            }
+            case QRCodeType.RequestCosignature: {
+                // Todo: In progress;
+                break;
+            }
+            case QRCodeType.ExportObject: {
+                new ObjectQR(jsonObj.data.object, jsonObj.network_id, jsonObj.chainId);
+            }
+         }
     }
 }
