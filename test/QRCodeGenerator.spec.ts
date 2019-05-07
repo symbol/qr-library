@@ -32,6 +32,8 @@ import { QRCodeGenerator } from "../index";
 import {
     ExpectedObjectBase64,
 } from './vectors/index';
+import { TransactionQR } from "../src/TransactionQR";
+import { QRCodeType } from "../src/QRCodeType";
 
 describe('QRCodeGenerator -->', () => {
 
@@ -77,5 +79,38 @@ describe('QRCodeGenerator -->', () => {
             expect(actualBase64.length).to.not.be.equal(0);
             expect(requestTx.toJSON()).to.have.lengthOf.below(2953);
         });
+    });
+
+    describe('fromJson() should', () => {
+
+        it('Read data From TransactionQR', () => {
+            // Arrange:
+            const transfer = TransferTransaction.create(
+                Deadline.create(),
+                Address.createFromPublicKey(
+                    'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                    NetworkType.MIJIN_TEST
+                ),
+                [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
+                PlainMessage.create('Welcome to NEM!'),
+                NetworkType.MIJIN_TEST
+            );
+
+            const requestTx = QRCodeGenerator.createTransactionRequest(transfer,NetworkType.MIJIN_TEST);
+            const txJSON = requestTx.toJSON();
+
+            // Act:
+            const transactionObj: TransactionQR = QRCodeGenerator.fromJSON(txJSON);
+
+            // Assert:
+            expect(transactionObj).to.not.be.equal('');
+            expect(transactionObj.transaction.toJSON()).to.deep.equal(transfer.toJSON());
+            expect(transactionObj.type).to.deep.equal(QRCodeType.RequestTransaction);
+        });
+
+
+        it('Read data From AccountQR', () => {});
+        it('Read data From ContactQR', () => {});
+        it('Read data From ObjectQR', () => {});
     });
 });
