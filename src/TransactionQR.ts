@@ -31,7 +31,7 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
     /**
      * Construct a Transaction Request QR Code out of the
      * nem2-sdk Transaction instance.
-     * 
+     *
      * @param   transaction     {Transaction}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
@@ -62,25 +62,19 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
      */
     public toJSON(): string {
 
-        // take the JSON of the transaction
-        const txJSON = this.transaction.toJSON().transaction;
-
-        // remove empty `signature` and `signer` fields
-        if (txJSON.hasOwnProperty('signature') && !txJSON.signature.length) {
-            delete txJSON['signature'];
-        }
-        if (txJSON.hasOwnProperty('signer') && !txJSON.signer.length) {
-            delete txJSON['signer'];
-        }
+        // Serialize the transaction object data.
+        const txSerialized = this.transaction.serialize();
 
         const jsonSchema = {
             'v': 3,
             'type': this.type,
             'network_id': this.networkType,
             'chain_id': this.chainId,
-            'data': txJSON,
+            'data': {
+                'payload': txSerialized
+            }
         };
 
-        return JSON.stringify(jsonSchema);
+        return JSON.stringify(jsonSchema).trim();
     }
 }
