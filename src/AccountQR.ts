@@ -17,6 +17,8 @@ import {
     Account,
     PublicAccount,
     NetworkType,
+    Wallet,
+    Password,
 } from "nem2-sdk";
 
 // internal dependencies
@@ -26,12 +28,13 @@ import {
     QRCodeType,
     QRCodeSettings,
 } from '../index';
+import { throwError } from "rxjs";
 
 export class AccountQR extends QRCode implements QRCodeInterface {
     /**
      * Construct an Account QR Code out of the
      * nem2-sdk Account or PublicAccount instance.
-     * 
+     *
      * @param   transaction     {Transaction}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
@@ -41,6 +44,11 @@ export class AccountQR extends QRCode implements QRCodeInterface {
                  * @var {Account}
                  */
                 public readonly account: Account,
+                /**
+                 * The password for encryption
+                 * @var {Password}
+                 */
+                public readonly password: Password,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -62,14 +70,23 @@ export class AccountQR extends QRCode implements QRCodeInterface {
      */
     public toJSON(): string {
 
-        const jsonSchema = {
-            'v': 3,
-            'type': this.type,
-            'network_id': this.networkType,
-            'chain_id': this.chainId,
-            'data': 'not implemented yet',
-        };
+      if (this.password == null) {
+        throw Error('Password is missing');
+      }
 
-        return JSON.stringify(jsonSchema);
+      const encryption = this.AES_PBKF2_encryption(this.password, this.account.privateKey);
+
+      const jsonSchema = {
+          'v': 3,
+          'type': this.type,
+          'network_id': this.networkType,
+          'chain_id': this.chainId,
+          'data': {
+              'priv_key': encryption.encrypted,
+              'salt': encryption.salt,
+            },
+      };
+
+      return JSON.stringify(jsonSchema);
     }
 }

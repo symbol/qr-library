@@ -18,7 +18,8 @@ import {
     Transaction,
     TransactionMapping,
     Account,
-    PublicAccount
+    PublicAccount,
+    Password
 } from "nem2-sdk";
 import {QRCode} from 'qrcode-generator-ts';
 
@@ -94,6 +95,15 @@ export class QRCodeGenerator {
         return new ContactQR(account, networkType, chainId);
     }
 
+    public static createExportAccount(
+        account: Account,
+        password: Password,
+        networkType: NetworkType = NetworkType.MIJIN_TEST,
+        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31',
+    ): AccountQR {
+        return new AccountQR(account, password, networkType, chainId);
+    }
+
     /**
      * Read JSON Content from QRcode.
      * @param   json    {string}
@@ -110,9 +120,9 @@ export class QRCodeGenerator {
             case QRCodeType.AddContact: {
                 return new ContactQR(jsonObj.data.address, jsonObj.network_id, jsonObj.chainId)
             }
-            case QRCodeType.ExportAccount: {
-               return new AccountQR(jsonObj.data.account,jsonObj.network_id, jsonObj.chainId)
-            }
+            // case QRCodeType.ExportAccount: {
+            //    return new AccountQR(jsonObj.data.account,jsonObj.network_id, jsonObj.chainId)
+            // }
             case QRCodeType.RequestTransaction: {
                 let txMapping: Transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
 
