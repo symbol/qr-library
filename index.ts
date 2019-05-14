@@ -22,3 +22,4 @@ export { ContactQR } from './src/ContactQR';
 export { ObjectQR } from './src/ObjectQR';
 export { TransactionQR } from './src/TransactionQR';
 export { QRCodeGenerator } from './src/QRCodeGenerator';
+export { QRService } from './src/QRService';
