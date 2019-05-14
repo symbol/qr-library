@@ -48,7 +48,7 @@ export class AccountQR extends QRCode implements QRCodeInterface {
                  * The password for encryption
                  * @var {Password}
                  */
-                public readonly password: Password,
+                protected readonly password: Password,
                 /**
                  * The network type.
                  * @var {NetworkType}

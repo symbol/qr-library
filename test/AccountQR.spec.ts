@@ -37,28 +37,28 @@ import { AccountQR } from "../src/AccountQR";
 
 describe('AccountQR -->', () => {
 
-    describe('toJSON() should', () => {
+    describe.only('toJSON() should', () => {
 
         it('include mandatory NIP-7 QR Code base fields', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.TEST_NET
+                NetworkType.MIJIN_TEST
             );
 
-            const password = new Password('1234');
+            const password = new Password('password');
 
             // Act:
-            const exportAccount = new AccountQR(account, password, NetworkType.TEST_NET, '');
+            const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, '');
             const actualJSON = exportAccount.toJSON();
-            // const actualObject = JSON.parse(actualJSON);
+            const actualObject = JSON.parse(actualJSON);
 
             // // Assert:
-            // expect(actualObject).to.have.property('v');
-            // expect(actualObject).to.have.property('type');
-            // expect(actualObject).to.have.property('network_id');
-            // expect(actualObject).to.have.property('chain_id');
-            // expect(actualObject).to.have.property('data');
+            expect(actualObject).to.have.property('v');
+            expect(actualObject).to.have.property('type');
+            expect(actualObject).to.have.property('network_id');
+            expect(actualObject).to.have.property('chain_id');
+            expect(actualObject).to.have.property('data');
         });
     });
 

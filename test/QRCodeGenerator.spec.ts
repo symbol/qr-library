@@ -29,16 +29,12 @@ import {
 } from 'nem2-sdk';
 
 // internal dependencies
-import { QRCodeGenerator } from "../index";
+import { QRCodeGenerator, AccountQR, TransactionQR, QRCodeType, ContactQR } from "../index";
 
 // vectors data
 import {
     ExpectedObjectBase64,
 } from './vectors/index';
-import { TransactionQR } from "../src/TransactionQR";
-import { QRCodeType } from "../src/QRCodeType";
-import { ContactQR } from "../src/ContactQR";
-import { AccountQR } from "../src/AccountQR";
 
 describe('QRCodeGenerator -->', () => {
 
@@ -106,26 +102,23 @@ describe('QRCodeGenerator -->', () => {
         });
     });
 
-    describe.only('createExportAccount() should', ()=> {
+    describe('createExportAccount() should', ()=> {
 
         it('generate correct Base64 representation for ExportAccount', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.TEST_NET
+                NetworkType.MIJIN_TEST
             );
             const password = new Password('password');
 
-
             // Act:
             const exportAccount = QRCodeGenerator.createExportAccount(account,password);
-            const actualObject = exportAccount.toJSON();
-            // const actualBase64 = exportAccount.base64();
-            console.log(exportAccount);
+            const actualBase64 = exportAccount.toBase64();
 
             // Assert:
-            expect(actualObject).to.not.be.equal('');
-            expect(actualObject.length).to.not.be.equal(0);
+            expect(actualBase64).to.not.be.equal('');
+            expect(actualBase64.length).to.not.be.equal(0);
             expect(exportAccount.toJSON()).to.have.lengthOf.below(2953);
         });
     });
