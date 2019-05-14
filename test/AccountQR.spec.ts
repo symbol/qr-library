@@ -37,23 +37,22 @@ import { AccountQR } from "../src/AccountQR";
 
 describe('AccountQR -->', () => {
 
-    describe.only('toJSON() should', () => {
+    describe('toJSON() should', () => {
 
-        it('include mandatory NIP-7 QR Code base fields', () => {
+        it.only('include mandatory NIP-7 QR Code base fields', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
                 NetworkType.MIJIN_TEST
             );
-
             const password = new Password('password');
 
             // Act:
-            const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, '');
+            const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, 'no-chain-id');
             const actualJSON = exportAccount.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
-            // // Assert:
+            // // // Assert:
             expect(actualObject).to.have.property('v');
             expect(actualObject).to.have.property('type');
             expect(actualObject).to.have.property('network_id');

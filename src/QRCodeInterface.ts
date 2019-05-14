@@ -15,10 +15,6 @@
  */
 import {QRCode} from 'qrcode-generator-ts';
 
-import {
-    Password
-} from 'nem2-sdk';
-
 // internal dependencies
 import {QRCodeType} from '../index';
 
@@ -64,25 +60,4 @@ export interface QRCodeInterface {
      * @return {string}
      */
     toBase64(): string;
-
-    /**
-     * The `AES_PBKF2_encryption()` method should return encrypted and salt
-     *
-     * @param password
-     * @param privateKey
-     *
-     * @returns {json}
-     */
-    AES_PBKF2_encryption(password: Password, privateKey: string): any;
-
-    /**
-     * The `AES_PBKF2_decryption()` method should return string (privateKey)
-     *
-     * @param password
-     * @param json
-     *
-     * @returns {string}
-     */
-    AES_PBKF2_decryption(password: Password, json: any): string;
-
 }

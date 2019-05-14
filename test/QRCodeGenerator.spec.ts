@@ -150,7 +150,7 @@ describe('QRCodeGenerator -->', () => {
             expect(transactionObj.type).to.deep.equal(QRCodeType.RequestTransaction);
         });
 
-        it.only('Read data From ContactQR', () => {
+        it('Read data From ContactQR', () => {
             // Arrange:
             const account = PublicAccount.createFromPublicKey(
                 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
@@ -170,7 +170,25 @@ describe('QRCodeGenerator -->', () => {
             expect(contactObj.type).to.deep.equal(QRCodeType.AddContact);
         });
 
-        it('Read data From AccountQR', () => {});
+        it('Read data From AccountQR', () => {
+            // Arrange:
+            const account = Account.createFromPrivateKey(
+                'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
+                NetworkType.MIJIN_TEST
+            );
+            const password = new Password('password');
+
+            const exportAccount = QRCodeGenerator.createExportAccount(account,password);
+            const actualObj = exportAccount.toJSON();
+
+            // Act:
+            const accountObj: AccountQR = QRCodeGenerator.fromJSON(actualObj,password);
+
+            // Assert:
+            expect(accountObj).to.not.be.equal('');
+            expect(accountObj.account).to.deep.equal(account);
+            expect(accountObj.type).to.deep.equal(QRCodeType.ExportAccount);
+        });
 
         it('Read data From ObjectQR', () => {});
     });

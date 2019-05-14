@@ -27,6 +27,7 @@ import {
     QRCodeInterface,
     QRCodeType,
     QRCodeSettings,
+    QRService
 } from '../index';
 import { throwError } from "rxjs";
 
@@ -35,7 +36,7 @@ export class AccountQR extends QRCode implements QRCodeInterface {
      * Construct an Account QR Code out of the
      * nem2-sdk Account or PublicAccount instance.
      *
-     * @param   transaction     {Transaction}
+     * @param   account     {Account}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
      */
@@ -73,8 +74,8 @@ export class AccountQR extends QRCode implements QRCodeInterface {
       if (this.password == null) {
         throw Error('Password is missing');
       }
-
-      const encryption = this.AES_PBKF2_encryption(this.password, this.account.privateKey);
+      const qrService: QRService = new QRService();
+      const encryption = qrService.AES_PBKF2_encryption(this.password, this.account.privateKey);
 
       const jsonSchema = {
           'v': 3,

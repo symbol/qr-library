@@ -21,7 +21,7 @@ import {
     PublicAccount,
     Password
 } from "nem2-sdk";
-import {QRCode} from 'qrcode-generator-ts';
+import * as CryptoJS from "crypto-js";
 
 // internal dependencies
 import {
@@ -31,6 +31,7 @@ import {
     ContactQR,
     ObjectQR,
     TransactionQR,
+    QRService,
 } from '../index';
 
 /**
@@ -108,7 +109,7 @@ export class QRCodeGenerator {
      * Read JSON Content from QRcode.
      * @param   json    {string}
      */
-    static fromJSON(json:string) :any{
+    static fromJSON(json:string, password?: Password) :any {
 
         if (json == null || json == '') {
             throw Error('QR json object is missing');
@@ -120,9 +121,19 @@ export class QRCodeGenerator {
             case QRCodeType.AddContact: {
                 return new ContactQR(jsonObj.data.address, jsonObj.network_id, jsonObj.chainId)
             }
-            // case QRCodeType.ExportAccount: {
-            //    return new AccountQR(jsonObj.data.account,jsonObj.network_id, jsonObj.chainId)
-            // }
+            case QRCodeType.ExportAccount: {
+                if (password == null){
+                    throw Error('Password are required');
+                }
+
+                const qrService: QRService = new QRService();
+                const privatekey: string = qrService.AES_PBKF2_decryption(password,jsonObj);
+
+                const account = Account.createFromPrivateKey(privatekey,
+                    NetworkType.MIJIN_TEST);
+
+               return new AccountQR(account, password, jsonObj.network_id, jsonObj.chainId)
+            }
             case QRCodeType.RequestTransaction: {
                 let txMapping: Transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
 
