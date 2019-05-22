@@ -29,7 +29,13 @@ import {
 } from 'nem2-sdk';
 
 // internal dependencies
-import { QRCodeGenerator, AccountQR, TransactionQR, QRCodeType, ContactQR } from "../index";
+import {
+    QRCodeGenerator,
+    AccountQR,
+    TransactionQR,
+    QRCodeType,
+    ContactQR
+} from "../index";
 
 // vectors data
 import {
@@ -86,13 +92,14 @@ describe('QRCodeGenerator -->', () => {
 
         it('generate correct Base64 representation for TransferTransaction', () => {
             // Arrange:
+            const name = 'test-contact-1';
             const account = PublicAccount.createFromPublicKey(
                 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
                 NetworkType.MIJIN_TEST
             );
 
             // Act:
-            const createContact = QRCodeGenerator.createContact(account);
+            const createContact = QRCodeGenerator.createContact(name, account);
             const actualBase64 = createContact.toBase64();
 
             // Assert:
@@ -142,7 +149,7 @@ describe('QRCodeGenerator -->', () => {
             const txJSON = requestTx.toJSON();
 
             // Act:
-            const transactionObj: TransactionQR = QRCodeGenerator.fromJSON(txJSON);
+            const transactionObj: TransactionQR = QRCodeGenerator.fromJSON(txJSON) as TransactionQR;
 
             // Assert:
             expect(transactionObj).to.not.be.equal('');
@@ -152,17 +159,22 @@ describe('QRCodeGenerator -->', () => {
 
         it('Read data From ContactQR', () => {
             // Arrange:
+            const name = 'test-contact-1';
             const account = PublicAccount.createFromPublicKey(
                 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
                 NetworkType.MIJIN_TEST
             );
 
-            const createContact = QRCodeGenerator.createContact(account,NetworkType.MIJIN_TEST);
+            const createContact = QRCodeGenerator.createContact(
+                name,
+                account,
+                NetworkType.MIJIN_TEST
+            );
             const contactJSON = createContact.toJSON();
 
 
             // Act:
-            const contactObj: ContactQR = QRCodeGenerator.fromJSON(contactJSON);
+            const contactObj: ContactQR = QRCodeGenerator.fromJSON(contactJSON) as ContactQR;
 
             // Assert:
             expect(contactObj).to.not.be.equal('');
@@ -182,7 +194,7 @@ describe('QRCodeGenerator -->', () => {
             const actualObj = exportAccount.toJSON();
 
             // Act:
-            const accountObj: AccountQR = QRCodeGenerator.fromJSON(actualObj,password);
+            const accountObj: AccountQR = QRCodeGenerator.fromJSON(actualObj,password) as AccountQR;
 
             // Assert:
             expect(accountObj).to.not.be.equal('');

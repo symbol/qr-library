@@ -25,6 +25,8 @@ import {
     QRCodeInterface,
     QRCodeType,
     QRCodeSettings,
+    QRCodeDataSchema,
+    RequestTransactionDataSchema
 } from '../index';
 
 export class TransactionQR extends QRCode implements QRCodeInterface {
@@ -55,26 +57,44 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
     }
 
     /**
-     * The `toJSON()` method should return the JSON
-     * representation of the QR Code content.
+     * Parse a JSON QR code content into a TransactionQR
+     * object.
      *
-     * @return {string}
+     * @param   json        {string}
+     * @return  {TransactionQR}
+     * @throws  {Error}     On empty `json` given.
+     * @throws  {Error}     On missing `type` field value.
+     * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    public toJSON(): string {
+    static fromJSON(
+        json: string
+    ): TransactionQR {
 
-        // Serialize the transaction object data.
-        const txSerialized = this.transaction.serialize();
+        // create the QRCode object from JSON
+        return RequestTransactionDataSchema.parse(json);
+    }
 
-        const jsonSchema = {
-            'v': 3,
-            'type': this.type,
-            'network_id': this.networkType,
-            'chain_id': this.chainId,
-            'data': {
-                'payload': txSerialized
-            }
-        };
+    /**
+     * The `getTypeNumber()` method should return the
+     * version number for QR codes of the underlying class.
+     *
+     * @see https://en.wikipedia.org/wiki/QR_code#Storage
+     * @return {number}
+     */
+    public getTypeNumber(): number {
+        // Type version for ContactQR is Version 40
+        // This type of QR can hold up to 1264 bytes of data.
+        return 40;
+    }
 
-        return JSON.stringify(jsonSchema).trim();
+    /**
+     * The `getSchema()` method should return an instance
+     * of a sub-class of QRCodeDataSchema which describes
+     * the QR Code data.
+     *
+     * @return {QRCodeDataSchema}
+     */
+    public getSchema(): QRCodeDataSchema {
+        return new RequestTransactionDataSchema();
     }
 }

@@ -39,13 +39,14 @@ describe('ContactQR -->', () => {
 
         it('include mandatory NIP-7 QR Code base fields', () => {
             // Arrange:
+            const name = 'test-contact-1';
             const account = PublicAccount.createFromPublicKey(
                 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
                 NetworkType.TEST_NET
             );
 
             // Act:
-            const addContact = new ContactQR(account, NetworkType.TEST_NET, '');
+            const addContact = new ContactQR(name, account, NetworkType.TEST_NET, '');
             const actualJSON = addContact.toJSON();
             const actualObject = JSON.parse(actualJSON);
 

@@ -17,6 +17,7 @@ import {
     Account,
     PublicAccount,
     NetworkType,
+    Address,
 } from "nem2-sdk";
 
 // internal dependencies
@@ -25,6 +26,8 @@ import {
     QRCodeInterface,
     QRCodeType,
     QRCodeSettings,
+    QRCodeDataSchema,
+    AddContactDataSchema
 } from '../index';
 
 export class ContactQR extends QRCode implements QRCodeInterface {
@@ -37,8 +40,13 @@ export class ContactQR extends QRCode implements QRCodeInterface {
      * @param   chainId         {string}
      */
     constructor(/**
+                 * The contact name.
+                 * @var {string}
+                 */
+                public readonly name: string,
+                /**
                  * The contact account.
-                 * @var {Account|PublicAccount}
+                 * @var {Account|PublicAccount|Address}
                  */
                 public readonly account: Account | PublicAccount,
                 /**
@@ -55,23 +63,44 @@ export class ContactQR extends QRCode implements QRCodeInterface {
     }
 
     /**
-     * The `toJSON()` method should return the JSON
-     * representation of the QR Code content.
+     * Parse a JSON QR code content into a ContactQR
+     * object.
      *
-     * @return {string}
+     * @param   json        {string}
+     * @return  {ContactQR}
+     * @throws  {Error}     On empty `json` given.
+     * @throws  {Error}     On missing `type` field value.
+     * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    public toJSON(): string {
+    static fromJSON(
+        json: string
+    ): ContactQR {
 
-        const jsonSchema = {
-            'v': 3,
-            'type': this.type,
-            'network_id': this.networkType,
-            'chain_id': this.chainId,
-            'data': {
-                'address': this.account
-            },
-        };
+        // create the QRCode object from JSON
+        return AddContactDataSchema.parse(json);
+    }
 
-        return JSON.stringify(jsonSchema).trim();
+    /**
+     * The `getTypeNumber()` method should return the
+     * version number for QR codes of the underlying class.
+     *
+     * @see https://en.wikipedia.org/wiki/QR_code#Storage
+     * @return {number}
+     */
+    public getTypeNumber(): number {
+        // Type version for ContactQR is Version 10
+        // This type of QR can hold up to 174 bytes of data.
+        return 10;
+    }
+
+    /**
+     * The `getSchema()` method should return an instance
+     * of a sub-class of QRCodeDataSchema which describes
+     * the QR Code data.
+     *
+     * @return {QRCodeDataSchema}
+     */
+    public getSchema(): QRCodeDataSchema {
+        return new AddContactDataSchema();
     }
 }

@@ -26,10 +26,11 @@ import {
     QRCodeType,
     QRCodeSettings,
     QRCodeDataSchema,
-    ExportObjectDataSchema
+    RequestCosignatureDataSchema
 } from '../index';
 
-export class ObjectQR extends QRCode implements QRCodeInterface {
+//XXX should it maybe extend TransactionQR to make use of version-40 ?
+export class CosignatureQR extends QRCode implements QRCodeInterface {
     /**
      * Construct a Object QR Code out of the
      * JSON object.
@@ -39,10 +40,10 @@ export class ObjectQR extends QRCode implements QRCodeInterface {
      * @param   chainId         {string}
      */
     constructor(/**
-                 * The object to display
-                 * @var {Object}
+                 * The hash of the transaction to co-sign
+                 * @var {string}
                  */
-                public readonly object: Object,
+                public readonly hash: string,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -57,21 +58,21 @@ export class ObjectQR extends QRCode implements QRCodeInterface {
     }
 
     /**
-     * Parse a JSON QR code content into a ObjectQR
+     * Parse a JSON QR code content into a CosignatureQR
      * object.
      *
      * @param   json        {string}
-     * @return  {ObjectQR}
+     * @return  {CosignatureQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
     static fromJSON(
         json: string
-    ): ObjectQR {
+    ): CosignatureQR {
 
         // create the QRCode object from JSON
-        return ExportObjectDataSchema.parse(json);
+        return RequestCosignatureDataSchema.parse(json);
     }
 
     /**
@@ -95,6 +96,6 @@ export class ObjectQR extends QRCode implements QRCodeInterface {
      * @return {QRCodeDataSchema}
      */
     public getSchema(): QRCodeDataSchema {
-        return new ExportObjectDataSchema();
+        return new RequestCosignatureDataSchema();
     }
 }

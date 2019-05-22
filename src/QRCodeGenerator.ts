@@ -31,7 +31,8 @@ import {
     ContactQR,
     ObjectQR,
     TransactionQR,
-    QRService,
+    CosignatureQR,
+    QRCode
 } from '../index';
 
 /**
@@ -89,11 +90,12 @@ export class QRCodeGenerator {
      * @param   chainId         {string}
      */
     public static createContact(
+        name: string,
         account: Account | PublicAccount,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
         chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
     ): ContactQR {
-        return new ContactQR(account, networkType, chainId);
+        return new ContactQR(name, account, networkType, chainId);
     }
 
     public static createExportAccount(
@@ -106,46 +108,66 @@ export class QRCodeGenerator {
     }
 
     /**
-     * Read JSON Content from QRcode.
+     * Parse a JSON QR code content into a sub-class
+     * of QRCode.
+     *
      * @param   json    {string}
+     * @return  {QRCode}
+     * @throws  {Error}     On empty `json` given.
+     * @throws  {Error}     On missing `type` field value.
+     * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static fromJSON(json:string, password?: Password) :any {
+    static fromJSON(
+        json: string,
+        password: Password | undefined = undefined
+    ): QRCode {
 
-        if (json == null || json == '') {
-            throw Error('QR json object is missing');
+        if (! json.length) {
+            throw new Error('JSON argument cannot be empty.');
         }
 
-        const jsonObj = JSON.parse(json || '');
+        const jsonObj = JSON.parse(json);
+        if (!jsonObj.type) {
+            throw new Error('Missing mandatory field with name "type".');
+        }
 
-        switch(jsonObj.type) {
-            case QRCodeType.AddContact: {
-                return new ContactQR(jsonObj.data.address, jsonObj.network_id, jsonObj.chainId)
-            }
-            case QRCodeType.ExportAccount: {
-                if (password == null){
-                    throw Error('Password are required');
-                }
+        // We will use the `fromJSON` static implementation
+        // of specialized QRCode classes (child classes).
+        // An error will be thrown if the QRCodeType is not
+        // recognized or invalid.
 
-                const qrService: QRService = new QRService();
-                const privatekey: string = qrService.AES_PBKF2_decryption(password,jsonObj);
+        switch (jsonObj.type) {
 
-                const account = Account.createFromPrivateKey(privatekey,
-                    NetworkType.MIJIN_TEST);
+        // create a ContactQR from JSON
+        case QRCodeType.AddContact:
+            return ContactQR.fromJSON(json);
 
-               return new AccountQR(account, password, jsonObj.network_id, jsonObj.chainId)
-            }
-            case QRCodeType.RequestTransaction: {
-                let txMapping: Transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
+        // create an AccountQR from JSON
+        case QRCodeType.ExportAccount:
 
-                return new TransactionQR(txMapping, jsonObj.network_id, jsonObj.chainId)
+            // password obligatory for encryption
+            if (! password) {
+                throw new Error('Missing password to decrypt AccountQR QR code.');
             }
-            case QRCodeType.RequestCosignature: {
-                // Todo: In progress;
-                break;
-            }
-            case QRCodeType.ExportObject: {
-                return new ObjectQR(jsonObj.data.object, jsonObj.network_id, jsonObj.chainId);
-            }
-         }
+
+            return AccountQR.fromJSON(json, password);
+            
+        // create a ObjectQR from JSON
+        case QRCodeType.ExportObject:
+            return ObjectQR.fromJSON(json);
+
+        // create a CosignatureQR from JSON
+        case QRCodeType.RequestCosignature:
+            return CosignatureQR.fromJSON(json);
+
+        // create a TransactionQR from JSON
+        case QRCodeType.RequestTransaction:
+            return TransactionQR.fromJSON(json);
+
+        default:
+            break;
+        }
+
+        throw new Error("Unrecognized QR Code 'type': '" + jsonObj.type + "'.");
     }
 }

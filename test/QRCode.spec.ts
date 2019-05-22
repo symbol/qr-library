@@ -36,6 +36,8 @@ import {
     QRCode,
     QRCodeType,
     QRCodeSettings,
+    QRCodeDataSchema,
+    ExportObjectDataSchema,
 } from "../index";
 
 /// region Mock for QRCode specialization
@@ -48,15 +50,12 @@ class FakeQR extends QRCode implements QRCodeInterface {
         super(QRCodeType.ExportObject, networkType, chainId);
     }
 
-    public toJSON(): string {
-        const jsonSchema = {
-            'v': 3,
-            'type': this.type,
-            'network_id': this.networkType,
-            'chain_id': this.chainId,
-            'data': this.object,
-        };
-        return JSON.stringify(jsonSchema);
+    public getSchema(): QRCodeDataSchema {
+        return new ExportObjectDataSchema();
+    }
+
+    public getTypeNumber(): number {
+        return 10;
     }
 }
 /// end-region Mock for QRCode specialization
@@ -101,14 +100,14 @@ describe('QRCode -->', () => {
         it('set correct settings for QR Code generation', () => {
             // Arrange:
             const object = {"test": "test"};
-            const modulesCount = QRCodeSettings.VERSION_NUMBER * 4 + 17;
+            const modulesCount = 10 * 4 + 17;
 
             // Act:
             const fakeQR = new FakeQR(object, NetworkType.TEST_NET, 'no-chain-id');
             const implQR = fakeQR.build();
 
             // Assert:
-            expect(implQR.getTypeNumber()).to.be.equal(QRCodeSettings.VERSION_NUMBER);
+            expect(implQR.getTypeNumber()).to.be.equal(10);
             expect(implQR.getErrorCorrectLevel()).to.be.equal(QRCodeSettings.CORRECTION_LEVEL);
             expect(implQR.getModuleCount()).to.be.equal(modulesCount);
         });
