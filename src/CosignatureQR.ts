@@ -14,9 +14,10 @@
  *limitations under the License.
  */
 import {
-    Account,
-    PublicAccount,
     NetworkType,
+    TransactionMapping,
+    Transaction,
+    AggregateTransaction,
 } from "nem2-sdk";
 
 // internal dependencies
@@ -26,24 +27,24 @@ import {
     QRCodeType,
     QRCodeSettings,
     QRCodeDataSchema,
-    RequestCosignatureDataSchema
+    RequestCosignatureDataSchema,
+    TransactionQR,
 } from '../index';
 
-//XXX should it maybe extend TransactionQR to make use of version-40 ?
-export class CosignatureQR extends QRCode implements QRCodeInterface {
+export class CosignatureQR extends TransactionQR implements QRCodeInterface {
     /**
-     * Construct a Object QR Code out of the
-     * JSON object.
-     * 
-     * @param   object          {Object}
+     * Construct a Transaction Request QR Code out of the
+     * nem2-sdk Transaction instance.
+     *
+     * @param   transaction     {Transaction}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
      */
     constructor(/**
-                 * The hash of the transaction to co-sign
-                 * @var {string}
+                 * The transaction for the request.
+                 * @var {AggregateTransaction}
                  */
-                public readonly hash: string,
+                public readonly transaction: AggregateTransaction,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -54,7 +55,7 @@ export class CosignatureQR extends QRCode implements QRCodeInterface {
                  * @var {string}
                  */
                 public readonly chainId: string) {
-        super(QRCodeType.ExportObject, networkType, chainId);
+        super(transaction, networkType, chainId, QRCodeType.RequestCosignature);
     }
 
     /**
@@ -83,9 +84,9 @@ export class CosignatureQR extends QRCode implements QRCodeInterface {
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for ContactQR is Version 10
-        // This type of QR can hold up to 174 bytes of data.
-        return 10;
+        // Type version for ContactQR is Version 40
+        // This type of QR can hold up to 1264 bytes of data.
+        return 40;
     }
 
     /**

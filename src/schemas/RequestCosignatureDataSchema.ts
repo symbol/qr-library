@@ -13,33 +13,32 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
+import {
+    NetworkType,
+    TransactionMapping,
+    Transaction,
+    AggregateTransaction,
+} from "nem2-sdk";
+
 // internal dependencies
 import {
     QRCodeDataSchema,
     QRCode,
     QRCodeType,
-    CosignatureQR
+    CosignatureQR,
+    RequestTransactionDataSchema,
 } from '../../index';
 
 /**
  * Class `RequestCosignatureDataSchema` describes a transaction
- * request QR code data schema.
+ * cosignature request QR code data schema.
  *
  * @since 0.3.0
  */
-export class RequestCosignatureDataSchema extends QRCodeDataSchema {
+export class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
 
-    /**
-     * The `getData()` method returns an object
-     * that will be stored in the `data` field of
-     * the underlying QR Code JSON content.
-     *
-     * @return {any}
-     */
-    public getData(qr: CosignatureQR): any {
-        return {
-            "hash": qr.hash
-        };
+    constructor() {
+        super();
     }
 
     /**
@@ -60,15 +59,15 @@ export class RequestCosignatureDataSchema extends QRCodeDataSchema {
         }
 
         const jsonObj = JSON.parse(json);
-        if (!jsonObj.type || jsonObj.type !== QRCodeType.RequestCosignature) {
+        if (!jsonObj.type || jsonObj.type !== QRCodeType.RequestTransaction) {
             throw Error('Invalid type field value for CosignatureQR.');
         }
 
         // read contact data
-        const hash = jsonObj.data.hash;
+        const transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
         const network = jsonObj.network_id;
         const chainId = jsonObj.chain_id;
 
-        return new CosignatureQR(hash, network, chainId);
+        return new CosignatureQR(transaction as AggregateTransaction, network, chainId);
     }
 }

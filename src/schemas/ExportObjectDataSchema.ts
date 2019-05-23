@@ -29,6 +29,10 @@ import {
  */
 export class ExportObjectDataSchema extends QRCodeDataSchema {
 
+    constructor() {
+        super();
+    }
+
     /**
      * The `getData()` method returns an object
      * that will be stored in the `data` field of

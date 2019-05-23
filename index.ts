@@ -29,8 +29,8 @@ export { QRCodeDataSchema } from './src/QRCodeDataSchema';
 export { AddContactDataSchema } from './src/schemas/AddContactDataSchema';
 export { ExportAccountDataSchema } from './src/schemas/ExportAccountDataSchema';
 export { ExportObjectDataSchema } from './src/schemas/ExportObjectDataSchema';
-export { RequestCosignatureDataSchema } from './src/schemas/RequestCosignatureDataSchema';
 export { RequestTransactionDataSchema } from './src/schemas/RequestTransactionDataSchema';
+export { RequestCosignatureDataSchema } from './src/schemas/RequestCosignatureDataSchema';
 
 // specialized QR Code classes
 export { AccountQR } from './src/AccountQR';

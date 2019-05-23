@@ -52,8 +52,14 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
                  * The chain Id.
                  * @var {string}
                  */
-                public readonly chainId: string) {
-        super(QRCodeType.RequestTransaction, networkType, chainId);
+                public readonly chainId: string,
+                /**
+                 * The QR Code Type
+                 * 
+                 * @var {QRCodeType} 
+                 */
+                public readonly type: QRCodeType = QRCodeType.RequestTransaction) {
+        super(type, networkType, chainId);
     }
 
     /**

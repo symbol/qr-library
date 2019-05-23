@@ -15,6 +15,7 @@
  */
 import {expect} from "chai";
 import {
+    AggregateTransaction,
     TransferTransaction,
     Deadline,
     Address,
@@ -23,6 +24,7 @@ import {
     UInt64,
     PlainMessage,
     NetworkType,
+    PublicAccount,
 } from 'nem2-sdk';
 import {
     QRCode as QRCodeImpl,
@@ -36,15 +38,19 @@ import {
     QRCode,
     QRCodeType,
     QRCodeSettings,
-    TransactionQR,
+    CosignatureQR,
 } from "../index";
 
-describe('TransactionQR -->', () => {
+describe('CosignatureQR -->', () => {
 
     describe('toJSON() should', () => {
 
         it('include mandatory NIP-7 QR Code base fields', () => {
             // Arrange:
+            const account = PublicAccount.createFromPublicKey(
+                'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                NetworkType.MIJIN_TEST
+            );
             const transfer = TransferTransaction.create(
                 Deadline.create(),
                 Address.createFromPublicKey(
@@ -55,9 +61,14 @@ describe('TransactionQR -->', () => {
                 PlainMessage.create('Welcome to NEM!'),
                 NetworkType.MIJIN_TEST
             );
+            const bonded = AggregateTransaction.createBonded(
+                Deadline.create(),
+                [transfer.toAggregate(account)],
+                NetworkType.MIJIN_TEST
+            );
 
             // Act:
-            const requestTx = new TransactionQR(transfer, NetworkType.TEST_NET, '');
+            const requestTx = new CosignatureQR(bonded, NetworkType.TEST_NET, '');
             const actualJSON = requestTx.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
@@ -71,6 +82,10 @@ describe('TransactionQR -->', () => {
 
         it('include specialized schema fields', () => {
             // Arrange:
+            const account = PublicAccount.createFromPublicKey(
+                'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                NetworkType.MIJIN_TEST
+            );
             const transfer = TransferTransaction.create(
                 Deadline.create(),
                 Address.createFromPublicKey(
@@ -81,9 +96,14 @@ describe('TransactionQR -->', () => {
                 PlainMessage.create('Welcome to NEM!'),
                 NetworkType.MIJIN_TEST
             );
+            const bonded = AggregateTransaction.createBonded(
+                Deadline.create(),
+                [transfer.toAggregate(account)],
+                NetworkType.MIJIN_TEST
+            );
 
             // Act:
-            const requestTx = new TransactionQR(transfer, NetworkType.TEST_NET, '');
+            const requestTx = new CosignatureQR(bonded, NetworkType.TEST_NET, '');
             const actualJSON = requestTx.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
