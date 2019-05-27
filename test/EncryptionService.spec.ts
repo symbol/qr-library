@@ -34,7 +34,7 @@ describe('EncryptionService -->', () => {
             // Act
             const encrypted = EncryptionService.encrypt(data, new Password(pass));
 
-            // Asset
+            // Assert
             expect(encrypted.ciphertext).to.not.be.undefined;
             expect(encrypted.salt).to.not.be.undefined;
             expect(encrypted.salt).to.have.lengthOf(64);
@@ -48,8 +48,8 @@ describe('EncryptionService -->', () => {
             // Act
             const encrypted = EncryptionService.encrypt(data, new Password(pass));
 
-            // Asset
-            expect(encrypted.ciphertext).to.have.lengthOf(160);
+            // Assert
+            expect(encrypted.ciphertext).to.have.lengthOf(76);
             expect(encrypted.salt).to.have.lengthOf(64);
         });
 
@@ -63,13 +63,29 @@ describe('EncryptionService -->', () => {
             const encrypted_2 = EncryptionService.encrypt(data, new Password(pass));
             const encrypted_3 = EncryptionService.encrypt(data, new Password(pass));
 
-            // Asset
+            // Assert
             expect(encrypted_1).to.not.be.equal(encrypted_2);
             expect(encrypted_1).to.not.be.equal(encrypted_3);
             expect(encrypted_2).to.not.be.equal(encrypted_3);
             expect(encrypted_1.salt).to.have.lengthOf(64);
             expect(encrypted_2.salt).to.have.lengthOf(64);
             expect(encrypted_3.salt).to.have.lengthOf(64);
+        });
+    });
+
+    describe('decrypt() should', () => {
+
+        it('should decrypt ciphertext correctly', () => {
+            // Arrange:
+            const data = 'this will be encrypted';
+            const pass = 'password';
+
+            // Act
+            const encrypted = EncryptionService.encrypt(data, new Password(pass));
+            const decrypted = EncryptionService.decrypt(encrypted, new Password(pass));
+
+            // Assert
+            expect(decrypted).to.be.equal(data);
         });
     });
 

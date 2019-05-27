@@ -66,18 +66,16 @@ export class EncryptionService {
         // create encryption input vector of 16 bytes (iv)
         const iv = CryptoJS.lib.WordArray.random(16);
 
-        // format IV for crypto-js encryption
-        const encIv = {
-            iv: iv
-        };
-
         // encrypt with AES
-        const dataBin = CryptoJS.lib.WordArray.create(data);
-        const encrypted = CryptoJS.AES.encrypt(dataBin, key, encIv);
+        const encrypted = CryptoJS.AES.encrypt(data, key,  {
+            iv: iv, 
+            padding: CryptoJS.pad.Pkcs7,
+            mode: CryptoJS.mode.CBC
+        });
 
-        // create our `EncryptedPayload`
+        // create our `EncryptedPayload` (16 bytes iv as hex || cipher text)
         const ciphertext = iv.toString() + encrypted.toString();
-        const used_salt = salt.toString();
+        const used_salt = CryptoJS.enc.Hex.stringify(salt);
 
         return new EncryptedPayload(ciphertext, used_salt);
     }
@@ -107,12 +105,8 @@ export class EncryptionService {
         const priv = payload.ciphertext;
 
         // read encryption configuration
-        const iv: string = CryptoJS.enc.Hex.parse(priv.substring(0, 32));
-        const cipher: string = priv.substring(32, 96);
-
-        const encIv = {
-            iv: iv
-        };
+        const iv: string = CryptoJS.enc.Hex.parse(priv.substr(0, 32));
+        const cipher: string = priv.substr(32);
 
         // re-generate key (PBKDF2)
         const key = CryptoJS.PBKDF2(password.value, salt, {
@@ -121,7 +115,12 @@ export class EncryptionService {
         });
 
         // decrypt and return
-        const decrypted = CryptoJS.AES.decrypt(cipher, key, encIv);
-        return decrypted.toString();
+        const decrypted = CryptoJS.AES.decrypt(cipher, key, {
+            iv: iv,
+            padding: CryptoJS.pad.Pkcs7,
+            mode: CryptoJS.mode.CBC
+        });
+
+        return decrypted.toString(CryptoJS.enc.Utf8);
     }
 }
