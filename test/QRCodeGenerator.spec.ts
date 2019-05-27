@@ -187,7 +187,7 @@ describe('QRCodeGenerator -->', () => {
             expect(contactObj.account.address).to.deep.equal(account.address);
             expect(contactObj.type).to.deep.equal(QRCodeType.AddContact);
         });
-/*
+
         it('Read data From AccountQR', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
@@ -207,7 +207,7 @@ describe('QRCodeGenerator -->', () => {
             expect(accountObj.account).to.deep.equal(account);
             expect(accountObj.type).to.deep.equal(QRCodeType.ExportAccount);
         });
-*/
+
         it('Read data From ObjectQR', () => {});
     });
 
