@@ -78,5 +78,4 @@ export class EncryptedPayload {
         return new EncryptedPayload(jsonObject.ciphertext, jsonObject.salt);
     }
 
-
 }

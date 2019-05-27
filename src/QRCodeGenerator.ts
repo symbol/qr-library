@@ -21,18 +21,17 @@ import {
     PublicAccount,
     Password
 } from "nem2-sdk";
-import * as CryptoJS from "crypto-js";
 
 // internal dependencies
 import {
     QRCodeInterface,
     QRCodeType,
+    QRCode,
     AccountQR,
     ContactQR,
     ObjectQR,
     TransactionQR,
-    CosignatureQR,
-    QRCode
+    CosignatureQR
 } from '../index';
 
 /**
@@ -53,6 +52,7 @@ export class QRCodeGenerator {
     /**
      * Create a JSON object QR Code from a JSON object.
      *
+     * @see {ObjectQR}
      * @param   object          {Object}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
@@ -66,9 +66,46 @@ export class QRCodeGenerator {
     }
 
     /**
+     * Create a Contact QR Code from a contact name
+     * and account.
+     *
+     * @see {ContactQR}
+     * @param   transaction     {Transaction}
+     * @param   networkType     {NetworkType}
+     * @param   chainId         {string}
+     */
+    public static createAddContact(
+        name: string,
+        account: Account | PublicAccount,
+        networkType: NetworkType = NetworkType.MIJIN_TEST,
+        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+    ): ContactQR {
+        return new ContactQR(name, account, networkType, chainId);
+    }
+
+    /**
      * Create a Transaction Request QR Code from a Transaction
      * instance.
      *
+     * @see {AccountQR}
+     * @param   transaction     {Transaction}
+     * @param   networkType     {NetworkType}
+     * @param   chainId         {string}
+     */
+    public static createExportAccount(
+        account: Account,
+        password: Password,
+        networkType: NetworkType = NetworkType.MIJIN_TEST,
+        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+    ): AccountQR {
+        return new AccountQR(account, password, networkType, chainId);
+    }
+
+    /**
+     * Create a Transaction Request QR Code from a Transaction
+     * instance.
+     *
+     * @see {TransactionQR}
      * @param   transaction     {Transaction}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
@@ -79,32 +116,6 @@ export class QRCodeGenerator {
         chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
     ): TransactionQR {
         return new TransactionQR(transaction, networkType, chainId);
-    }
-
-    /**
-     * Create a Transaction Request QR Code from a Transaction
-     * instance.
-     *
-     * @param   transaction     {Transaction}
-     * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
-     */
-    public static createContact(
-        name: string,
-        account: Account | PublicAccount,
-        networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
-    ): ContactQR {
-        return new ContactQR(name, account, networkType, chainId);
-    }
-
-    public static createExportAccount(
-        account: Account,
-        password: Password,
-        networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31',
-    ): AccountQR {
-        return new AccountQR(account, password, networkType, chainId);
     }
 
     /**
@@ -126,9 +137,16 @@ export class QRCodeGenerator {
             throw new Error('JSON argument cannot be empty.');
         }
 
-        const jsonObj = JSON.parse(json);
-        if (!jsonObj.type) {
-            throw new Error('Missing mandatory field with name "type".');
+        let jsonObject: any;
+        try {
+            jsonObject = JSON.parse(json);
+            if (!jsonObject.type) {
+                throw new Error('Missing mandatory field with name "type".');
+            }
+        }
+        catch(e) {
+            // Invalid JSON provided, forward error
+            throw new Error(e);
         }
 
         // We will use the `fromJSON` static implementation
@@ -136,7 +154,7 @@ export class QRCodeGenerator {
         // An error will be thrown if the QRCodeType is not
         // recognized or invalid.
 
-        switch (jsonObj.type) {
+        switch (jsonObject.type) {
 
         // create a ContactQR from JSON
         case QRCodeType.AddContact:
@@ -151,7 +169,7 @@ export class QRCodeGenerator {
             }
 
             return AccountQR.fromJSON(json, password);
-            
+
         // create a ObjectQR from JSON
         case QRCodeType.ExportObject:
             return ObjectQR.fromJSON(json);
@@ -168,6 +186,6 @@ export class QRCodeGenerator {
             break;
         }
 
-        throw new Error("Unrecognized QR Code 'type': '" + jsonObj.type + "'.");
+        throw new Error("Unrecognized QR Code 'type': '" + jsonObject.type + "'.");
     }
 }

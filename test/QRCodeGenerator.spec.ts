@@ -30,33 +30,39 @@ import {
 
 // internal dependencies
 import {
+    QRCodeType,
     QRCodeGenerator,
+    ContactQR,
     AccountQR,
     TransactionQR,
-    QRCodeType,
-    ContactQR
 } from "../index";
-
-// vectors data
-import {
-    ExpectedObjectBase64,
-} from './vectors/index';
 
 describe('QRCodeGenerator -->', () => {
 
     describe('createExportObject() should', () => {
-        it('generate correct Base64 representation for {test: test}', () => {
+
+        it('use default values for network_id and chain_id', () => {
             // Arrange:
-            const object = {"test": "test"};
-            const qrcode = QRCodeGenerator.createExportObject(object, NetworkType.TEST_NET, 'no-chain-id');
+            const object = {};
 
             // Act:
-            const base64 = qrcode.toBase64();
+            const objectQR = QRCodeGenerator.createExportObject(object);
 
             // Assert:
-            expect(base64).to.not.be.equal('');
-            expect(base64.length).to.not.be.equal(0);
-            expect(base64).to.be.equal(ExpectedObjectBase64);
+            expect(objectQR.networkType).to.be.equal(NetworkType.MIJIN_TEST);
+            expect(objectQR.chainId).to.not.be.undefined;
+            expect(objectQR.chainId).to.have.lengthOf(64);
+        });
+
+        it('fill object property correctly with {test: test}', () => {
+            // Arrange:
+            const object = {test: "test"};
+
+            // Act:
+            const objectQR = QRCodeGenerator.createExportObject(object);
+
+            // Assert:
+            expect(objectQR.object).to.deep.equal(object);
         });
     });
 
@@ -88,7 +94,7 @@ describe('QRCodeGenerator -->', () => {
         });
     });
 
-    describe('createContact() should', ()=> {
+    describe('createAddContact() should', () => {
 
         it('generate correct Base64 representation for TransferTransaction', () => {
             // Arrange:
@@ -99,7 +105,7 @@ describe('QRCodeGenerator -->', () => {
             );
 
             // Act:
-            const createContact = QRCodeGenerator.createContact(name, account);
+            const createContact = QRCodeGenerator.createAddContact(name, account);
             const actualBase64 = createContact.toBase64();
 
             // Assert:
@@ -109,7 +115,7 @@ describe('QRCodeGenerator -->', () => {
         });
     });
 
-    describe('createExportAccount() should', ()=> {
+    describe('createExportAccount() should', () => {
 
         it('generate correct Base64 representation for ExportAccount', () => {
             // Arrange:
@@ -120,7 +126,7 @@ describe('QRCodeGenerator -->', () => {
             const password = new Password('password');
 
             // Act:
-            const exportAccount = QRCodeGenerator.createExportAccount(account,password);
+            const exportAccount = QRCodeGenerator.createExportAccount(account, password);
             const actualBase64 = exportAccount.toBase64();
 
             // Assert:
@@ -165,7 +171,7 @@ describe('QRCodeGenerator -->', () => {
                 NetworkType.MIJIN_TEST
             );
 
-            const createContact = QRCodeGenerator.createContact(
+            const createContact = QRCodeGenerator.createAddContact(
                 name,
                 account,
                 NetworkType.MIJIN_TEST
@@ -181,7 +187,7 @@ describe('QRCodeGenerator -->', () => {
             expect(contactObj.account.address).to.deep.equal(account.address);
             expect(contactObj.type).to.deep.equal(QRCodeType.AddContact);
         });
-
+/*
         it('Read data From AccountQR', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
@@ -190,18 +196,19 @@ describe('QRCodeGenerator -->', () => {
             );
             const password = new Password('password');
 
-            const exportAccount = QRCodeGenerator.createExportAccount(account,password);
+            const exportAccount = QRCodeGenerator.createExportAccount(account, password);
             const actualObj = exportAccount.toJSON();
 
             // Act:
-            const accountObj: AccountQR = QRCodeGenerator.fromJSON(actualObj,password) as AccountQR;
+            const accountObj: AccountQR = QRCodeGenerator.fromJSON(actualObj, password) as AccountQR;
 
             // Assert:
             expect(accountObj).to.not.be.equal('');
             expect(accountObj.account).to.deep.equal(account);
             expect(accountObj.type).to.deep.equal(QRCodeType.ExportAccount);
         });
-
+*/
         it('Read data From ObjectQR', () => {});
     });
+
 });

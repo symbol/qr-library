@@ -19,21 +19,11 @@ import {
     NetworkType,
     Password,
 } from 'nem2-sdk';
-import {
-    QRCode as QRCodeImpl,
-    QR8BitByte,
-    ErrorCorrectLevel,
-} from 'qrcode-generator-ts';
 
 // internal dependencies
 import {
-    QRCodeInterface,
-    QRCode,
-    QRCodeType,
-    QRCodeSettings,
-    ContactQR,
+    AccountQR,
 } from "../index";
-import { AccountQR } from "../src/AccountQR";
 
 describe('AccountQR -->', () => {
 

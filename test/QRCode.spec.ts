@@ -15,13 +15,6 @@
  */
 import {expect} from "chai";
 import {
-    TransferTransaction,
-    Deadline,
-    Address,
-    Mosaic,
-    NamespaceId,
-    UInt64,
-    PlainMessage,
     NetworkType,
 } from 'nem2-sdk';
 import {
@@ -31,7 +24,7 @@ import {
 } from 'qrcode-generator-ts';
 
 // internal dependencies
-import { 
+import {
     QRCodeInterface,
     QRCode,
     QRCodeType,

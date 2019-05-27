@@ -84,11 +84,15 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
             throw Error('Invalid type field value for AccountQR.');
         }
 
+        console.log("JSON: ", jsonObj);
+
         // decrypt private key
         const payload = new EncryptedPayload(jsonObj.data.ciphertext, jsonObj.data.salt);
         const privKey = EncryptionService.decrypt(payload, password);
         const network = jsonObj.network_id;
         const chainId = jsonObj.chain_id;
+
+        console.log("data: ", privKey);
 
         // create account
         const account = Account.createFromPrivateKey(privKey, network);

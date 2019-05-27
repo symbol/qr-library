@@ -24,18 +24,9 @@ import {
     PlainMessage,
     NetworkType,
 } from 'nem2-sdk';
-import {
-    QRCode as QRCodeImpl,
-    QR8BitByte,
-    ErrorCorrectLevel,
-} from 'qrcode-generator-ts';
 
 // internal dependencies
-import { 
-    QRCodeInterface,
-    QRCode,
-    QRCodeType,
-    QRCodeSettings,
+import {
     TransactionQR,
 } from "../index";
 

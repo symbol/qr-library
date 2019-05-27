@@ -20,10 +20,6 @@ export { QRCodeSettings } from './src/QRCodeSettings';
 export { QRCodeInterface } from './src/QRCodeInterface';
 export { QRCode } from './src/QRCode';
 
-// encryption
-export { EncryptedPayload } from './src/EncryptedPayload';
-export { EncryptionService } from './src/services/EncryptionService';
-
 // QR Code data schemas
 export { QRCodeDataSchema } from './src/QRCodeDataSchema';
 export { AddContactDataSchema } from './src/schemas/AddContactDataSchema';
@@ -31,6 +27,10 @@ export { ExportAccountDataSchema } from './src/schemas/ExportAccountDataSchema';
 export { ExportObjectDataSchema } from './src/schemas/ExportObjectDataSchema';
 export { RequestTransactionDataSchema } from './src/schemas/RequestTransactionDataSchema';
 export { RequestCosignatureDataSchema } from './src/schemas/RequestCosignatureDataSchema';
+
+// encryption
+export { EncryptedPayload } from './src/EncryptedPayload';
+export { EncryptionService } from './src/services/EncryptionService';
 
 // specialized QR Code classes
 export { AccountQR } from './src/AccountQR';

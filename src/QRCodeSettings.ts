@@ -36,13 +36,6 @@ export class QRCodeSettings {
     public static CORRECTION_LEVEL = ErrorCorrectLevel.L;
 
     /**
-     * The NEM network QR Code version
-     *
-     * @var {number}
-     */
-    public static VERSION = 3;
-
-    /**
      * The QR Code cell size in pixels.
      *
      * @var {number}

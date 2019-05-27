@@ -33,11 +33,7 @@ import {
 } from 'qrcode-generator-ts';
 
 // internal dependencies
-import { 
-    QRCodeInterface,
-    QRCode,
-    QRCodeType,
-    QRCodeSettings,
+import {
     CosignatureQR,
 } from "../index";
 

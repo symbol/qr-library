@@ -94,7 +94,7 @@ export class AccountQR extends QRCode implements QRCodeInterface {
     public getTypeNumber(): number {
         // Type version for ContactQR is Version 10
         // This type of QR can hold up to 174 bytes of data.
-        return 10;
+        return 20;
     }
 
     /**
