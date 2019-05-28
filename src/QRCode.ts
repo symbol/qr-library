@@ -21,13 +21,17 @@ import {
 
 import {
     NetworkType,
+    Password
 } from 'nem2-sdk';
+import {convert,nacl_catapult} from 'nem2-library';
+import * as CryptoJS from "crypto-js";
 
 // internal dependencies
 import {
     QRCodeInterface,
     QRCodeType,
     QRCodeSettings,
+    QRCodeDataSchema,
 } from "../index";
 
 export abstract class QRCode implements QRCodeInterface {
@@ -35,7 +39,7 @@ export abstract class QRCode implements QRCodeInterface {
     /**
      * Construct a QR Code instance out of its base64
      * representation and type.
-     * 
+     *
      * @param   type    {QRCodeType}
      * @param   base64  {string}
      */
@@ -64,13 +68,39 @@ export abstract class QRCode implements QRCodeInterface {
 
     /// region Abstract Methods
     /**
+     * The `getSchema()` method should return an instance
+     * of a sub-class of QRCodeDataSchema which describes
+     * the QR Code data.
+     *
+     * @return {QRCodeDataSchema}
+     */
+    public abstract getSchema(): QRCodeDataSchema;
+    /**
+     * The `getTypeNumber()` method should return the
+     * version number for QR codes of the underlying class.
+     *
+     * @return {number}
+     */
+    public abstract getTypeNumber(): number;
+    /// end-region Abstract Methods
+
+    /**
      * The `toJSON()` method should return the JSON
      * representation of the QR Code content.
      *
      * @return {string}
      */
-    public abstract toJSON(): string;
-    /// end-region Abstract Methods
+    public toJSON(): string {
+
+        // get the QR Code Data Schema
+        const schema = this.getSchema();
+
+        // create the JSON object for this QR Code
+        const json = schema.toObject(this);
+
+        // format to JSON
+        return JSON.stringify(json);
+    }
 
     /**
      * The `build()` method should return the QRCode
@@ -82,7 +112,7 @@ export abstract class QRCode implements QRCodeInterface {
 
         // prepare QR generation
         const qr = new QRCodeImpl();
-        qr.setTypeNumber(QRCodeSettings.VERSION_NUMBER);
+        qr.setTypeNumber(this.getTypeNumber());
         qr.setErrorCorrectLevel(QRCodeSettings.CORRECTION_LEVEL);
 
         // get JSON representation

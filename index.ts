@@ -13,12 +13,31 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
+
+// enumerations / interfaces
 export { QRCodeType } from './src/QRCodeType';
 export { QRCodeSettings } from './src/QRCodeSettings';
 export { QRCodeInterface } from './src/QRCodeInterface';
 export { QRCode } from './src/QRCode';
+
+// QR Code data schemas
+export { QRCodeDataSchema } from './src/QRCodeDataSchema';
+export { AddContactDataSchema } from './src/schemas/AddContactDataSchema';
+export { ExportAccountDataSchema } from './src/schemas/ExportAccountDataSchema';
+export { ExportObjectDataSchema } from './src/schemas/ExportObjectDataSchema';
+export { RequestTransactionDataSchema } from './src/schemas/RequestTransactionDataSchema';
+export { RequestCosignatureDataSchema } from './src/schemas/RequestCosignatureDataSchema';
+
+// encryption
+export { EncryptedPayload } from './src/EncryptedPayload';
+export { EncryptionService } from './src/services/EncryptionService';
+
+// specialized QR Code classes
 export { AccountQR } from './src/AccountQR';
 export { ContactQR } from './src/ContactQR';
 export { ObjectQR } from './src/ObjectQR';
 export { TransactionQR } from './src/TransactionQR';
+export { CosignatureQR } from './src/CosignatureQR';
+
+// factory
 export { QRCodeGenerator } from './src/QRCodeGenerator';

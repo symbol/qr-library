@@ -17,6 +17,7 @@ import {
     Account,
     PublicAccount,
     NetworkType,
+    Password,
 } from "nem2-sdk";
 
 // internal dependencies
@@ -25,14 +26,18 @@ import {
     QRCodeInterface,
     QRCodeType,
     QRCodeSettings,
+    EncryptionService,
+    EncryptedPayload,
+    QRCodeDataSchema,
+    ExportAccountDataSchema
 } from '../index';
 
 export class AccountQR extends QRCode implements QRCodeInterface {
     /**
      * Construct an Account QR Code out of the
      * nem2-sdk Account or PublicAccount instance.
-     * 
-     * @param   transaction     {Transaction}
+     *
+     * @param   account     {Account}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
      */
@@ -41,6 +46,11 @@ export class AccountQR extends QRCode implements QRCodeInterface {
                  * @var {Account}
                  */
                 public readonly account: Account,
+                /**
+                 * The password for encryption
+                 * @var {Password}
+                 */
+                public readonly password: Password,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -55,21 +65,46 @@ export class AccountQR extends QRCode implements QRCodeInterface {
     }
 
     /**
-     * The `toJSON()` method should return the JSON
-     * representation of the QR Code content.
+     * Parse a JSON QR code content into a AccountQR
+     * object.
      *
-     * @return {string}
+     * @param   json        {string}
+     * @param   password    {Password}
+     * @return  {AccountQR}
+     * @throws  {Error}     On empty `json` given.
+     * @throws  {Error}     On missing `type` field value.
+     * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    public toJSON(): string {
+    static fromJSON(
+        json: string,
+        password: Password
+    ): AccountQR {
 
-        const jsonSchema = {
-            'v': 3,
-            'type': this.type,
-            'network_id': this.networkType,
-            'chain_id': this.chainId,
-            'data': 'not implemented yet',
-        };
+        // create the QRCode object from JSON
+        return ExportAccountDataSchema.parse(json, password);
+    }
 
-        return JSON.stringify(jsonSchema);
+    /**
+     * The `getTypeNumber()` method should return the
+     * version number for QR codes of the underlying class.
+     *
+     * @see https://en.wikipedia.org/wiki/QR_code#Storage
+     * @return {number}
+     */
+    public getTypeNumber(): number {
+        // Type version for ContactQR is Version 10
+        // This type of QR can hold up to 174 bytes of data.
+        return 20;
+    }
+
+    /**
+     * The `getSchema()` method should return an instance
+     * of a sub-class of QRCodeDataSchema which describes
+     * the QR Code data.
+     *
+     * @return {QRCodeDataSchema}
+     */
+    public getSchema(): QRCodeDataSchema {
+        return new ExportAccountDataSchema();
     }
 }

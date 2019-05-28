@@ -66,6 +66,7 @@ The produced Base64 encoded payload can be used to display the QR Code. An examp
 
 Important versions listed below. Refer to the [Changelog](CHANGELOG.md) for a full history of the project.
 
+- [0.3.0](CHANGELOG.md) - 2019-05-27
 - [0.2.0](CHANGELOG.md) - 2019-05-01
 - [0.1.0](CHANGELOG.md) - 2019-04-20
 

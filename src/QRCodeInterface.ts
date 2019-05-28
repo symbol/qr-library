@@ -21,7 +21,7 @@ import {QRCodeType} from '../index';
 /**
  * Interface `QRCodeInterface` describes rules for the definition
  * of NIP-7 compliant QR Codes.
- * 
+ *
  * @since 0.2.0
  */
 export interface QRCodeInterface {

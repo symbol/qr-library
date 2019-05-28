@@ -17,6 +17,7 @@ import {
     NetworkType,
     TransactionMapping,
     Transaction,
+    AggregateTransaction,
 } from "nem2-sdk";
 
 // internal dependencies
@@ -26,10 +27,11 @@ import {
     QRCodeType,
     QRCodeSettings,
     QRCodeDataSchema,
-    RequestTransactionDataSchema
+    RequestCosignatureDataSchema,
+    TransactionQR,
 } from '../index';
 
-export class TransactionQR extends QRCode implements QRCodeInterface {
+export class CosignatureQR extends TransactionQR implements QRCodeInterface {
     /**
      * Construct a Transaction Request QR Code out of the
      * nem2-sdk Transaction instance.
@@ -40,9 +42,9 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
      */
     constructor(/**
                  * The transaction for the request.
-                 * @var {Transaction}
+                 * @var {AggregateTransaction}
                  */
-                public readonly transaction: Transaction,
+                public readonly transaction: AggregateTransaction,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -52,32 +54,26 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
                  * The chain Id.
                  * @var {string}
                  */
-                public readonly chainId: string,
-                /**
-                 * The QR Code Type
-                 * 
-                 * @var {QRCodeType} 
-                 */
-                public readonly type: QRCodeType = QRCodeType.RequestTransaction) {
-        super(type, networkType, chainId);
+                public readonly chainId: string) {
+        super(transaction, networkType, chainId, QRCodeType.RequestCosignature);
     }
 
     /**
-     * Parse a JSON QR code content into a TransactionQR
+     * Parse a JSON QR code content into a CosignatureQR
      * object.
      *
      * @param   json        {string}
-     * @return  {TransactionQR}
+     * @return  {CosignatureQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
     static fromJSON(
         json: string
-    ): TransactionQR {
+    ): CosignatureQR {
 
         // create the QRCode object from JSON
-        return RequestTransactionDataSchema.parse(json);
+        return RequestCosignatureDataSchema.parse(json);
     }
 
     /**
@@ -101,6 +97,6 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
      * @return {QRCodeDataSchema}
      */
     public getSchema(): QRCodeDataSchema {
-        return new RequestTransactionDataSchema();
+        return new RequestCosignatureDataSchema();
     }
 }

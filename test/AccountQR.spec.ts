@@ -17,20 +17,12 @@ import {expect} from "chai";
 import {
     Account,
     NetworkType,
+    Password,
 } from 'nem2-sdk';
-import {
-    QRCode as QRCodeImpl,
-    QR8BitByte,
-    ErrorCorrectLevel,
-} from 'qrcode-generator-ts';
 
 // internal dependencies
-import { 
-    QRCodeInterface,
-    QRCode,
-    QRCodeType,
-    QRCodeSettings,
-    ContactQR,
+import {
+    AccountQR,
 } from "../index";
 
 describe('AccountQR -->', () => {
@@ -41,12 +33,13 @@ describe('AccountQR -->', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.TEST_NET
+                NetworkType.MIJIN_TEST
             );
+            const password = new Password('password');
 
             // Act:
-            const addContact = new ContactQR(account, NetworkType.TEST_NET, '');
-            const actualJSON = addContact.toJSON();
+            const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, 'no-chain-id');
+            const actualJSON = exportAccount.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
             // Assert:
@@ -55,6 +48,24 @@ describe('AccountQR -->', () => {
             expect(actualObject).to.have.property('network_id');
             expect(actualObject).to.have.property('chain_id');
             expect(actualObject).to.have.property('data');
+        });
+
+        it('include specialized schema fields', () => {
+            // Arrange:
+            const account = Account.createFromPrivateKey(
+                'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
+                NetworkType.MIJIN_TEST
+            );
+            const password = new Password('password');
+
+            // Act:
+            const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, 'no-chain-id');
+            const actualJSON = exportAccount.toJSON();
+            const actualObject = JSON.parse(actualJSON);
+
+            // Assert:
+            expect(actualObject.data).to.have.property('ciphertext');
+            expect(actualObject.data).to.have.property('salt');
         });
     });
 

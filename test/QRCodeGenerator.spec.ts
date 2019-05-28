@@ -23,31 +23,46 @@ import {
     UInt64,
     PlainMessage,
     NetworkType,
+    PublicAccount,
+    Account,
+    Password
 } from 'nem2-sdk';
 
 // internal dependencies
-import { QRCodeGenerator } from "../index";
-
-// vectors data
 import {
-    ExpectedObjectBase64,
-} from './vectors/index';
+    QRCodeType,
+    QRCodeGenerator,
+    ContactQR,
+    AccountQR,
+    TransactionQR,
+} from "../index";
 
 describe('QRCodeGenerator -->', () => {
 
     describe('createExportObject() should', () => {
-        it('generate correct Base64 representation for {test: test}', () => {
+
+        it('use default values for network_id and chain_id', () => {
             // Arrange:
-            const object = {"test": "test"};
-            const qrcode = QRCodeGenerator.createExportObject(object, NetworkType.TEST_NET, 'no-chain-id');
+            const object = {};
 
             // Act:
-            const base64 = qrcode.toBase64();
+            const objectQR = QRCodeGenerator.createExportObject(object);
 
             // Assert:
-            expect(base64).to.not.be.equal('');
-            expect(base64.length).to.not.be.equal(0);
-            expect(base64).to.be.equal(ExpectedObjectBase64);
+            expect(objectQR.networkType).to.be.equal(NetworkType.MIJIN_TEST);
+            expect(objectQR.chainId).to.not.be.undefined;
+            expect(objectQR.chainId).to.have.lengthOf(64);
+        });
+
+        it('fill object property correctly with {test: test}', () => {
+            // Arrange:
+            const object = {test: "test"};
+
+            // Act:
+            const objectQR = QRCodeGenerator.createExportObject(object);
+
+            // Assert:
+            expect(objectQR.object).to.deep.equal(object);
         });
     });
 
@@ -78,4 +93,122 @@ describe('QRCodeGenerator -->', () => {
             expect(requestTx.toJSON()).to.have.lengthOf.below(2953);
         });
     });
+
+    describe('createAddContact() should', () => {
+
+        it('generate correct Base64 representation for TransferTransaction', () => {
+            // Arrange:
+            const name = 'test-contact-1';
+            const account = PublicAccount.createFromPublicKey(
+                'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                NetworkType.MIJIN_TEST
+            );
+
+            // Act:
+            const createContact = QRCodeGenerator.createAddContact(name, account);
+            const actualBase64 = createContact.toBase64();
+
+            // Assert:
+            expect(actualBase64).to.not.be.equal('');
+            expect(actualBase64.length).to.not.be.equal(0);
+            expect(createContact.toJSON()).to.have.lengthOf.below(2953);
+        });
+    });
+
+    describe('createExportAccount() should', () => {
+
+        it('generate correct Base64 representation for ExportAccount', () => {
+            // Arrange:
+            const account = Account.createFromPrivateKey(
+                'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
+                NetworkType.MIJIN_TEST
+            );
+            const password = new Password('password');
+
+            // Act:
+            const exportAccount = QRCodeGenerator.createExportAccount(account, password);
+            const actualBase64 = exportAccount.toBase64();
+
+            // Assert:
+            expect(actualBase64).to.not.be.equal('');
+            expect(actualBase64.length).to.not.be.equal(0);
+            expect(exportAccount.toJSON()).to.have.lengthOf.below(2953);
+        });
+    });
+
+    describe('fromJson() should', () => {
+
+        it('Read data From TransactionQR', () => {
+            // Arrange:
+            const transfer = TransferTransaction.create(
+                Deadline.create(),
+                Address.createFromPublicKey(
+                    'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                    NetworkType.MIJIN_TEST
+                ),
+                [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
+                PlainMessage.create('Welcome to NEM!'),
+                NetworkType.MIJIN_TEST
+            );
+
+            const requestTx = QRCodeGenerator.createTransactionRequest(transfer,NetworkType.MIJIN_TEST);
+            const txJSON = requestTx.toJSON();
+
+            // Act:
+            const transactionObj: TransactionQR = QRCodeGenerator.fromJSON(txJSON) as TransactionQR;
+
+            // Assert:
+            expect(transactionObj).to.not.be.equal('');
+            expect(transactionObj.transaction.toJSON()).to.deep.equal(transfer.toJSON());
+            expect(transactionObj.type).to.deep.equal(QRCodeType.RequestTransaction);
+        });
+
+        it('Read data From ContactQR', () => {
+            // Arrange:
+            const name = 'test-contact-1';
+            const account = PublicAccount.createFromPublicKey(
+                'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                NetworkType.MIJIN_TEST
+            );
+
+            const createContact = QRCodeGenerator.createAddContact(
+                name,
+                account,
+                NetworkType.MIJIN_TEST
+            );
+            const contactJSON = createContact.toJSON();
+
+
+            // Act:
+            const contactObj: ContactQR = QRCodeGenerator.fromJSON(contactJSON) as ContactQR;
+
+            // Assert:
+            expect(contactObj).to.not.be.equal('');
+            expect(contactObj.account.address).to.deep.equal(account.address);
+            expect(contactObj.type).to.deep.equal(QRCodeType.AddContact);
+        });
+
+        it('Read data From AccountQR', () => {
+            // Arrange:
+            const account = Account.createFromPrivateKey(
+                'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
+                NetworkType.MIJIN_TEST
+            );
+            const password = new Password('password');
+
+            const exportAccount = QRCodeGenerator.createExportAccount(account, password);
+            const actualObj = exportAccount.toJSON();
+
+            // Act:
+            const accountObj: AccountQR = QRCodeGenerator.fromJSON(actualObj, password) as AccountQR;
+
+            // Assert:
+            expect(accountObj).to.not.be.equal('');
+            expect(accountObj.account).to.deep.equal(account);
+            expect(accountObj.type).to.deep.equal(QRCodeType.ExportAccount);
+        });
+
+        it('Read data From ObjectQR', () => {});
+    });
+
 });
