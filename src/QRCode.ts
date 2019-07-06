@@ -16,12 +16,10 @@
 import {
     QRCode as QRCodeImpl,
     QR8BitByte,
-    ErrorCorrectLevel,
 } from 'qrcode-generator-ts';
 
 import {
     NetworkType,
-    Password
 } from 'nem2-sdk';
 
 // internal dependencies
@@ -30,6 +28,7 @@ import {
     QRCodeType,
     QRCodeSettings,
     QRCodeDataSchema,
+    EncoderASCII,
 } from "../index";
 
 export abstract class QRCode implements QRCodeInterface {
@@ -127,7 +126,7 @@ export abstract class QRCode implements QRCodeInterface {
      *
      * @return  {string} Retrun image data in Base64.
      */
-    public toBase64() : string {
+    public toBase64(): string {
 
         // build QR Code
         const qr = this.build();
@@ -137,5 +136,23 @@ export abstract class QRCode implements QRCodeInterface {
             QRCodeSettings.CELL_PIXEL_SIZE,
             QRCodeSettings.MARGIN_PIXEL
         );
+    }
+
+    /**
+     * 
+     */
+    public toASCII(
+        cellSize: number = QRCodeSettings.CELL_PIXEL_SIZE,
+        margin: number = QRCodeSettings.MARGIN_PIXEL
+    ): string {
+
+        // build the QR code
+        const qr = this.build();
+
+        // use ASCII encoder
+        const encoder = new EncoderASCII(qr, cellSize, margin);
+
+        // use encoder to get string representation
+        return encoder.toString();
     }
 }
