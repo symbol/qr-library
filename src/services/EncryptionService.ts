@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 import {
-    convert,
-    nacl_catapult,
-    sha3Hasher
-} from 'nem2-library';
-import {
     Password,
 } from "nem2-sdk";
 import * as CryptoJS from "crypto-js";
