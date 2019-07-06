@@ -23,8 +23,6 @@ import {
     NetworkType,
     Password
 } from 'nem2-sdk';
-import {convert,nacl_catapult} from 'nem2-library';
-import * as CryptoJS from "crypto-js";
 
 // internal dependencies
 import {
