@@ -31,7 +31,8 @@
     "test": "mocha --ui bdd --recursive ./dist/test",
     "test:cov-html": "nyc --reporter=html npm t",
     "test:coverage": "nyc --reporter=text-lcov npm t",
-    "report-coverage": "nyc report --reporter=text-lcov | coveralls"
+    "report-coverage": "nyc report --reporter=text-lcov | coveralls",
+    "examples": "npm run build && node dist/examples/index.js"
   },
   "repository": {
     "type": "git",

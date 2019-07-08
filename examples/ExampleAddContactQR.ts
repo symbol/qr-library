@@ -22,20 +22,34 @@ import {
     ContactQR,
     QRCodeType,
 } from '../index';
+import {Example} from './Example';
 
-// Arrange
-const contactInfo = {
-    v: 3,
-    type: QRCodeType.AddContact,
-    network_id: NetworkType.MIJIN_TEST,
-    chain_id: 'no-chain-id',
-    data: {
-        name: 'nemtech',
-        address: 'SDUFICQAIHN2VYORJILRQ5YXAERLJF5HDTPJNXVR'
+export class ExampleAddContactQR extends Example {
+
+    /**
+     * The `execute()` method should run the underlying
+     * example business flow.
+     *
+     * @return {number}
+     */
+    public execute(): number {
+
+        // Arrange
+        const contactInfo = {
+            v: 3,
+            type: QRCodeType.AddContact,
+            network_id: NetworkType.MIJIN_TEST,
+            chain_id: 'no-chain-id',
+            data: {
+                name: 'nemtech',
+                publicKey: 'D90ABF5BADC4E709E79E8F168F1629CD90D7F5B41010B7C0616C2121D516C11C'
+            }
+        };
+
+        // create QR Code with JSON content
+        const contactQR = ContactQR.fromJSON(JSON.stringify(contactInfo));
+        console.log(contactQR.toASCII());
+        return 0;
     }
-};
+}
 
-// create QR Code with JSON content
-const contactQR = ContactQR.fromJSON(JSON.stringify(contactInfo));
-
-console.log(contactQR.toASCII());
