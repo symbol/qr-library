@@ -79,8 +79,8 @@ export class AddContactDataSchema extends QRCodeDataSchema {
         const name = jsonObj.data.name;
         const network = jsonObj.network_id;
         const account = PublicAccount.createFromPublicKey(jsonObj.data.publicKey, network);
-        const chainId = jsonObj.chain_id;
+        const generationHash = jsonObj.chain_id;
 
-        return new ContactQR(name, account, network, chainId);
+        return new ContactQR(name, account, network, generationHash);
     }
 }

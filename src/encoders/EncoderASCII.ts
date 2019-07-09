@@ -24,28 +24,54 @@ import {
     QRCodeSettings,
 } from "../../index";
 
+/**
+ * Class `EncoderASCII` describes encoders utilities
+ * for QR Codes that are to be displayed with the 
+ * ASCII character set.
+ *
+ * @since 0.3.2
+ */
 export class EncoderASCII implements EncoderInterface {
 
     /**
+     * Construct an ASCII encoder for said `qr` QR Code.
      * 
+     * @param   {QRCodeImpl}    qr          The QRCode to encode.
+     * @param   {number}        cellSize    The QRCode cell size.
+     * @param   {number}        margin      The QRCode cell margin.
      */
     constructor(/**
-                 * 
+                 * The QR Code that will be encoded.
+                 * @var {QRCodeImpl}
                  */
                 public readonly qr: QRCodeImpl,
                 /**
-                 * 
+                 * The Cell Size used for encoding in Pixel.
+                 * @var {number}
                  */
                 public readonly cellSize: number = QRCodeSettings.CELL_PIXEL_SIZE,
                 /**
-                 * 
+                 * The Cell Size used for encoding in Pixel.
+                 * @var {number}
                  */
                 public readonly margin: number = QRCodeSettings.MARGIN_PIXEL) {
 
     }
 
     /**
-     * 
+     * The `toString()` method should return a string
+     * representation for the encoded QR Code.
+     *
+     * This specialization uses the ASCII encoding with
+     * a cell size of at least *2*. The margin can be custom
+     * or undefined and will then be set to _double the cell
+     * size_.
+     *
+     * This implementation is a Typescript rewrite of the ASCII
+     * encoding in below listed package.
+     *
+     * @see https://github.com/1w2w3y/qrcode-generator-ts
+     * @return  {string}    The ASCII encoded QRCode.
      */
     public toString(): string {
 

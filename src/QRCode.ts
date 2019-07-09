@@ -51,10 +51,10 @@ export abstract class QRCode implements QRCodeInterface {
                  */
                 public readonly networkType: NetworkType,
                 /**
-                 * The chain ID.
+                 * The network generation hash.
                  * @var {string}
                  */
-                public readonly chainId: string,
+                public readonly generationHash: string,
                 /**
                  * The base64 representation of the QR Code content.
                  * @var {string}
@@ -124,7 +124,7 @@ export abstract class QRCode implements QRCodeInterface {
     /**
      * Generate QRcode image Base64.
      *
-     * @return  {string} Retrun image data in Base64.
+     * @return  {string} Return image data in Base64.
      */
     public toBase64(): string {
 
@@ -139,7 +139,13 @@ export abstract class QRCode implements QRCodeInterface {
     }
 
     /**
-     * 
+     * Generate an ASCII encoded QRcode. This encoding can be
+     * displayed in bash screens.
+     *
+     * @see {EncoderASCII}
+     * @param   {number}    cellSize     QRcode cell size
+     * @param   {number}    margin       QRcode cell margin
+     * @return  {string}
      */
     public toASCII(
         cellSize: number = QRCodeSettings.CELL_PIXEL_SIZE,

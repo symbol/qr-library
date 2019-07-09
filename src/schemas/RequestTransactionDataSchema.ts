@@ -81,8 +81,8 @@ export class RequestTransactionDataSchema extends QRCodeDataSchema {
         // read contact data
         const transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
         const network = jsonObj.network_id;
-        const chainId = jsonObj.chain_id;
+        const generationHash = jsonObj.chain_id;
 
-        return new TransactionQR(transaction, network, chainId);
+        return new TransactionQR(transaction, network, generationHash);
     }
 }

@@ -60,7 +60,7 @@ export abstract class QRCodeDataSchema {
             "v": this.VERSION,
             "type": qr.type,
             "network_id": qr.networkType,
-            "chain_id": qr.chainId,
+            "chain_id": qr.generationHash,
             "data": data
         };
     }

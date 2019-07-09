@@ -39,7 +39,7 @@ export class AccountQR extends QRCode implements QRCodeInterface {
      *
      * @param   account     {Account}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     constructor(/**
                  * The account to be exported
@@ -57,11 +57,11 @@ export class AccountQR extends QRCode implements QRCodeInterface {
                  */
                 public readonly networkType: NetworkType,
                 /**
-                 * The chain Id.
+                 * The network generation hash.
                  * @var {string}
                  */
-                public readonly chainId: string) {
-        super(QRCodeType.ExportAccount, networkType, chainId);
+                public readonly generationHash: string) {
+        super(QRCodeType.ExportAccount, networkType, generationHash);
     }
 
     /**

@@ -70,8 +70,8 @@ export class ExportObjectDataSchema extends QRCodeDataSchema {
         // read contact data
         const obj = jsonObj.data;
         const network = jsonObj.network_id;
-        const chainId = jsonObj.chain_id;
+        const generationHash = jsonObj.chain_id;
 
-        return new ObjectQR(obj, network, chainId);
+        return new ObjectQR(obj, network, generationHash);
     }
 }

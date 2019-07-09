@@ -66,8 +66,8 @@ export class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
         // read contact data
         const transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
         const network = jsonObj.network_id;
-        const chainId = jsonObj.chain_id;
+        const generationHash = jsonObj.chain_id;
 
-        return new CosignatureQR(transaction as AggregateTransaction, network, chainId);
+        return new CosignatureQR(transaction as AggregateTransaction, network, generationHash);
     }
 }

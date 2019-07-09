@@ -50,8 +50,8 @@ describe('QRCodeGenerator -->', () => {
 
             // Assert:
             expect(objectQR.networkType).to.be.equal(NetworkType.MIJIN_TEST);
-            expect(objectQR.chainId).to.not.be.undefined;
-            expect(objectQR.chainId).to.have.lengthOf(64);
+            expect(objectQR.generationHash).to.not.be.undefined;
+            expect(objectQR.generationHash).to.have.lengthOf(64);
         });
 
         it('fill object property correctly with {test: test}', () => {

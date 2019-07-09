@@ -39,8 +39,8 @@ class FakeQR extends QRCode implements QRCodeInterface {
     constructor(
         public readonly object: Object,
         public readonly networkType: NetworkType,
-        public readonly chainId: string) {
-        super(QRCodeType.ExportObject, networkType, chainId);
+        public readonly generationHash: string) {
+        super(QRCodeType.ExportObject, networkType, generationHash);
     }
 
     public getSchema(): QRCodeDataSchema {

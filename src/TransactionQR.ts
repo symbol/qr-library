@@ -36,7 +36,7 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
      *
      * @param   transaction     {Transaction}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     constructor(/**
                  * The transaction for the request.
@@ -52,14 +52,14 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
                  * The chain Id.
                  * @var {string}
                  */
-                public readonly chainId: string,
+                public readonly generationHash: string,
                 /**
                  * The QR Code Type
                  * 
                  * @var {QRCodeType} 
                  */
                 public readonly type: QRCodeType = QRCodeType.RequestTransaction) {
-        super(type, networkType, chainId);
+        super(type, networkType, generationHash);
     }
 
     /**

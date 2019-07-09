@@ -38,7 +38,7 @@ export class CosignatureQR extends TransactionQR implements QRCodeInterface {
      *
      * @param   transaction     {Transaction}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     constructor(/**
                  * The transaction for the request.
@@ -51,11 +51,11 @@ export class CosignatureQR extends TransactionQR implements QRCodeInterface {
                  */
                 public readonly networkType: NetworkType,
                 /**
-                 * The chain Id.
+                 * The network generation hash.
                  * @var {string}
                  */
-                public readonly chainId: string) {
-        super(transaction, networkType, chainId, QRCodeType.RequestCosignature);
+                public readonly generationHash: string) {
+        super(transaction, networkType, generationHash, QRCodeType.RequestCosignature);
     }
 
     /**

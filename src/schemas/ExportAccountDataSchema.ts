@@ -88,10 +88,10 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
         const payload = new EncryptedPayload(jsonObj.data.ciphertext, jsonObj.data.salt);
         const privKey = EncryptionService.decrypt(payload, password);
         const network = jsonObj.network_id;
-        const chainId = jsonObj.chain_id;
+        const generationHash = jsonObj.chain_id;
 
         // create account
         const account = Account.createFromPrivateKey(privKey, network);
-        return new AccountQR(account, password, network, chainId);
+        return new AccountQR(account, password, network, generationHash);
     }
 }

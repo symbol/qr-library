@@ -21,7 +21,7 @@ import {
  * Interface `EncoderInterface` describes encoders utilities
  * for QR Codes that are compliant with NIP-7
  *
- * @since 0.3.1
+ * @since 0.3.2
  */
 export interface EncoderInterface {
 
@@ -44,7 +44,10 @@ export interface EncoderInterface {
     margin: number;
 
     /**
-     * 
+     * The `toString()` method should return a string
+     * representation for the encoded QR Code.
+     *
+     * @return {string}
      */
     toString(): string;
 }

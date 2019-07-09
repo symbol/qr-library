@@ -37,7 +37,7 @@ export class ContactQR extends QRCode implements QRCodeInterface {
      *
      * @param   account         {Account|PublicAccount}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     constructor(/**
                  * The contact name.
@@ -55,11 +55,11 @@ export class ContactQR extends QRCode implements QRCodeInterface {
                  */
                 public readonly networkType: NetworkType,
                 /**
-                 * The chain Id.
+                 * The network generation hash.
                  * @var {string}
                  */
-                public readonly chainId: string) {
-        super(QRCodeType.AddContact, networkType, chainId);
+                public readonly generationHash: string) {
+        super(QRCodeType.AddContact, networkType, generationHash);
     }
 
     /**
