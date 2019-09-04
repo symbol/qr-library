@@ -18,6 +18,9 @@ import {
     QR8BitByte,
 } from 'qrcode-generator-ts';
 
+import * as QRCodeCanvas from 'qrcode';
+import { createCanvas } from 'canvas';
+
 import {
     NetworkType,
 } from 'nem2-sdk';
@@ -139,26 +142,44 @@ export abstract class QRCode implements QRCodeInterface {
     }
 
     /**
-     * Generate an ASCII encoded QRcode. This encoding can be
-     * displayed in bash screens.
+     * 
+     */
+    public toASCII() {
+
+        // build the QR Code
+        const qr = this.build();
+
+        // encode with ASCII/MinimalASCII encoder
+        const encoder = new EncoderASCII(qr);
+
+        // return string representation
+        return encoder.toString();
+    }
+
+    /**
+     * Generate QRCode to be printed on a `node-canvas`. This
+     * is compatible with the browser and node.
      *
-     * @see {EncoderASCII}
+     * @see https://www.npmjs.com/package/qrcode
+     * @see https://www.npmjs.com/package/canvas
      * @param   {number}    cellSize     QRcode cell size
      * @param   {number}    margin       QRcode cell margin
      * @return  {string}
      */
-    public toASCII(
-        cellSize: number = QRCodeSettings.CELL_PIXEL_SIZE,
-        margin: number = QRCodeSettings.MARGIN_PIXEL
-    ): string {
+    public async toCanvas(): Promise<any> {
 
-        // build the QR code
-        const qr = this.build();
+        // get JSON representation
+        const json = this.toJSON();
 
-        // use ASCII encoder
-        const encoder = new EncoderASCII(qr, cellSize, margin);
+        // create canvas
+        const canvas = createCanvas(250, 250);
+        const context = canvas.getContext('2d');
 
-        // use encoder to get string representation
-        return encoder.toString();
+        // build the QR Code
+        return await QRCodeCanvas.toCanvas(canvas, json, {
+            errorCorrectionLevel: 'M',
+            width: 250,
+            // do-not-set-'version'
+        })
     }
 }

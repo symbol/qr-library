@@ -33,7 +33,7 @@ export class QRCodeSettings {
      *
      * @var {ErrorCorrectLevel}
      */
-    public static CORRECTION_LEVEL = ErrorCorrectLevel.L;
+    public static CORRECTION_LEVEL = ErrorCorrectLevel.M;
 
     /**
      * The QR Code cell size in pixels.

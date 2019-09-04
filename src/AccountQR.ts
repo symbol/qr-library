@@ -89,12 +89,13 @@ export class AccountQR extends QRCode implements QRCodeInterface {
      * version number for QR codes of the underlying class.
      *
      * @see https://en.wikipedia.org/wiki/QR_code#Storage
+     * @see {QRUtil.MAX_LENGTH}
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for ContactQR is Version 10
-        // This type of QR can hold up to 174 bytes of data.
-        return 20;
+        // Type version for AccountQR is Version 15
+        // This type of QR can hold up to 412 binary bytes.
+        return 15;
     }
 
     /**

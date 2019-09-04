@@ -96,7 +96,7 @@ describe('QRCodeGenerator -->', () => {
 
     describe('createAddContact() should', () => {
 
-        it('generate correct Base64 representation for TransferTransaction', () => {
+        it('generate correct Base64 representation for AddContact', () => {
             // Arrange:
             const name = 'test-contact-1';
             const account = PublicAccount.createFromPublicKey(

@@ -14,11 +14,10 @@
  *limitations under the License.
  */
 import {
-    Account,
-    PublicAccount,
     NetworkType,
-    Address,
+    Password,
 } from "nem2-sdk";
+import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
@@ -26,29 +25,32 @@ import {
     QRCodeInterface,
     QRCodeType,
     QRCodeSettings,
+    EncryptionService,
+    EncryptedPayload,
     QRCodeDataSchema,
-    AddContactDataSchema
+    ExportMnemonicDataSchema
 } from '../index';
 
-export class ContactQR extends QRCode implements QRCodeInterface {
+export class MnemonicQR extends QRCode implements QRCodeInterface {
     /**
-     * Construct a Contact QR Code out of the
-     * nem2-sdk Account or PublicAccount instance.
+     * Construct a Mnemonic Export QR Code out of the
+     * MnemonicPassPhrase and Password instances.
      *
-     * @param   account         {Account|PublicAccount}
+     * @param   mnemonic        {MnemonicPassPhrase}
+     * @param   password        {Password}
      * @param   networkType     {NetworkType}
-     * @param   generationHash         {string}
+     * @param   generationHash  {string}
      */
     constructor(/**
-                 * The contact name.
-                 * @var {string}
+                 * The mnemonic pass phrase to be exported
+                 * @var {MnemonicPassPhrase}
                  */
-                public readonly name: string,
+                public readonly mnemonic: MnemonicPassPhrase,
                 /**
-                 * The contact account.
-                 * @var {Account|PublicAccount|Address}
+                 * The password for encryption
+                 * @var {Password}
                  */
-                public readonly account: Account | PublicAccount,
+                public readonly password: Password,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -59,25 +61,27 @@ export class ContactQR extends QRCode implements QRCodeInterface {
                  * @var {string}
                  */
                 public readonly generationHash: string) {
-        super(QRCodeType.AddContact, networkType, generationHash);
+        super(QRCodeType.ExportMnemonic, networkType, generationHash);
     }
 
     /**
-     * Parse a JSON QR code content into a ContactQR
+     * Parse a JSON QR code content into a MnemonicQR
      * object.
      *
      * @param   json        {string}
-     * @return  {ContactQR}
+     * @param   password    {Password}
+     * @return  {MnemonicQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
     static fromJSON(
-        json: string
-    ): ContactQR {
+        json: string,
+        password: Password
+    ): MnemonicQR {
 
         // create the QRCode object from JSON
-        return AddContactDataSchema.parse(json);
+        return ExportMnemonicDataSchema.parse(json, password);
     }
 
     /**
@@ -85,12 +89,13 @@ export class ContactQR extends QRCode implements QRCodeInterface {
      * version number for QR codes of the underlying class.
      *
      * @see https://en.wikipedia.org/wiki/QR_code#Storage
+     * @see {QRUtil.MAX_LENGTH}
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for ContactQR is Version 10
-        // This type of QR can hold up to 213 binary bytes.
-        return 15;
+        // Type version for MnemonicQR is Version 20
+        // This type of QR can hold up to XXX binary bytes.
+        return 20;
     }
 
     /**
@@ -101,6 +106,6 @@ export class ContactQR extends QRCode implements QRCodeInterface {
      * @return {QRCodeDataSchema}
      */
     public getSchema(): QRCodeDataSchema {
-        return new AddContactDataSchema();
+        return new ExportMnemonicDataSchema();
     }
 }

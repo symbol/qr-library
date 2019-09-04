@@ -21,6 +21,7 @@ import {
     PublicAccount,
     Password
 } from "nem2-sdk";
+import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
@@ -31,7 +32,8 @@ import {
     ContactQR,
     ObjectQR,
     TransactionQR,
-    CosignatureQR
+    CosignatureQR,
+    MnemonicQR,
 } from '../index';
 
 /**
@@ -84,11 +86,12 @@ export class QRCodeGenerator {
     }
 
     /**
-     * Create a Transaction Request QR Code from a Transaction
-     * instance.
+     * Create an Account Export QR Code from an Account
+     * instance, encrypted with given password.
      *
      * @see {AccountQR}
-     * @param   transaction     {Transaction}
+     * @param   account         {Account}
+     * @param   password        {Password}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
      */
@@ -116,6 +119,25 @@ export class QRCodeGenerator {
         chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
     ): TransactionQR {
         return new TransactionQR(transaction, networkType, chainId);
+    }
+
+    /**
+     * Create a Mnemonic Export QR Code from an Account
+     * instance, encrypted with given password.
+     *
+     * @see {MnemonicQR}
+     * @param   mnemonic        {MnemonicPassPhrase}
+     * @param   password        {Password}
+     * @param   networkType     {NetworkType}
+     * @param   chainId         {string}
+     */
+    public static createExportMnemonic(
+        mnemonic: MnemonicPassPhrase,
+        password: Password,
+        networkType: NetworkType = NetworkType.MIJIN_TEST,
+        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+    ): MnemonicQR {
+        return new MnemonicQR(mnemonic, password, networkType, chainId);
     }
 
     /**
@@ -181,6 +203,16 @@ export class QRCodeGenerator {
         // create a TransactionQR from JSON
         case QRCodeType.RequestTransaction:
             return TransactionQR.fromJSON(json);
+
+        // create an MnemonicQR from JSON
+        case QRCodeType.ExportMnemonic:
+
+            // password obligatory for encryption
+            if (! password) {
+                throw new Error('Missing password to decrypt MnemonicQR QR code.');
+            }
+
+            return MnemonicQR.fromJSON(json, password);
 
         default:
             break;
