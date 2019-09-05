@@ -15,16 +15,18 @@
  */
 import {
     NetworkType,
+    Account,
+    Password,
 } from 'nem2-sdk';
 
 // internal dependencies
 import {
-    ContactQR,
+    AccountQR,
     QRCodeType,
 } from '../index';
 import {Example} from './Example';
 
-export class ExampleAddContactQR extends Example {
+export class ExampleExportAccountQR extends Example {
 
     /**
      * The `execute()` method should run the underlying
@@ -35,24 +37,28 @@ export class ExampleAddContactQR extends Example {
     public async execute(): Promise<number> {
 
         // Arrange
-        const contactInfo = {
+        const accountInfo = {
             v: 3,
-            type: QRCodeType.AddContact,
-            network_id: NetworkType.MIJIN_TEST,
-            chain_id: 'no-chain-id',
+            type: 2,
+            network_id: 144,
+            chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
             data: {
-                name: 'nemtech',
-                publicKey: 'D90ABF5BADC4E709E79E8F168F1629CD90D7F5B41010B7C0616C2121D516C11C'
+                ciphertext: 'cdc2f1ff390dd21b4528f5b75e69b30aNkYsuMlvsC7bShwqilk8P0txdWiQptMNypbjV9p5VFw766YIGqOfm336U1mMrMGwbPeIqbuPXsc8+stuGJ/M0OswzzDJ9BZyDQ+UK7sYBwE=',
+                salt: '9860f8643b3b1d77514a63eb4cbc0d9dbd6091bca10e742663d2bcc6b79fe7fb'
             }
         };
 
-        // create QR Code with JSON content
-        const contactQR = ContactQR.fromJSON(JSON.stringify(contactInfo));
-        console.log("JSON: ", contactQR.toJSON());
-        console.log("BASE64: ", contactQR.toBase64());
+        // create QR Code with JSON content and password
+        const accountQR = AccountQR.fromJSON(
+            JSON.stringify(accountInfo),
+            new Password('Intranet123')
+        );
+
+        console.log("JSON: ", accountQR.toJSON());
+        console.log("BASE64: ", accountQR.toBase64());
         console.log("");
         console.log("ASCII: ");
-        console.log(contactQR.toASCII());
+        console.log(accountQR.toASCII());
         console.log("");
         return this.resolve(0);
     }

@@ -28,6 +28,24 @@ export abstract class Example {
      *
      * @return {number}
      */
-    public abstract execute(): number;
+    public abstract async execute(): Promise<number>;
     /// end-region Abstract Methods
+
+    /**
+     * 
+     */
+    public resolve<T>(resp: T): Promise<T> {
+        return new Promise((resolve, reject) => {
+            return resolve(resp);
+        });
+    }
+
+    /**
+     * 
+     */
+    public reject<T>(resp: T): Promise<T> {
+        return new Promise((resolve, reject) => {
+            return reject(resp);
+        });
+    }
 }

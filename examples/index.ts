@@ -20,9 +20,27 @@ import {
 // internal dependencies
 import {Example} from './Example';
 import {ExampleAddContactQR} from './ExampleAddContactQR';
+import {ExampleExportAccountQR} from './ExampleExportAccountQR';
 
-console.log("Starting examples");
+console.log("Starting examples for nem2-qr-library");
+console.log("");
 
+// -----------------------------
 // EX 1: Contact QR Code example
+// -----------------------------
+console.log("1) Creating Contact QR-Code");
+console.log("");
+
 const contactQR = new ExampleAddContactQR();
 contactQR.execute();
+console.log("");
+
+// -----------------------------
+// EX 2: Account QR Code example
+// -----------------------------
+console.log("2) Creating Account QR-Code");
+console.log("");
+
+const accountQR = new ExampleExportAccountQR();
+accountQR.execute();
+console.log("");
