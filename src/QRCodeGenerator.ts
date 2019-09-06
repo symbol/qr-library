@@ -122,7 +122,7 @@ export class QRCodeGenerator {
     }
 
     /**
-     * Create a Mnemonic Export QR Code from an Account
+     * Create a Mnemonic Export QR Code from a MnemonicPassPhrase
      * instance, encrypted with given password.
      *
      * @see {MnemonicQR}

@@ -21,6 +21,8 @@ import {
 import {Example} from './Example';
 import {ExampleAddContactQR} from './ExampleAddContactQR';
 import {ExampleExportAccountQR} from './ExampleExportAccountQR';
+import {ExampleExportMnemonicQR} from './ExampleExportMnemonicQR';
+import {ExampleRequestTransactionQR} from './ExampleRequestTransactionQR';
 
 console.log("Starting examples for nem2-qr-library");
 console.log("");
@@ -43,4 +45,24 @@ console.log("");
 
 const accountQR = new ExampleExportAccountQR();
 accountQR.execute();
+console.log("");
+
+// -----------------------------
+// EX 3: Mnemonic QR Code example
+// -----------------------------
+console.log("3) Creating Mnemonic QR-Code");
+console.log("");
+
+const mnemonicQR = new ExampleExportMnemonicQR();
+mnemonicQR.execute();
+console.log("");
+
+// -----------------------------
+// EX 4: Transaction QR Code example
+// -----------------------------
+console.log("3) Creating Transaction Request QR-Code");
+console.log("");
+
+const transactionQR = new ExampleRequestTransactionQR();
+transactionQR.execute();
 console.log("");

@@ -69,22 +69,23 @@ export class ExportMnemonicDataSchema extends QRCodeDataSchema {
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
+     * @throws  {Error}     On invalid password.
      */
     static parse(
         json: string,
         password: Password
     ): MnemonicQR {
         if (! json.length) {
-            throw Error('JSON argument cannot be empty.');
+            throw new Error('JSON argument cannot be empty.');
         }
 
         const jsonObj = JSON.parse(json);
         if (!jsonObj.type || jsonObj.type !== QRCodeType.ExportMnemonic) {
-            throw Error('Invalid type field value for MnemonicQR.');
+            throw new Error('Invalid type field value for MnemonicQR.');
         }
 
-        // decrypt mnemonic pass phrase
         try {
+            // decrypt mnemonic pass phrase
             const payload  = new EncryptedPayload(jsonObj.data.ciphertext, jsonObj.data.salt);
             const plainTxt = EncryptionService.decrypt(payload, password);
             const network  = jsonObj.network_id;
@@ -95,7 +96,7 @@ export class ExportMnemonicDataSchema extends QRCodeDataSchema {
             return new MnemonicQR(mnemonic, password, network, generationHash);
         }
         catch(e) {
-            throw Error('Invalid password.');
+            throw new Error('Could not parse encrypted mnemonic pass phrase.');
         }
     }
 }

@@ -70,28 +70,34 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
+     * @throws  {Error}     On invalid password.
      */
     static parse(
         json: string,
         password: Password
     ): AccountQR {
         if (! json.length) {
-            throw Error('JSON argument cannot be empty.');
+            throw new Error('JSON argument cannot be empty.');
         }
 
         const jsonObj = JSON.parse(json);
         if (!jsonObj.type || jsonObj.type !== QRCodeType.ExportAccount) {
-            throw Error('Invalid type field value for AccountQR.');
+            throw new Error('Invalid type field value for AccountQR.');
         }
 
-        // decrypt private key
-        const payload = new EncryptedPayload(jsonObj.data.ciphertext, jsonObj.data.salt);
-        const privKey = EncryptionService.decrypt(payload, password);
-        const network = jsonObj.network_id;
-        const generationHash = jsonObj.chain_id;
+        try {
+            // decrypt private key
+            const payload = new EncryptedPayload(jsonObj.data.ciphertext, jsonObj.data.salt);
+            const privKey = EncryptionService.decrypt(payload, password);
+            const network = jsonObj.network_id;
+            const generationHash = jsonObj.chain_id;
 
-        // create account
-        const account = Account.createFromPrivateKey(privKey, network);
-        return new AccountQR(account, password, network, generationHash);
+            // create account
+            const account = Account.createFromPrivateKey(privKey, network);
+            return new AccountQR(account, password, network, generationHash);
+        }
+        catch(e) {
+            throw new Error('Could not parse encrypted account information.');
+        }
     }
 }
