@@ -84,13 +84,18 @@ export class ExportMnemonicDataSchema extends QRCodeDataSchema {
         }
 
         // decrypt mnemonic pass phrase
-        const payload  = new EncryptedPayload(jsonObj.data.ciphertext, jsonObj.data.salt);
-        const plainTxt = EncryptionService.decrypt(payload, password);
-        const network  = jsonObj.network_id;
-        const generationHash = jsonObj.chain_id;
+        try {
+            const payload  = new EncryptedPayload(jsonObj.data.ciphertext, jsonObj.data.salt);
+            const plainTxt = EncryptionService.decrypt(payload, password);
+            const network  = jsonObj.network_id;
+            const generationHash = jsonObj.chain_id;
 
-        // create mnemonic
-        const mnemonic = new MnemonicPassPhrase(plainTxt);
-        return new MnemonicQR(mnemonic, password, network, generationHash);
+            // create mnemonic
+            const mnemonic = new MnemonicPassPhrase(plainTxt);
+            return new MnemonicQR(mnemonic, password, network, generationHash);
+        }
+        catch(e) {
+            throw Error('Invalid password.');
+        }
     }
 }
