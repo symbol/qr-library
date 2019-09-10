@@ -85,10 +85,22 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
             throw new Error('Invalid type field value for AccountQR.');
         }
 
+        if (!jsonObj.hasOwnProperty('data')) {
+            throw new Error('Missing mandatory property for encrypted payload.');
+        }
+
         try {
+            // encrypted payload validation
+            const payload = EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data));
+
             // decrypt private key
-            const payload = new EncryptedPayload(jsonObj.data.ciphertext, jsonObj.data.salt);
             const privKey = EncryptionService.decrypt(payload, password);
+
+            // more content validation
+            if (!privKey || (privKey.length != 64 && privKey.length != 66)) {
+                throw new Error('Invalid encrypted private key.');
+            }
+
             const network = jsonObj.network_id;
             const generationHash = jsonObj.chain_id;
 

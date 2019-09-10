@@ -84,15 +84,27 @@ export class ExportMnemonicDataSchema extends QRCodeDataSchema {
             throw new Error('Invalid type field value for MnemonicQR.');
         }
 
+        if (!jsonObj.hasOwnProperty('data')) {
+            throw new Error('Missing mandatory property for encrypted payload.');
+        }
+
         try {
+            // encrypted payload validation
+            const payload = EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data));
+
             // decrypt mnemonic pass phrase
-            const payload  = new EncryptedPayload(jsonObj.data.ciphertext, jsonObj.data.salt);
             const plainTxt = EncryptionService.decrypt(payload, password);
             const network  = jsonObj.network_id;
             const generationHash = jsonObj.chain_id;
 
             // create mnemonic
             const mnemonic = new MnemonicPassPhrase(plainTxt);
+
+            // more content validation
+            if (!mnemonic.isValid()) {
+                throw new Error('Invalid encrypted mnemonic pass phrase.');
+            }
+
             return new MnemonicQR(mnemonic, password, network, generationHash);
         }
         catch(e) {

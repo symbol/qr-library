@@ -90,6 +90,26 @@ describe('AccountQR -->', () => {
             })).to.throw('Could not parse encrypted account information.');
         });
 
+        it('throw error given encrypted payload is invalid', () => {
+            // Arrange:
+            let accountInfo:any = {
+                v: 3,
+                type: QRCodeType.ExportAccount,
+                network_id: NetworkType.MIJIN_TEST,
+                chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
+                data: {
+                    // 'ciphertext' field for encrypted payload missing
+                    salt: '42c8615bc6b2bc88cd239f08a5a17cc62bb0ebaece53f3e458a1cd67cd0888bc'
+                }
+            };
+            const password = new Password('password');
+
+            // Act + Assert
+            expect((function () {
+                const importAccount = AccountQR.fromJSON(JSON.stringify(accountInfo), password);
+            })).to.throw('Could not parse encrypted account information.');
+        });
+
         it('reconstruct account given correct password', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(

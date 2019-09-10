@@ -59,7 +59,7 @@ export class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
         }
 
         const jsonObj = JSON.parse(json);
-        if (!jsonObj.type || jsonObj.type !== QRCodeType.RequestTransaction) {
+        if (!jsonObj.type || jsonObj.type !== QRCodeType.RequestCosignature) {
             throw Error('Invalid type field value for CosignatureQR.');
         }
 
