@@ -22,6 +22,7 @@ import {
 // internal dependencies
 import {
     ContactQR,
+    QRCodeType,
 } from "../index";
 
 describe('ContactQR -->', () => {
@@ -66,6 +67,47 @@ describe('ContactQR -->', () => {
             expect(actualObject.data).to.have.property('name');
             expect(actualObject.data).to.have.property('publicKey');
         });
+    });
+
+    describe('fromJSON() should', () => {
+
+        it('reconstruct contact given ContactQR JSON', () => {
+            // Arrange:
+            const account = PublicAccount.createFromPublicKey(
+                'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                NetworkType.TEST_NET
+            );
+
+            // Act:
+            const exportContact = new ContactQR('nemtech', account, NetworkType.MIJIN_TEST, 'no-chain-id');
+            const importContact = ContactQR.fromJSON(exportContact.toJSON());
+
+            // Assert
+            expect(importContact.name).to.be.equal('nemtech');
+            expect(importContact.account.publicKey).to.be.equal(exportContact.account.publicKey);
+        });
+
+        it('reconstruct contact given correct JSON structure', () => {
+            // Arrange:
+            const contactInfo = {
+                v: 3,
+                type: QRCodeType.AddContact,
+                network_id: NetworkType.MIJIN_TEST,
+                chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
+                data: {
+                    name: 'nemtech',
+                    publicKey: 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268'
+                }
+            };
+
+            // Act:
+            const importContact = ContactQR.fromJSON(JSON.stringify(contactInfo));
+
+            // Assert
+            expect(importContact.name).to.be.equal('nemtech');
+            expect(importContact.account.publicKey).to.be.equal('C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268');
+        });
+
     });
 
 });

@@ -19,4 +19,5 @@ export enum QRCodeType {
     RequestTransaction = 3,
     RequestCosignature = 4,
     ExportObject = 5,
+    ExportMnemonic = 6,
 }

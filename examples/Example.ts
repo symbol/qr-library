@@ -13,39 +13,39 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
-import {
-    ErrorCorrectLevel,
-} from 'qrcode-generator-ts';
 
-// internal dependencies
-import {QRCodeType} from '../index';
+export abstract class Example {
+    /**
+     * Construct an example instance
+     *
+     */
+    constructor() {}
 
-/**
- * Class `QRCodeSettings` describes rules for the generation
- * of NIP-7 compliant QR Codes.
- *
- * @since 0.2.0
- */
-export class QRCodeSettings {
+    /// region Abstract Methods
+    /**
+     * The `execute()` method should run the underlying
+     * example business flow.
+     *
+     * @return {number}
+     */
+    public abstract async execute(): Promise<number>;
+    /// end-region Abstract Methods
 
     /**
-     * The Error correction level.
-     *
-     * @var {ErrorCorrectLevel}
+     * 
      */
-    public static CORRECTION_LEVEL = ErrorCorrectLevel.M;
+    public resolve<T>(resp: T): Promise<T> {
+        return new Promise((resolve, reject) => {
+            return resolve(resp);
+        });
+    }
 
     /**
-     * The QR Code cell size in pixels.
-     *
-     * @var {number}
+     * 
      */
-    public static CELL_PIXEL_SIZE: number = 1;
-
-    /**
-     * The QR Code Margin in pixels.
-     *
-     * @var {number}
-     */
-    public static MARGIN_PIXEL: number = 2;
+    public reject<T>(resp: T): Promise<T> {
+        return new Promise((resolve, reject) => {
+            return reject(resp);
+        });
+    }
 }

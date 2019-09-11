@@ -39,7 +39,7 @@ export class AccountQR extends QRCode implements QRCodeInterface {
      *
      * @param   account     {Account}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     constructor(/**
                  * The account to be exported
@@ -57,11 +57,11 @@ export class AccountQR extends QRCode implements QRCodeInterface {
                  */
                 public readonly networkType: NetworkType,
                 /**
-                 * The chain Id.
+                 * The network generation hash.
                  * @var {string}
                  */
-                public readonly chainId: string) {
-        super(QRCodeType.ExportAccount, networkType, chainId);
+                public readonly generationHash: string) {
+        super(QRCodeType.ExportAccount, networkType, generationHash);
     }
 
     /**
@@ -89,12 +89,13 @@ export class AccountQR extends QRCode implements QRCodeInterface {
      * version number for QR codes of the underlying class.
      *
      * @see https://en.wikipedia.org/wiki/QR_code#Storage
+     * @see {QRUtil.MAX_LENGTH}
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for ContactQR is Version 10
-        // This type of QR can hold up to 174 bytes of data.
-        return 20;
+        // Type version for AccountQR is Version 15, uses correction level M
+        // This type of QR can hold up to 412 binary bytes.
+        return 15;
     }
 
     /**

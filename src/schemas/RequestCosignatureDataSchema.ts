@@ -59,15 +59,15 @@ export class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
         }
 
         const jsonObj = JSON.parse(json);
-        if (!jsonObj.type || jsonObj.type !== QRCodeType.RequestTransaction) {
+        if (!jsonObj.type || jsonObj.type !== QRCodeType.RequestCosignature) {
             throw Error('Invalid type field value for CosignatureQR.');
         }
 
         // read contact data
         const transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
         const network = jsonObj.network_id;
-        const chainId = jsonObj.chain_id;
+        const generationHash = jsonObj.chain_id;
 
-        return new CosignatureQR(transaction as AggregateTransaction, network, chainId);
+        return new CosignatureQR(transaction as AggregateTransaction, network, generationHash);
     }
 }

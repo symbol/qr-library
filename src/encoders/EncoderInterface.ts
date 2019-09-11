@@ -14,38 +14,40 @@
  *limitations under the License.
  */
 import {
-    ErrorCorrectLevel,
+    QRCode as QRCodeImpl,
 } from 'qrcode-generator-ts';
 
-// internal dependencies
-import {QRCodeType} from '../index';
-
 /**
- * Class `QRCodeSettings` describes rules for the generation
- * of NIP-7 compliant QR Codes.
+ * Interface `EncoderInterface` describes encoders utilities
+ * for QR Codes that are compliant with NIP-7
  *
- * @since 0.2.0
+ * @since 0.3.2
  */
-export class QRCodeSettings {
+export interface EncoderInterface {
 
     /**
-     * The Error correction level.
-     *
-     * @var {ErrorCorrectLevel}
+     * The QR Code that will be encoded.
+     * @var {QRCodeImpl}
      */
-    public static CORRECTION_LEVEL = ErrorCorrectLevel.M;
+    qr: QRCodeImpl;
 
     /**
-     * The QR Code cell size in pixels.
-     *
-     * @var {number}
+     * The Cell Size used for encoding in Pixel.
+     * @var {number}
      */
-    public static CELL_PIXEL_SIZE: number = 1;
+    cellSize: number;
 
     /**
-     * The QR Code Margin in pixels.
-     *
-     * @var {number}
+     * The margin used for encoding in Pixel
+     * @var {number}
      */
-    public static MARGIN_PIXEL: number = 2;
+    margin: number;
+
+    /**
+     * The `toString()` method should return a string
+     * representation for the encoded QR Code.
+     *
+     * @return {string}
+     */
+    toString(): string;
 }

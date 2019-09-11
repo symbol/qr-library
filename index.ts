@@ -18,12 +18,20 @@
 export { QRCodeType } from './src/QRCodeType';
 export { QRCodeSettings } from './src/QRCodeSettings';
 export { QRCodeInterface } from './src/QRCodeInterface';
+
+// encoder classes
+export { EncoderInterface } from './src/encoders/EncoderInterface';
+export { EncoderMinimalASCII } from './src/encoders/EncoderMinimalASCII';
+export { EncoderASCII } from './src/encoders/EncoderASCII';
+
+// abstract QRCode
 export { QRCode } from './src/QRCode';
 
 // QR Code data schemas
 export { QRCodeDataSchema } from './src/QRCodeDataSchema';
 export { AddContactDataSchema } from './src/schemas/AddContactDataSchema';
 export { ExportAccountDataSchema } from './src/schemas/ExportAccountDataSchema';
+export { ExportMnemonicDataSchema } from './src/schemas/ExportMnemonicDataSchema';
 export { ExportObjectDataSchema } from './src/schemas/ExportObjectDataSchema';
 export { RequestTransactionDataSchema } from './src/schemas/RequestTransactionDataSchema';
 export { RequestCosignatureDataSchema } from './src/schemas/RequestCosignatureDataSchema';
@@ -38,6 +46,7 @@ export { ContactQR } from './src/ContactQR';
 export { ObjectQR } from './src/ObjectQR';
 export { TransactionQR } from './src/TransactionQR';
 export { CosignatureQR } from './src/CosignatureQR';
+export { MnemonicQR } from './src/MnemonicQR';
 
 // factory
 export { QRCodeGenerator } from './src/QRCodeGenerator';

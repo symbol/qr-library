@@ -36,7 +36,7 @@ export class ObjectQR extends QRCode implements QRCodeInterface {
      * 
      * @param   object          {Object}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     constructor(/**
                  * The object to display
@@ -49,11 +49,11 @@ export class ObjectQR extends QRCode implements QRCodeInterface {
                  */
                 public readonly networkType: NetworkType,
                 /**
-                 * The chain Id.
+                 * The network generation hash.
                  * @var {string}
                  */
-                public readonly chainId: string) {
-        super(QRCodeType.ExportObject, networkType, chainId);
+                public readonly generationHash: string) {
+        super(QRCodeType.ExportObject, networkType, generationHash);
     }
 
     /**
@@ -82,8 +82,8 @@ export class ObjectQR extends QRCode implements QRCodeInterface {
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for ContactQR is Version 10
-        // This type of QR can hold up to 174 bytes of data.
+        // Type version for ContactQR is Version 10, uses correction level M
+        // This type of QR can hold up to 213 bytes of data.
         return 10;
     }
 

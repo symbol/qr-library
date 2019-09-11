@@ -15,10 +15,9 @@
  */
 import {
     NetworkType,
-    TransactionMapping,
-    Transaction,
-    AggregateTransaction,
+    Password,
 } from "nem2-sdk";
+import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
@@ -26,25 +25,32 @@ import {
     QRCodeInterface,
     QRCodeType,
     QRCodeSettings,
+    EncryptionService,
+    EncryptedPayload,
     QRCodeDataSchema,
-    RequestCosignatureDataSchema,
-    TransactionQR,
+    ExportMnemonicDataSchema
 } from '../index';
 
-export class CosignatureQR extends TransactionQR implements QRCodeInterface {
+export class MnemonicQR extends QRCode implements QRCodeInterface {
     /**
-     * Construct a Transaction Request QR Code out of the
-     * nem2-sdk Transaction instance.
+     * Construct a Mnemonic Export QR Code out of the
+     * MnemonicPassPhrase and Password instances.
      *
-     * @param   transaction     {Transaction}
+     * @param   mnemonic        {MnemonicPassPhrase}
+     * @param   password        {Password}
      * @param   networkType     {NetworkType}
-     * @param   generationHash         {string}
+     * @param   generationHash  {string}
      */
     constructor(/**
-                 * The transaction for the request.
-                 * @var {AggregateTransaction}
+                 * The mnemonic pass phrase to be exported
+                 * @var {MnemonicPassPhrase}
                  */
-                public readonly transaction: AggregateTransaction,
+                public readonly mnemonic: MnemonicPassPhrase,
+                /**
+                 * The password for encryption
+                 * @var {Password}
+                 */
+                public readonly password: Password,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -55,25 +61,27 @@ export class CosignatureQR extends TransactionQR implements QRCodeInterface {
                  * @var {string}
                  */
                 public readonly generationHash: string) {
-        super(transaction, networkType, generationHash, QRCodeType.RequestCosignature);
+        super(QRCodeType.ExportMnemonic, networkType, generationHash);
     }
 
     /**
-     * Parse a JSON QR code content into a CosignatureQR
+     * Parse a JSON QR code content into a MnemonicQR
      * object.
      *
      * @param   json        {string}
-     * @return  {CosignatureQR}
+     * @param   password    {Password}
+     * @return  {MnemonicQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
     static fromJSON(
-        json: string
-    ): CosignatureQR {
+        json: string,
+        password: Password
+    ): MnemonicQR {
 
         // create the QRCode object from JSON
-        return RequestCosignatureDataSchema.parse(json);
+        return ExportMnemonicDataSchema.parse(json, password);
     }
 
     /**
@@ -81,12 +89,13 @@ export class CosignatureQR extends TransactionQR implements QRCodeInterface {
      * version number for QR codes of the underlying class.
      *
      * @see https://en.wikipedia.org/wiki/QR_code#Storage
+     * @see {QRUtil.MAX_LENGTH}
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for ContactQR is Version 40, uses correction level L
-        // This type of QR can hold up to 2953 bytes of data.
-        return 40;
+        // Type version for MnemonicQR is Version 20, uses correction level M
+        // This type of QR can hold up to 666 binary bytes.
+        return 20;
     }
 
     /**
@@ -97,6 +106,6 @@ export class CosignatureQR extends TransactionQR implements QRCodeInterface {
      * @return {QRCodeDataSchema}
      */
     public getSchema(): QRCodeDataSchema {
-        return new RequestCosignatureDataSchema();
+        return new ExportMnemonicDataSchema();
     }
 }

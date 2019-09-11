@@ -14,29 +14,28 @@
  *limitations under the License.
  */
 import {
-    Account,
-    PublicAccount,
     NetworkType,
     Password,
 } from "nem2-sdk";
+import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
     QRCodeDataSchema,
     QRCode,
     QRCodeType,
-    AccountQR,
+    MnemonicQR,
     EncryptionService,
     EncryptedPayload,
 } from '../../index';
 
 /**
- * Class `ExportAccountDataSchema` describes an export
+ * Class `ExportMnemonicDataSchema` describes an export
  * account QR code data schema.
  *
- * @since 0.3.0
+ * @since 0.3.2
  */
-export class ExportAccountDataSchema extends QRCodeDataSchema {
+export class ExportMnemonicDataSchema extends QRCodeDataSchema {
 
     constructor() {
         super();
@@ -49,10 +48,10 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
      *
      * @return {any}
      */
-    public getData(qr: AccountQR): any {
+    public getData(qr: MnemonicQR): any {
 
         // we will store a password encrypted copy of the private key
-        const encrypted = EncryptionService.encrypt(qr.account.privateKey, qr.password);
+        const encrypted = EncryptionService.encrypt(qr.mnemonic.plain, qr.password);
 
         return {
             "ciphertext": encrypted.ciphertext,
@@ -61,12 +60,12 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
     }
 
     /**
-     * Parse a JSON QR code content into a AccountQR
+     * Parse a JSON QR code content into a MnemonicQR
      * object.
      *
      * @param   json        {string}
      * @param   password    {Password}
-     * @return  {AccountQR}
+     * @return  {MnemonicQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
@@ -75,14 +74,14 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
     static parse(
         json: string,
         password: Password
-    ): AccountQR {
+    ): MnemonicQR {
         if (! json.length) {
             throw new Error('JSON argument cannot be empty.');
         }
 
         const jsonObj = JSON.parse(json);
-        if (!jsonObj.type || jsonObj.type !== QRCodeType.ExportAccount) {
-            throw new Error('Invalid type field value for AccountQR.');
+        if (!jsonObj.type || jsonObj.type !== QRCodeType.ExportMnemonic) {
+            throw new Error('Invalid type field value for MnemonicQR.');
         }
 
         if (!jsonObj.hasOwnProperty('data')) {
@@ -93,23 +92,23 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
             // encrypted payload validation
             const payload = EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data));
 
-            // decrypt private key
-            const privKey = EncryptionService.decrypt(payload, password);
-
-            // more content validation
-            if (!privKey || (privKey.length != 64 && privKey.length != 66)) {
-                throw new Error('Invalid encrypted private key.');
-            }
-
-            const network = jsonObj.network_id;
+            // decrypt mnemonic pass phrase
+            const plainTxt = EncryptionService.decrypt(payload, password);
+            const network  = jsonObj.network_id;
             const generationHash = jsonObj.chain_id;
 
-            // create account
-            const account = Account.createFromPrivateKey(privKey, network);
-            return new AccountQR(account, password, network, generationHash);
+            // create mnemonic
+            const mnemonic = new MnemonicPassPhrase(plainTxt);
+
+            // more content validation
+            if (!mnemonic.isValid()) {
+                throw new Error('Invalid encrypted mnemonic pass phrase.');
+            }
+
+            return new MnemonicQR(mnemonic, password, network, generationHash);
         }
         catch(e) {
-            throw new Error('Could not parse encrypted account information.');
+            throw new Error('Could not parse encrypted mnemonic pass phrase.');
         }
     }
 }

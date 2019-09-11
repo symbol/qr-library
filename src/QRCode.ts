@@ -14,14 +14,16 @@
  *limitations under the License.
  */
 import {
+    ErrorCorrectLevel,
     QRCode as QRCodeImpl,
     QR8BitByte,
-    ErrorCorrectLevel,
 } from 'qrcode-generator-ts';
+
+import * as QRCodeCanvas from 'qrcode';
+import { createCanvas } from 'canvas';
 
 import {
     NetworkType,
-    Password
 } from 'nem2-sdk';
 
 // internal dependencies
@@ -30,6 +32,7 @@ import {
     QRCodeType,
     QRCodeSettings,
     QRCodeDataSchema,
+    EncoderASCII,
 } from "../index";
 
 export abstract class QRCode implements QRCodeInterface {
@@ -52,10 +55,10 @@ export abstract class QRCode implements QRCodeInterface {
                  */
                 public readonly networkType: NetworkType,
                 /**
-                 * The chain ID.
+                 * The network generation hash.
                  * @var {string}
                  */
-                public readonly chainId: string,
+                public readonly generationHash: string,
                 /**
                  * The base64 representation of the QR Code content.
                  * @var {string}
@@ -81,6 +84,19 @@ export abstract class QRCode implements QRCodeInterface {
      */
     public abstract getTypeNumber(): number;
     /// end-region Abstract Methods
+
+    /**
+     * The `getCorrectionLevel()` method should return the
+     * QR Code correction level.
+     * 
+     * Sub-classes may overload this method to provide with
+     * a different correction level.
+     * 
+     * @return {number}
+     */
+    public getCorrectionLevel(): number {
+        return QRCodeSettings.CORRECTION_LEVEL;
+    }
 
     /**
      * The `toJSON()` method should return the JSON
@@ -111,7 +127,7 @@ export abstract class QRCode implements QRCodeInterface {
         // prepare QR generation
         const qr = new QRCodeImpl();
         qr.setTypeNumber(this.getTypeNumber());
-        qr.setErrorCorrectLevel(QRCodeSettings.CORRECTION_LEVEL);
+        qr.setErrorCorrectLevel(this.getCorrectionLevel());
 
         // get JSON representation
         const json = this.toJSON();
@@ -125,9 +141,9 @@ export abstract class QRCode implements QRCodeInterface {
     /**
      * Generate QRcode image Base64.
      *
-     * @return  {string} Retrun image data in Base64.
+     * @return  {string} Return image data in Base64.
      */
-    public toBase64() : string {
+    public toBase64(): string {
 
         // build QR Code
         const qr = this.build();
@@ -137,5 +153,56 @@ export abstract class QRCode implements QRCodeInterface {
             QRCodeSettings.CELL_PIXEL_SIZE,
             QRCodeSettings.MARGIN_PIXEL
         );
+    }
+
+    /**
+     * Generate QRCode to be printed in ASCII format.
+     *
+     * @return {string}
+     */
+    public toASCII() {
+
+        // build the QR Code
+        const qr = this.build();
+
+        // encode with ASCII/MinimalASCII encoder
+        const encoder = new EncoderASCII(qr);
+
+        // return string representation
+        return encoder.toString();
+    }
+
+    /**
+     * Generate QRCode to be printed on a `node-canvas`. This
+     * is compatible with the browser and node.
+     *
+     * @see https://www.npmjs.com/package/qrcode
+     * @see https://www.npmjs.com/package/canvas
+     * @param   {number}    cellSize     QRcode cell size
+     * @param   {number}    margin       QRcode cell margin
+     * @return  {string}
+     */
+    public async toCanvas(): Promise<any> {
+
+        // get JSON representation
+        const json = this.toJSON();
+
+        // create canvas
+        const canvas = createCanvas(250, 250);
+        const context = canvas.getContext('2d');
+
+        // QRCodeCanvas correction level
+        const corrections: any = {};
+        corrections[ErrorCorrectLevel.L] = 'L';
+        corrections[ErrorCorrectLevel.M] = 'M';
+        corrections[ErrorCorrectLevel.Q] = 'Q';
+        corrections[ErrorCorrectLevel.H] = 'H';
+
+        // build the QR Code
+        return await QRCodeCanvas.toCanvas(canvas, json, {
+            errorCorrectionLevel: corrections[this.getCorrectionLevel()],
+            width: 250,
+            // do-not-set-'version'
+        });
     }
 }
