@@ -18,6 +18,9 @@ import {
     TransactionMapping,
     Transaction,
 } from "nem2-sdk";
+import {
+    ErrorCorrectLevel,
+} from 'qrcode-generator-ts';
 
 // internal dependencies
 import {
@@ -81,6 +84,21 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
     }
 
     /**
+     * The `getCorrectionLevel()` method should return the
+     * QR Code correction level.
+     * 
+     * Sub-classes may overload this method to provide with
+     * a different correction level.
+     * 
+     * @return {number}
+     */
+    public getCorrectionLevel(): number {
+        // transaction request QR codes uses correction level L to
+        // increase capacity of the QR Code binary data.
+        return ErrorCorrectLevel.L;
+    }
+
+    /**
      * The `getTypeNumber()` method should return the
      * version number for QR codes of the underlying class.
      *
@@ -88,8 +106,8 @@ export class TransactionQR extends QRCode implements QRCodeInterface {
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for ContactQR is Version 40
-        // This type of QR can hold up to 1264 bytes of data.
+        // Type version for ContactQR is Version 40, uses correction level L
+        // This type of QR can hold up to 2953 bytes of data.
         return 40;
     }
 

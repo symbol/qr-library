@@ -93,7 +93,7 @@ export class AccountQR extends QRCode implements QRCodeInterface {
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for AccountQR is Version 15
+        // Type version for AccountQR is Version 15, uses correction level M
         // This type of QR can hold up to 412 binary bytes.
         return 15;
     }

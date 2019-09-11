@@ -93,8 +93,8 @@ export class MnemonicQR extends QRCode implements QRCodeInterface {
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for MnemonicQR is Version 20
-        // This type of QR can hold up to XXX binary bytes.
+        // Type version for MnemonicQR is Version 20, uses correction level M
+        // This type of QR can hold up to 666 binary bytes.
         return 20;
     }
 

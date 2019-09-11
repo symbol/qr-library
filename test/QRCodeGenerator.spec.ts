@@ -27,6 +27,7 @@ import {
     Account,
     Password
 } from 'nem2-sdk';
+import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
@@ -35,6 +36,9 @@ import {
     ContactQR,
     AccountQR,
     TransactionQR,
+    ObjectQR,
+    CosignatureQR,
+    MnemonicQR,
 } from "../index";
 
 describe('QRCodeGenerator -->', () => {
@@ -67,8 +71,6 @@ describe('QRCodeGenerator -->', () => {
     });
 
     describe('createTransactionRequest() should', () => {
-
-        //XXX set default TESTNET and CHAIN_ID
 
         it('generate correct Base64 representation for TransferTransaction', () => {
             // Arrange:
@@ -136,9 +138,27 @@ describe('QRCodeGenerator -->', () => {
         });
     });
 
-    describe('fromJson() should', () => {
+    describe('createExportMnemonic() should', () => {
 
-        it('Read data From TransactionQR', () => {
+        it('generate correct Base64 representation for ExportMnemonic', () => {
+            // Arrange:
+            const mnemonic = MnemonicPassPhrase.createRandom();
+            const password = new Password('password');
+
+            // Act:
+            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, password);
+            const actualBase64 = exportMnemonic.toBase64();
+
+            // Assert:
+            expect(actualBase64).to.not.be.equal('');
+            expect(actualBase64.length).to.not.be.equal(0);
+            expect(exportMnemonic.toJSON()).to.have.lengthOf.below(2953);
+        });
+    });
+
+    describe('fromJSON() should', () => {
+
+        it('Populate transaction data given TransactionQR JSON', () => {
             // Arrange:
             const transfer = TransferTransaction.create(
                 Deadline.create(),
@@ -158,12 +178,13 @@ describe('QRCodeGenerator -->', () => {
             const transactionObj: TransactionQR = QRCodeGenerator.fromJSON(txJSON) as TransactionQR;
 
             // Assert:
-            expect(transactionObj).to.not.be.equal('');
+            expect(transactionObj.toJSON()).to.not.be.equal('');
+            expect(transactionObj.type).to.be.equal(QRCodeType.RequestTransaction);
             expect(transactionObj.transaction.toJSON()).to.deep.equal(transfer.toJSON());
-            expect(transactionObj.type).to.deep.equal(QRCodeType.RequestTransaction);
+            expect(transactionObj.transaction.serialize()).to.be.equal(transfer.serialize());
         });
 
-        it('Read data From ContactQR', () => {
+        it('Populate contact information given ContactQR JSON', () => {
             // Arrange:
             const name = 'test-contact-1';
             const account = PublicAccount.createFromPublicKey(
@@ -178,17 +199,17 @@ describe('QRCodeGenerator -->', () => {
             );
             const contactJSON = createContact.toJSON();
 
-
             // Act:
             const contactObj: ContactQR = QRCodeGenerator.fromJSON(contactJSON) as ContactQR;
 
             // Assert:
-            expect(contactObj).to.not.be.equal('');
+            expect(contactObj.toJSON()).to.not.be.equal('');
+            expect(contactObj.type).to.be.equal(QRCodeType.AddContact);
             expect(contactObj.account.address).to.deep.equal(account.address);
-            expect(contactObj.type).to.deep.equal(QRCodeType.AddContact);
+            expect(contactObj.name).to.be.equal(name);
         });
 
-        it('Read data From AccountQR', () => {
+        it('Populate account information given AccountQR JSON', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
@@ -203,12 +224,48 @@ describe('QRCodeGenerator -->', () => {
             const accountObj: AccountQR = QRCodeGenerator.fromJSON(actualObj, password) as AccountQR;
 
             // Assert:
-            expect(accountObj).to.not.be.equal('');
+            expect(accountObj.toJSON()).to.not.be.equal('');
+            expect(accountObj.type).to.be.equal(QRCodeType.ExportAccount);
             expect(accountObj.account).to.deep.equal(account);
-            expect(accountObj.type).to.deep.equal(QRCodeType.ExportAccount);
+            expect(accountObj.account.privateKey).to.be.equal('F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978');
         });
 
-        it('Read data From ObjectQR', () => {});
+        it('Populate object given ObjectQR JSON', () => {
+            // Arrange:
+            const object = {
+                key: "Value1",
+                key2: "Value2"
+            };
+
+            const exportObject = QRCodeGenerator.createExportObject(object);
+            const actualObj = exportObject.toJSON();
+
+            // Act:
+            const objectObj: ObjectQR = QRCodeGenerator.fromJSON(actualObj) as ObjectQR;
+
+            // Assert:
+            expect(objectObj.toJSON()).to.not.be.equal('');
+            expect(objectObj.type).to.be.equal(QRCodeType.ExportObject);
+            expect(objectObj.object).to.deep.equal(object);
+        });
+
+        it('Populate mnemonic pass phrase given MnemonicQR JSON', () => {
+            // Arrange:
+            const mnemonic = MnemonicPassPhrase.createRandom();
+            const password = new Password('password');
+
+            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, password);
+            const actualObj = exportMnemonic.toJSON();
+
+            // Act:
+            const mnemonicObj: MnemonicQR = QRCodeGenerator.fromJSON(actualObj, password) as MnemonicQR;
+
+            // Assert:
+            expect(mnemonicObj.toJSON()).to.not.be.equal('');
+            expect(mnemonicObj.type).to.be.equal(QRCodeType.ExportMnemonic);
+            expect(mnemonicObj.mnemonic).to.deep.equal(mnemonic);
+            expect(mnemonicObj.mnemonic.plain).to.be.equal(mnemonic.plain);
+        });
     });
 
 });

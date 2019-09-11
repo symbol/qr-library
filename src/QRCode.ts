@@ -14,6 +14,7 @@
  *limitations under the License.
  */
 import {
+    ErrorCorrectLevel,
     QRCode as QRCodeImpl,
     QR8BitByte,
 } from 'qrcode-generator-ts';
@@ -85,6 +86,19 @@ export abstract class QRCode implements QRCodeInterface {
     /// end-region Abstract Methods
 
     /**
+     * The `getCorrectionLevel()` method should return the
+     * QR Code correction level.
+     * 
+     * Sub-classes may overload this method to provide with
+     * a different correction level.
+     * 
+     * @return {number}
+     */
+    public getCorrectionLevel(): number {
+        return QRCodeSettings.CORRECTION_LEVEL;
+    }
+
+    /**
      * The `toJSON()` method should return the JSON
      * representation of the QR Code content.
      *
@@ -113,7 +127,7 @@ export abstract class QRCode implements QRCodeInterface {
         // prepare QR generation
         const qr = new QRCodeImpl();
         qr.setTypeNumber(this.getTypeNumber());
-        qr.setErrorCorrectLevel(QRCodeSettings.CORRECTION_LEVEL);
+        qr.setErrorCorrectLevel(this.getCorrectionLevel());
 
         // get JSON representation
         const json = this.toJSON();
@@ -142,7 +156,9 @@ export abstract class QRCode implements QRCodeInterface {
     }
 
     /**
-     * 
+     * Generate QRCode to be printed in ASCII format.
+     *
+     * @return {string}
      */
     public toASCII() {
 
@@ -175,11 +191,18 @@ export abstract class QRCode implements QRCodeInterface {
         const canvas = createCanvas(250, 250);
         const context = canvas.getContext('2d');
 
+        // QRCodeCanvas correction level
+        const corrections: any = {};
+        corrections[ErrorCorrectLevel.L] = 'L';
+        corrections[ErrorCorrectLevel.M] = 'M';
+        corrections[ErrorCorrectLevel.Q] = 'Q';
+        corrections[ErrorCorrectLevel.H] = 'H';
+
         // build the QR Code
         return await QRCodeCanvas.toCanvas(canvas, json, {
-            errorCorrectionLevel: 'M',
+            errorCorrectionLevel: corrections[this.getCorrectionLevel()],
             width: 250,
             // do-not-set-'version'
-        })
+        });
     }
 }

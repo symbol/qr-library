@@ -88,8 +88,8 @@ export class ContactQR extends QRCode implements QRCodeInterface {
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for ContactQR is Version 10
-        // This type of QR can hold up to 213 binary bytes.
+        // Type version for ContactQR is Version 15, uses correction level M
+        // This type of QR can hold up to 412 binary bytes.
         return 15;
     }
 

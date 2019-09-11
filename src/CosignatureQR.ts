@@ -84,8 +84,8 @@ export class CosignatureQR extends TransactionQR implements QRCodeInterface {
      * @return {number}
      */
     public getTypeNumber(): number {
-        // Type version for ContactQR is Version 40
-        // This type of QR can hold up to 1264 bytes of data.
+        // Type version for ContactQR is Version 40, uses correction level L
+        // This type of QR can hold up to 2953 bytes of data.
         return 40;
     }
 

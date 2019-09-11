@@ -82,6 +82,26 @@ describe('MnemonicQR -->', () => {
             })).to.throw('Could not parse encrypted mnemonic pass phrase.');
         });
 
+        it('throw error given encrypted payload is invalid', () => {
+            // Arrange:
+            let accountInfo:any = {
+                v: 3,
+                type: QRCodeType.ExportMnemonic,
+                network_id: NetworkType.MIJIN_TEST,
+                chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
+                data: {
+                    // 'ciphertext' field for encrypted payload missing
+                    salt: "b248953e9ebfa269cd7b940f9c03d2d4b192f90db61638375b5e78296bbe675a"
+                }
+            };
+            const password = new Password('password');
+
+            // Act + Assert
+            expect((function () {
+                const importAccount = MnemonicQR.fromJSON(JSON.stringify(accountInfo), password);
+            })).to.throw('Could not parse encrypted mnemonic pass phrase.');
+        });
+
         it('reconstruct mnemonic pass phrase given correct password', () => {
             // Arrange:
             const mnemonic = MnemonicPassPhrase.createRandom();
