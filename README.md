@@ -29,7 +29,7 @@ const transfer = TransferTransaction.create(
     NetworkType.MIJIN_TEST
   ),
   [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
-  new PlainMessage('Welcome to NEM!'),
+  PlainMessage.create('Welcome to NEM!'),
   NetworkType.MIJIN_TEST
 );
 
