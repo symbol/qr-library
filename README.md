@@ -56,6 +56,54 @@ const base64 = request.toBase64();
 
 ```
 
+### Generate ContactQR code
+
+```typescript
+import {
+    PublicAccount,
+    NetworkType,
+} from 'nem2-sdk';
+
+const name = 'test-contact-1';
+const account = PublicAccount.createFromPublicKey(
+                'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                NetworkType.TEST_NET
+            );
+
+// create QR Code base64
+  const request = QRCodeGenerator.createAddContact(name, account);
+
+// get base64 notation for <img> HTML attribute
+const base64 = request.toBase64();
+
+```
+
+### Generate QRCode for a Mnemonic data
+
+```typescript
+import {
+    Account,
+    NetworkType,
+    Password,
+} from 'nem2-sdk';
+import { MnemonicPassPhrase } from 'nem2-hd-wallets';
+
+// create a mnemonic and password.
+const mnemonic = MnemonicPassPhrase.createRandom();
+const password = new Password('password');
+
+
+// create QR Code base64
+const exportMnemonic = new MnemonicQR(mnemonic, password, NetworkType.MIJIN_TEST, 'no-chain-id');
+
+// get base64 notation for <img> HTML attribute
+const base64 = exportMnemonic.toBase64();
+
+```
+
+
+
+
 The produced Base64 encoded payload can be used to display the QR Code. An example of display can be done easily with HTML, as follows:
 
 ```html
