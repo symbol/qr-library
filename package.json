@@ -10,7 +10,7 @@
   "dependencies": {
     "canvas": "^2.6.0",
     "crypto-js": "^3.1.9-1",
-    "nem2-sdk": "^0.13.0",
+    "nem2-sdk": "^0.14.3",
     "qrcode": "^1.4.0",
     "qrcode-generator-ts": "^0.0.4",
     "nem2-hd-wallets": "0.4.1"
