@@ -30,7 +30,7 @@ const contactQR = ContactQR.fromJSON(JSON.stringify(contactInfo));
 
 window.addEventListener('DOMContentLoaded', function() {
     (async function() {
-        const base64 = await contactQR.toBase64();
+        const base64 = await contactQR.toBase64().toPromise();
         document.getElementById("qr-code-1-1").setAttribute('src', base64);
     })();
 });

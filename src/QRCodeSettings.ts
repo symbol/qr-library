@@ -13,14 +13,6 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
-/*
-import {
-    ErrorCorrectLevel,
-} from 'qrcode-generator-ts';
-*/
-// internal dependencies
-import {QRCodeType} from '../index';
-
 /**
  * Class `QRCodeSettings` describes rules for the generation
  * of NIP-7 compliant QR Codes.

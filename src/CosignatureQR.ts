@@ -16,16 +16,12 @@
 import {
     AggregateTransaction,
     NetworkType,
-    Transaction,
-    TransactionMapping,
 } from 'nem2-sdk';
 
 // internal dependencies
 import {
-    QRCode,
     QRCodeDataSchema,
     QRCodeInterface,
-    QRCodeSettings,
     QRCodeType,
     RequestCosignatureDataSchema,
     TransactionQR,

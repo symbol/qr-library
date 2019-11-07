@@ -49,10 +49,7 @@ export class ExampleAddContactQR extends Example {
         // create QR Code with JSON content
         const contactQR = ContactQR.fromJSON(JSON.stringify(contactInfo));
         console.log("JSON: ", contactQR.toJSON());
-        console.log("BASE64: ", contactQR.toBase64());
-        console.log("");
-        console.log("ASCII: ");
-        //console.log(contactQR.toASCII());
+        console.log("BASE64: ", await contactQR.toBase64().toPromise());
         console.log("");
         return this.resolve(0);
     }

@@ -21,13 +21,10 @@ import {
 
 // internal dependencies
 import {
-    EncryptedPayload,
-    EncryptionService,
     ExportMnemonicDataSchema,
     QRCode,
     QRCodeDataSchema,
     QRCodeInterface,
-    QRCodeSettings,
     QRCodeType,
 } from '../index';
 

@@ -17,19 +17,12 @@ import {expect} from "chai";
 import {
     NetworkType,
 } from 'nem2-sdk';
-/*
-import {
-    QRCode as QRCodeImpl,
-    QR8BitByte,
-    ErrorCorrectLevel,
-} from 'qrcode-generator-ts';
-*/
+
 // internal dependencies
 import {
     QRCodeInterface,
     QRCode,
     QRCodeType,
-    QRCodeSettings,
     QRCodeDataSchema,
     ExportObjectDataSchema,
 } from "../index";
@@ -58,7 +51,7 @@ describe('QRCode -->', () => {
 
     describe('toBase64() should', () => {
 
-        it('create same Base64 given same objects', () => {
+        it('create same Base64 given same objects', async () => {
             // Arrange:
             const object1 = {"test1": "test1"};
             const object2 = {"test1": "test1"};
@@ -68,10 +61,10 @@ describe('QRCode -->', () => {
             const fakeQR2 = new FakeQR(object2, NetworkType.TEST_NET, 'no-chain-id');
 
             // Assert:
-            expect(fakeQR1.toBase64()).to.be.equal(fakeQR2.toBase64());
+            expect(await fakeQR1.toBase64().toPromise()).to.be.equal(await fakeQR2.toBase64().toPromise());
         });
 
-        it('create different Base64 given different objects', () => {
+        it('create different Base64 given different objects', async () => {
             // Arrange:
             const object1 = {"test1": "test1"};
             const object2 = {"test2": "test2"};
@@ -81,53 +74,7 @@ describe('QRCode -->', () => {
             const fakeQR2 = new FakeQR(object2, NetworkType.TEST_NET, 'no-chain-id');
 
             // Assert:
-            expect(fakeQR1.toBase64()).to.not.be.equal(fakeQR2.toBase64());
+            expect(await fakeQR1.toBase64().toPromise()).to.not.be.equal(await fakeQR2.toBase64().toPromise());
         });
     });
-/*
-    describe('build() should', () => {
-
-        it('set correct settings for QR Code generation', () => {
-            // Arrange:
-            const object = {"test": "test"};
-            const modulesCount = 10 * 4 + 17;
-
-            // Act:
-            const fakeQR = new FakeQR(object, NetworkType.TEST_NET, 'no-chain-id');
-
-            // Assert:
-            expect(fakeQR.getTypeNumber()).to.be.equal(10);
-            expect(fakeQR.getErrorCorrectLevel()).to.be.equal(QRCodeSettings.CORRECTION_LEVEL);
-            expect(fakeQR.getModuleCount()).to.be.equal(modulesCount);
-        });
-
-        it('create same QR codes given same objects', () => {
-            // Arrange:
-            const object1 = {"test1": "test1"};
-            const object2 = {"test1": "test1"};
-
-            // Act:
-            const fakeQR1 = new FakeQR(object1, NetworkType.TEST_NET, 'no-chain-id');
-            const fakeQR2 = new FakeQR(object2, NetworkType.TEST_NET, 'no-chain-id');
-
-            // Assert:
-            expect(fakeQR1.toJSON()).to.be.equal(fakeQR2.toJSON());
-            expect(fakeQR1.toBase64()).to.be.equal(fakeQR2.toBase64());
-        });
-
-        it('create different QR codes given different objects', () => {
-            // Arrange:
-            const object1 = {"test1": "test1"};
-            const object2 = {"test2": "test2"};
-
-            // Act:
-            const fakeQR1 = new FakeQR(object1, NetworkType.TEST_NET, 'no-chain-id');
-            const fakeQR2 = new FakeQR(object2, NetworkType.TEST_NET, 'no-chain-id');
-
-            // Assert:
-            expect(fakeQR1.toJSON()).to.not.be.equal(fakeQR2.toJSON());
-            expect(fakeQR1.toBase64()).to.not.be.equal(fakeQR2.toBase64());
-        });
-    });
-*/
 });

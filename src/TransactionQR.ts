@@ -15,20 +15,14 @@
  */
 import {
     NetworkType,
-    TransactionMapping,
     Transaction,
 } from "nem2-sdk";
-/*
-import {
-    ErrorCorrectLevel,
-} from 'qrcode-generator-ts';
-*/
+
 // internal dependencies
 import {
     QRCode,
     QRCodeInterface,
     QRCodeType,
-    QRCodeSettings,
     QRCodeDataSchema,
     RequestTransactionDataSchema
 } from '../index';
@@ -83,21 +77,6 @@ class TransactionQR extends QRCode implements QRCodeInterface {
         // create the QRCode object from JSON
         return RequestTransactionDataSchema.parse(json);
     }
-
-    /**
-     * The `getCorrectionLevel()` method should return the
-     * QR Code correction level.
-     * 
-     * Sub-classes may overload this method to provide with
-     * a different correction level.
-     * 
-     * @return {number}
-     /
-    public getCorrectionLevel(): number {
-        // transaction request QR codes uses correction level L to
-        // increase capacity of the QR Code binary data.
-        return ErrorCorrectLevel.L;
-    }*/
 
     /**
      * The `getTypeNumber()` method should return the

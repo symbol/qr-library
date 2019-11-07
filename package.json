@@ -42,7 +42,8 @@
     "uglifyify": "^5.0.2",
     "utf-8-validate": "^5.0.2",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "rxjs": "^6.5.3"
   },
   "scripts": {
     "build": "rm -rf dist/ && tsc",

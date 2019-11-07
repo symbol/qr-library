@@ -16,7 +16,6 @@
 // internal dependencies
 import {
     ObjectQR,
-    QRCode,
     QRCodeDataSchema,
     QRCodeType,
 } from '../../index';

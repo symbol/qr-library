@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 // internal dependencies
-import {QRCodeType} from '../index';
-
 /**
  * Class `EncryptedPayload` describes an encrypted payload
  * with salt and ciphertext properties.

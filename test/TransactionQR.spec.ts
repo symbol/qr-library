@@ -11,18 +11,18 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {expect} from "chai";
 import {
-    TransferTransaction,
-    Deadline,
     Address,
+    Deadline,
     Mosaic,
     NamespaceId,
-    UInt64,
-    PlainMessage,
     NetworkType,
+    PlainMessage,
+    TransferTransaction,
+    UInt64,
 } from 'nem2-sdk';
 
 // internal dependencies
@@ -40,11 +40,11 @@ describe('TransactionQR -->', () => {
                 Deadline.create(),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-                    NetworkType.MIJIN_TEST
+                    NetworkType.MIJIN_TEST,
                 ),
                 [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
                 PlainMessage.create('Welcome to NEM!'),
-                NetworkType.MIJIN_TEST
+                NetworkType.MIJIN_TEST,
             );
 
             // Act:
@@ -66,11 +66,11 @@ describe('TransactionQR -->', () => {
                 Deadline.create(),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-                    NetworkType.MIJIN_TEST
+                    NetworkType.MIJIN_TEST,
                 ),
                 [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
                 PlainMessage.create('Welcome to NEM!'),
-                NetworkType.MIJIN_TEST
+                NetworkType.MIJIN_TEST,
             );
 
             // Act:

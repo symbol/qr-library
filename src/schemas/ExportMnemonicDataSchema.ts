@@ -15,7 +15,6 @@
  */
 import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 import {
-    NetworkType,
     Password,
 } from "nem2-sdk";
 
@@ -24,7 +23,6 @@ import {
     EncryptedPayload,
     EncryptionService,
     MnemonicQR,
-    QRCode,
     QRCodeDataSchema,
     QRCodeType,
 } from '../../index';

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
-//import {QRCode} from 'qrcode-generator-ts';
+import { Observable } from 'rxjs';
 
 // internal dependencies
 import {QRCodeType} from '../index';
@@ -38,14 +38,6 @@ interface QRCodeInterface {
     type: QRCodeType;
 
     /**
-     * The `build()` method should return the QRCode
-     * representation of the QR Code content.
-     *
-     * @return {QRCode}
-     */
-    //build(): QRCode;
-
-    /**
      * The `toJSON()` method should return the JSON
      * representation of the QR Code content.
      *
@@ -59,7 +51,7 @@ interface QRCodeInterface {
      *
      * @return {string}
      */
-    toBase64(): Promise<string>;
+    toBase64(): Observable<string>;
 }
 
 export {QRCodeInterface};

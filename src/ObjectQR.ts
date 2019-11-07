@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 import {
-    Account,
     NetworkType,
-    PublicAccount,
 } from "nem2-sdk";
 
 // internal dependencies
@@ -25,7 +23,6 @@ import {
     QRCode,
     QRCodeDataSchema,
     QRCodeInterface,
-    QRCodeSettings,
     QRCodeType,
 } from '../index';
 

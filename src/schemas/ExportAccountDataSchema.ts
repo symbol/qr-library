@@ -15,9 +15,7 @@
  */
 import {
     Account,
-    NetworkType,
     Password,
-    PublicAccount,
 } from "nem2-sdk";
 
 // internal dependencies
@@ -25,7 +23,6 @@ import {
     AccountQR,
     EncryptedPayload,
     EncryptionService,
-    QRCode,
     QRCodeDataSchema,
     QRCodeType,
 } from '../../index';

@@ -11,15 +11,14 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {expect} from "chai";
+import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 import {
-    Account,
     NetworkType,
     Password,
 } from 'nem2-sdk';
-import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
@@ -77,27 +76,27 @@ describe('MnemonicQR -->', () => {
             const exportMnemonic = new MnemonicQR(mnemonic, password, NetworkType.MIJIN_TEST, 'no-chain-id');
 
             // Act + Assert
-            expect((function () {
+            expect((() => {
                 const importMnemonic = MnemonicQR.fromJSON(exportMnemonic.toJSON(), wrongPw);
             })).to.throw('Could not parse encrypted mnemonic pass phrase.');
         });
 
         it('throw error given encrypted payload is invalid', () => {
             // Arrange:
-            let accountInfo:any = {
+            const accountInfo: any = {
                 v: 3,
                 type: QRCodeType.ExportMnemonic,
                 network_id: NetworkType.MIJIN_TEST,
                 chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
                 data: {
                     // 'ciphertext' field for encrypted payload missing
-                    salt: "b248953e9ebfa269cd7b940f9c03d2d4b192f90db61638375b5e78296bbe675a"
-                }
+                    salt: "b248953e9ebfa269cd7b940f9c03d2d4b192f90db61638375b5e78296bbe675a",
+                },
             };
             const password = new Password('password');
 
             // Act + Assert
-            expect((function () {
+            expect((() => {
                 const importAccount = MnemonicQR.fromJSON(JSON.stringify(accountInfo), password);
             })).to.throw('Could not parse encrypted mnemonic pass phrase.');
         });
@@ -124,8 +123,8 @@ describe('MnemonicQR -->', () => {
                 chain_id: "9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7",
                 data: {
                     ciphertext: "964322228f401a2ec576ac256cbbdce29YfW+CykqESzGSzDYuKJxJUSpQ4woqMdD8Up7mjbow09I/UYV4e8HEgbhjlLjf30YLlQ+JKLBTf9kUGMnp3tZqYSq3lLZRDp8TVE6GzHiX4V59RTP7BOixwpDWDmfOP0B0i+Q1s0+OPfmyck4p7YZkVNi/HYvQF4kDV27sjRTZKs+uETKA0Ae0rl17d9EMV3eLUVcWEGE/ChgEfmnMlN1g==",
-                    salt: "b248953e9ebfa269cd7b940f9c03d2d4b192f90db61638375b5e78296bbe675a"
-                }
+                    salt: "b248953e9ebfa269cd7b940f9c03d2d4b192f90db61638375b5e78296bbe675a",
+                },
             };
             const password = new Password('password');
 
@@ -135,11 +134,11 @@ describe('MnemonicQR -->', () => {
             // Assert
             expect(importMnemonic.mnemonic.plain).to.be.equal(
                 'stumble shoot spawn bitter '
-              + 'forest waste attitude chest ' 
+              + 'forest waste attitude chest '
               + 'square kite dawn photo '
               + 'twice message bargain trap '
               + 'spin vote lamp wire '
-              + 'also either else pupil'
+              + 'also either else pupil',
             );
         });
     });

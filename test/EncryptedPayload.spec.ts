@@ -11,7 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {expect} from "chai";
 
@@ -29,7 +29,7 @@ describe('EncryptedPayload -->', () => {
             const json = '';
 
             // Act + Assert
-            expect((function () {
+            expect((() => {
                 const payload = EncryptedPayload.fromJSON(json);
             })).to.throw('JSON argument cannot be empty.');
         });
@@ -39,7 +39,7 @@ describe('EncryptedPayload -->', () => {
             const json = '{"salt": "00"}';
 
             // Act + Assert
-            expect((function () {
+            expect((() => {
                 const payload = EncryptedPayload.fromJSON(json);
             })).to.throw('Missing mandatory field \'ciphertext\'.');
         });
@@ -49,7 +49,7 @@ describe('EncryptedPayload -->', () => {
             const json = '{"ciphertext": "00"}';
 
             // Act + Assert
-            expect((function () {
+            expect((() => {
                 const payload = EncryptedPayload.fromJSON(json);
             })).to.throw('Missing mandatory field \'salt\'.');
         });
@@ -58,7 +58,7 @@ describe('EncryptedPayload -->', () => {
             // Arrange:
             const json = {
                 ciphertext: "zyFIAqnq8fihaJFqgH9gVKGT1Aa8dbxXqrcWb//Ckv7R/DJDgdXOY8ejc6KNURPGujULpv0fQnN87AQFldmCgkGYq0CBSHwhOhyCvEBK18g=",
-                salt: "12345678901234567890123456789012"
+                salt: "12345678901234567890123456789012",
             };
 
             // Act

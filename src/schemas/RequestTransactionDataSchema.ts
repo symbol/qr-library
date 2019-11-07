@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 import {
-    NetworkType,
-    Transaction,
     TransactionMapping,
 } from "nem2-sdk";
 
 // internal dependencies
 import {
-    QRCode,
     QRCodeDataSchema,
     QRCodeType,
     TransactionQR,

@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 import {
-    Account,
-    Address,
     PublicAccount,
 } from "nem2-sdk";
 
 // internal dependencies
 import {
     ContactQR,
-    QRCode,
     QRCodeDataSchema,
     QRCodeType,
 } from '../../index';

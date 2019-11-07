@@ -37,7 +37,6 @@ import {
     AccountQR,
     TransactionQR,
     ObjectQR,
-    CosignatureQR,
     MnemonicQR,
 } from "../index";
 
@@ -87,7 +86,7 @@ describe('QRCodeGenerator -->', () => {
 
             // Act:
             const requestTx = QRCodeGenerator.createTransactionRequest(transfer);
-            const actualBase64 = await requestTx.toBase64();
+            const actualBase64 = await requestTx.toBase64().toPromise();
 
             // Assert:
             expect(actualBase64).to.not.be.equal('');
@@ -108,7 +107,7 @@ describe('QRCodeGenerator -->', () => {
 
             // Act:
             const createContact = QRCodeGenerator.createAddContact(name, account);
-            const actualBase64 = await createContact.toBase64();
+            const actualBase64 = await createContact.toBase64().toPromise();
 
             // Assert:
             expect(actualBase64).to.not.be.equal('');
@@ -129,7 +128,7 @@ describe('QRCodeGenerator -->', () => {
 
             // Act:
             const exportAccount = QRCodeGenerator.createExportAccount(account, password);
-            const actualBase64 = await exportAccount.toBase64();
+            const actualBase64 = await exportAccount.toBase64().toPromise();
 
             // Assert:
             expect(actualBase64).to.not.be.equal('');
@@ -147,7 +146,7 @@ describe('QRCodeGenerator -->', () => {
 
             // Act:
             const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, password);
-            const actualBase64 = await exportMnemonic.toBase64();
+            const actualBase64 = await exportMnemonic.toBase64().toPromise();
 
             // Assert:
             expect(actualBase64).to.not.be.equal('');

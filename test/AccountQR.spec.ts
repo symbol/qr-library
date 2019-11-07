@@ -11,7 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {expect} from "chai";
 import {
@@ -34,7 +34,7 @@ describe('AccountQR -->', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.MIJIN_TEST
+                NetworkType.MIJIN_TEST,
             );
             const password = new Password('password');
 
@@ -55,7 +55,7 @@ describe('AccountQR -->', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.MIJIN_TEST
+                NetworkType.MIJIN_TEST,
             );
             const password = new Password('password');
 
@@ -76,7 +76,7 @@ describe('AccountQR -->', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.MIJIN_TEST
+                NetworkType.MIJIN_TEST,
             );
             const password = new Password('password');
             const wrongPw = new Password('passw0rd');
@@ -85,27 +85,27 @@ describe('AccountQR -->', () => {
             const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, 'no-chain-id');
 
             // Act + Assert
-            expect((function () {
+            expect((() => {
                 const importAccount = AccountQR.fromJSON(exportAccount.toJSON(), wrongPw);
             })).to.throw('Could not parse encrypted account information.');
         });
 
         it('throw error given encrypted payload is invalid', () => {
             // Arrange:
-            let accountInfo:any = {
+            const accountInfo: any = {
                 v: 3,
                 type: QRCodeType.ExportAccount,
                 network_id: NetworkType.MIJIN_TEST,
                 chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
                 data: {
                     // 'ciphertext' field for encrypted payload missing
-                    salt: '42c8615bc6b2bc88cd239f08a5a17cc62bb0ebaece53f3e458a1cd67cd0888bc'
-                }
+                    salt: '42c8615bc6b2bc88cd239f08a5a17cc62bb0ebaece53f3e458a1cd67cd0888bc',
+                },
             };
             const password = new Password('password');
 
             // Act + Assert
-            expect((function () {
+            expect((() => {
                 const importAccount = AccountQR.fromJSON(JSON.stringify(accountInfo), password);
             })).to.throw('Could not parse encrypted account information.');
         });
@@ -114,7 +114,7 @@ describe('AccountQR -->', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.MIJIN_TEST
+                NetworkType.MIJIN_TEST,
             );
             const password = new Password('password');
 
@@ -136,8 +136,8 @@ describe('AccountQR -->', () => {
                 chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
                 data: {
                     ciphertext: '56d310848ee93d0794eb1f64a5195778ded2q7IxvtPbO+sA7jZZyhpu/khbaNdx1pzuoGoPJRw1A4aBsWPlex3y/gy5da8WjF0i4d+/D0B5ESy+zX5P+AoFAw3EFi3UVBdnav4rnqg=',
-                    salt: '42c8615bc6b2bc88cd239f08a5a17cc62bb0ebaece53f3e458a1cd67cd0888bc'
-                }
+                    salt: '42c8615bc6b2bc88cd239f08a5a17cc62bb0ebaece53f3e458a1cd67cd0888bc',
+                },
             };
             const password = new Password('password');
 

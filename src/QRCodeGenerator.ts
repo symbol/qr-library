@@ -16,7 +16,6 @@
 import {
     NetworkType,
     Transaction,
-    TransactionMapping,
     Account,
     PublicAccount,
     Password
@@ -25,7 +24,6 @@ import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
-    QRCodeInterface,
     QRCodeType,
     QRCode,
     AccountQR,

@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
-import {
-    ErrorCorrectLevel,
-    QRCode as QRCodeImpl,
-    QR8BitByte,
-} from 'qrcode-generator-ts';
-*/
-
 import * as QRCodeCanvas from 'qrcode';
 import { createCanvas } from 'canvas';
-
 import {
     NetworkType,
 } from 'nem2-sdk';
+import { 
+    from as observableFrom,
+    Observable
+} from 'rxjs'
 
 // internal dependencies
 import {
@@ -95,8 +90,8 @@ abstract class QRCode implements QRCodeInterface {
      * 
      * @return {number}
      */
-    public getCorrectionLevel(): 'M' | 'L' | 'S' {
-        return 'M' //QRCodeSettings.CORRECTION_LEVEL;
+    public getCorrectionLevel(): 'H' | 'M' | 'L' | 'S' {
+        return 'M';
     }
 
     /**
@@ -122,35 +117,18 @@ abstract class QRCode implements QRCodeInterface {
      *
      * @return  {string} Return image data in Base64.
      */
-    public async toBase64(): Promise<string> {
+    public toBase64(): Observable<string> {
 
         // get JSON representation
         const json = this.toJSON()
 
         // get base64 representation
-        return await QRCodeCanvas.toDataURL(json, {
-            errorCorrectionLevel: 'M', //this.getCorrectionLevel(),
+        return observableFrom(QRCodeCanvas.toDataURL(json, {
+            errorCorrectionLevel: 'M',
             width: 250,
             // do-not-set-'version'
-        });
+        }));
     }
-
-    /**
-     * Generate QRCode to be printed in ASCII format.
-     *
-     * @return {string}
-     
-    public toASCII() {
-
-        // build the QR Code
-        const qr = this.build();
-
-        // encode with ASCII/MinimalASCII encoder
-        const encoder = new EncoderASCII(qr);
-
-        // return string representation
-        return encoder.toString();
-    }*/
 
     /**
      * Generate QRCode to be printed on a `node-canvas`. This
@@ -162,7 +140,7 @@ abstract class QRCode implements QRCodeInterface {
      * @param   {number}    margin       QRcode cell margin
      * @return  {string}
      */
-    public async toCanvas(): Promise<any> {
+    public toCanvas(): Observable<any> {
 
         // get JSON representation
         const json = this.toJSON();
@@ -172,11 +150,11 @@ abstract class QRCode implements QRCodeInterface {
         const context = canvas.getContext('2d');
 
         // build the QR Code
-        return await QRCodeCanvas.toCanvas(canvas, json, {
-            errorCorrectionLevel: 'M', // this.getCorrectionLevel(),
+        return observableFrom(QRCodeCanvas.toCanvas(canvas, json, {
+            errorCorrectionLevel: 'M',
             width: 250,
             // do-not-set-'version'
-        });
+        }));
     }
 }
 

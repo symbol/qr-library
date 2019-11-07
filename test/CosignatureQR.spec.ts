@@ -11,20 +11,20 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {expect} from "chai";
 import {
-    AggregateTransaction,
-    TransferTransaction,
-    Deadline,
     Address,
+    AggregateTransaction,
+    Deadline,
     Mosaic,
     NamespaceId,
-    UInt64,
-    PlainMessage,
     NetworkType,
+    PlainMessage,
     PublicAccount,
+    TransferTransaction,
+    UInt64,
 } from 'nem2-sdk';
 
 // internal dependencies
@@ -36,22 +36,22 @@ import {
 const bondedCreationHelper = () => {
     const account = PublicAccount.createFromPublicKey(
         'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-        NetworkType.MIJIN_TEST
+        NetworkType.MIJIN_TEST,
     );
     const transfer = TransferTransaction.create(
         Deadline.create(1),
         Address.createFromPublicKey(
             'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-            NetworkType.MIJIN_TEST
+            NetworkType.MIJIN_TEST,
         ),
         [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
         PlainMessage.create('Welcome to NEM!'),
-        NetworkType.MIJIN_TEST
+        NetworkType.MIJIN_TEST,
     );
     const bonded = AggregateTransaction.createBonded(
         Deadline.create(1),
         [transfer.toAggregate(account)],
-        NetworkType.MIJIN_TEST
+        NetworkType.MIJIN_TEST,
     );
 
     return bonded;
@@ -120,8 +120,8 @@ describe('CosignatureQR -->', () => {
                            + '0000000001904142000000000000000025A52B4E190000006400000064000000'
                            + 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268'
                            + '019054419051F5B062FE3931B29B095AB8FD42FCC2010AE1A67D903BC5100001'
-                           + '0057656C636F6D6520746F204E454D2144B262C46CEABB858096980000000000'
-                }
+                           + '0057656C636F6D6520746F204E454D2144B262C46CEABB858096980000000000',
+                },
             };
 
             // Act:

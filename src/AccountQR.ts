@@ -15,7 +15,6 @@
  */
 import {
     Account,
-    PublicAccount,
     NetworkType,
     Password,
 } from "nem2-sdk";
@@ -25,9 +24,6 @@ import {
     QRCode,
     QRCodeInterface,
     QRCodeType,
-    QRCodeSettings,
-    EncryptionService,
-    EncryptedPayload,
     QRCodeDataSchema,
     ExportAccountDataSchema
 } from '../index';

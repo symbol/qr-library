@@ -61,10 +61,7 @@ export class ExampleExportAccountQR extends Example {
         );
 
         console.log("JSON: ", accountQR.toJSON());
-        console.log("BASE64: ", accountQR.toBase64());
-        console.log("");
-        console.log("ASCII: ");
-        //console.log(accountQR.toASCII());
+        console.log("BASE64: ", await accountQR.toBase64().toPromise());
         console.log("");
         return this.resolve(0);
     }
