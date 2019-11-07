@@ -57,7 +57,7 @@ export class ExampleExportAccountQR extends Example {
         // create QR Code with JSON content and password
         const accountQR = AccountQR.fromJSON(
             JSON.stringify(accountInfo),
-            new Password('password')
+            'password'
         );
 
         console.log("JSON: ", accountQR.toJSON());

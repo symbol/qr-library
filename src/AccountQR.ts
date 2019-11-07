@@ -16,7 +16,6 @@
 import {
     Account,
     NetworkType,
-    Password,
 } from "nem2-sdk";
 
 // internal dependencies
@@ -33,9 +32,10 @@ class AccountQR extends QRCode implements QRCodeInterface {
      * Construct an Account QR Code out of the
      * nem2-sdk Account or PublicAccount instance.
      *
-     * @param   account     {Account}
+     * @param   account         {Account}
+     * @param   password        {string}
      * @param   networkType     {NetworkType}
-     * @param   generationHash         {string}
+     * @param   generationHash  {string}
      */
     constructor(/**
                  * The account to be exported
@@ -44,9 +44,9 @@ class AccountQR extends QRCode implements QRCodeInterface {
                 public readonly account: Account,
                 /**
                  * The password for encryption
-                 * @var {Password}
+                 * @var {string}
                  */
-                public readonly password: Password,
+                public readonly password: string,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -73,7 +73,7 @@ class AccountQR extends QRCode implements QRCodeInterface {
      */
     static fromJSON(
         json: string,
-        password: Password
+        password: string
     ): AccountQR {
 
         // create the QRCode object from JSON

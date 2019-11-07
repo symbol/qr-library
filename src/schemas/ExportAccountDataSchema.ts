@@ -62,7 +62,7 @@ class ExportAccountDataSchema extends QRCodeDataSchema {
      * object.
      *
      * @param   json        {string}
-     * @param   password    {Password}
+     * @param   password    {string}
      * @return  {AccountQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -71,7 +71,7 @@ class ExportAccountDataSchema extends QRCodeDataSchema {
      */
     public static parse(
         json: string,
-        password: Password,
+        password: string,
     ): AccountQR {
         if (! json.length) {
             throw new Error('JSON argument cannot be empty.');

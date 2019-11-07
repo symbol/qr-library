@@ -59,7 +59,7 @@ export class ExampleExportMnemonicQR extends Example {
         // create QR Code with JSON content and password
         const mnemonicQR = MnemonicQR.fromJSON(
             JSON.stringify(mnemonicInfo),
-            new Password('password')
+            'password'
         );
 
         console.log("JSON: ", mnemonicQR.toJSON());

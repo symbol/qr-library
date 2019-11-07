@@ -18,7 +18,7 @@ import {
     Transaction,
     Account,
     PublicAccount,
-    Password
+    Password,
 } from "nem2-sdk";
 import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
@@ -89,13 +89,13 @@ class QRCodeGenerator {
      *
      * @see {AccountQR}
      * @param   account         {Account}
-     * @param   password        {Password}
+     * @param   password        {string}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
      */
     public static createExportAccount(
         account: Account,
-        password: Password,
+        password: string,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
         chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
     ): AccountQR {
@@ -125,13 +125,13 @@ class QRCodeGenerator {
      *
      * @see {MnemonicQR}
      * @param   mnemonic        {MnemonicPassPhrase}
-     * @param   password        {Password}
+     * @param   password        {string}
      * @param   networkType     {NetworkType}
      * @param   chainId         {string}
      */
     public static createExportMnemonic(
         mnemonic: MnemonicPassPhrase,
-        password: Password,
+        password: string,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
         chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
     ): MnemonicQR {
@@ -150,7 +150,7 @@ class QRCodeGenerator {
      */
     static fromJSON(
         json: string,
-        password: Password | undefined = undefined
+        password: string | undefined = undefined
     ): QRCode {
 
         if (! json.length) {

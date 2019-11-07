@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import {expect} from "chai";
-import {Password} from 'nem2-sdk';
 
 // internal dependencies
 import {
@@ -31,7 +30,7 @@ describe('EncryptionService -->', () => {
             const pass = 'password';
 
             // Act
-            const encrypted = EncryptionService.encrypt(data, new Password(pass));
+            const encrypted = EncryptionService.encrypt(data, pass);
 
             // Assert
             expect(encrypted.ciphertext).to.not.be.undefined;
@@ -45,7 +44,7 @@ describe('EncryptionService -->', () => {
             const pass = 'password';
 
             // Act
-            const encrypted = EncryptionService.encrypt(data, new Password(pass));
+            const encrypted = EncryptionService.encrypt(data, pass);
 
             // Assert
             expect(encrypted.ciphertext).to.have.lengthOf(76);
@@ -58,9 +57,9 @@ describe('EncryptionService -->', () => {
             const pass = 'password';
 
             // Act
-            const encrypted_1 = EncryptionService.encrypt(data, new Password(pass));
-            const encrypted_2 = EncryptionService.encrypt(data, new Password(pass));
-            const encrypted_3 = EncryptionService.encrypt(data, new Password(pass));
+            const encrypted_1 = EncryptionService.encrypt(data, pass);
+            const encrypted_2 = EncryptionService.encrypt(data, pass);
+            const encrypted_3 = EncryptionService.encrypt(data, pass);
 
             // Assert
             expect(encrypted_1).to.not.be.equal(encrypted_2);
@@ -80,8 +79,8 @@ describe('EncryptionService -->', () => {
             const pass = 'password';
 
             // Act
-            const encrypted = EncryptionService.encrypt(data, new Password(pass));
-            const decrypted = EncryptionService.decrypt(encrypted, new Password(pass));
+            const encrypted = EncryptionService.encrypt(data, pass);
+            const decrypted = EncryptionService.decrypt(encrypted, pass);
 
             // Assert
             expect(decrypted).to.be.equal(data);

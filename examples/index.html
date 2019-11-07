@@ -14,6 +14,8 @@
 const QRCodeType = CatapultQR.QRCodeType;
 const ContactQR = CatapultQR.ContactQR;
 const AccountQR = CatapultQR.AccountQR;
+const MnemonicQR = CatapultQR.MnemonicQR;
+const TransactionQR = CatapultQR.TransactionQR;
 
 // ContactQR created from JSON
 const contactInfo = {
@@ -26,22 +28,101 @@ const contactInfo = {
         publicKey: 'D90ABF5BADC4E709E79E8F168F1629CD90D7F5B41010B7C0616C2121D516C11C'
     }
 };
+
+// AccountQR created from JSON
+const accountInfo = {
+    v: 3,
+    type: QRCodeType.ExportAccount,
+    network_id: 144,
+    chain_id: "9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7",
+    data: {
+        ciphertext: "a89541dbaa98ef9e9e498cd76ff46461bI3kQgjmHUgFRd5ySLf8D9VDJCFSIvZ8xJwcnG/kRrrdqP1Y7Fc20C0xOWOHmAloKyn066FidX5QCtFQgqf1NChsJH2t3qXaxXB1h36voqU=","salt":"cc53aeba6dab2f3d93fe080cb548a2353fa24a792e958f612dbb98eb5528471c"
+    }
+};
+
+// MnemonicQR created from JSON
+const mnemonicInfo = {
+    v: 3,
+    type: QRCodeType.ExportMnemonic,
+    network_id: 144,
+    chain_id: "9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7",
+    data: {
+        ciphertext: "a580e9cf65d22127626e44c3a2221487VRLN341zEoEHWBK381Xqkzhbt1L+CHfKpvsyYF+2N2CBFJJrZvA6+b5unxafklV0xHOaymakrAemfPAnQYfgsGMC5uyMaYTOS+cwQqDJ3+QAegaOh9CMV6A5ww5D2hE6OF6szbbOe7l6fSVrboFgMGXEuoO1jN5jkPnIN0MqeFgO0R62er2PkuHw4tiu5+kp33nnvwO7XwhQV7mVnNUOiw==","salt":"d2c6a1af61ff37fd9e699646ae279de5419e71efa820f2486d8055aaafa24503"
+    }
+};
+
+// TransactionQR created from JSON
+const transactionInfo = {
+    v: 3,
+    type: 3,
+    network_id: 144,
+    chain_id: "9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7",
+    data: {
+        payload: "A500000000000000000000000000000000000000000000000000000000000000"
+               + "0000000000000000000000000000000000000000000000000000000000000000"
+               + "0000000000000000000000000000000000000000000000000000000000000000"
+               + "000000000190544100000000000000008CDC693819000000912C7BC6007CB8AC"
+               + "B8000000000000000000000000000000000100010044B262C46CEABB85010000"
+               + "0000000000"
+    }
+}
+
+// create QR codes
 const contactQR = ContactQR.fromJSON(JSON.stringify(contactInfo));
+const accountQR = AccountQR.fromJSON(JSON.stringify(accountInfo), 'password');
+const mnemonicQR = MnemonicQR.fromJSON(JSON.stringify(mnemonicInfo), 'password');
+const transactionQR = TransactionQR.fromJSON(JSON.stringify(transactionInfo));
 
 window.addEventListener('DOMContentLoaded', function() {
     (async function() {
-        const base64 = await contactQR.toBase64().toPromise();
-        document.getElementById("qr-code-1-1").setAttribute('src', base64);
+        const contact_base64 = await contactQR.toBase64().toPromise();
+        const account_base64 = await accountQR.toBase64().toPromise();
+        const mnemonic_base64 = await mnemonicQR.toBase64().toPromise();
+        const transaction_base64 = await transactionQR.toBase64().toPromise();
+        document.getElementById("qr-code-contact").setAttribute('src', contact_base64);
+        document.getElementById("qr-code-account").setAttribute('src', account_base64);
+        document.getElementById("qr-code-mnemonic").setAttribute('src', mnemonic_base64);
+        document.getElementById("qr-code-transaction").setAttribute('src', transaction_base64);
     })();
 });
 </script>
 
         <div id="examples-wrapper">
-            <div class="example" rel="1">
-                <img src=""
-                     width="250px"
-                     height="250px"
-                     id="qr-code-1-1" />
+            <div class="example" rel="contact">
+                <p style="vertical-align: middle;">
+                    <span>ContactQR: </span>
+                    <img src=""
+                        width="250px"
+                        height="250px"
+                        id="qr-code-contact" />
+                </p>
+            </div>
+            <div class="example" rel="account">
+                <p style="vertical-align: middle;">
+                    <span>AccountQR: </span>
+                    <img src=""
+                        width="250px"
+                        height="250px"
+                        id="qr-code-account" />
+                </p>
+            </div>
+            <div class="example" rel="mnemonic">
+                <p style="vertical-align: middle;">
+                    <span>MnemonicQR: </span>
+                    <img src=""
+                        width="250px"
+                        height="250px"
+                        id="qr-code-mnemonic" />
+                </p>
+            </div>
+            <div class="example" rel="transaction">
+                <p style="vertical-align: middle;">
+                    <span>TransactionQR: </span>
+                    <img src=""
+                        width="250px"
+                        height="250px"
+                        id="qr-code-transaction" />
+                </p>
             </div>
         </div>
 	</body>

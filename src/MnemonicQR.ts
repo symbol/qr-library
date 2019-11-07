@@ -16,7 +16,6 @@
 import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 import {
     NetworkType,
-    Password,
 } from "nem2-sdk";
 
 // internal dependencies
@@ -45,9 +44,9 @@ class MnemonicQR extends QRCode implements QRCodeInterface {
                 public readonly mnemonic: MnemonicPassPhrase,
                 /**
                  * The password for encryption
-                 * @var {Password}
+                 * @var {string}
                  */
-                public readonly password: Password,
+                public readonly password: string,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -66,7 +65,7 @@ class MnemonicQR extends QRCode implements QRCodeInterface {
      * object.
      *
      * @param   json        {string}
-     * @param   password    {Password}
+     * @param   password    {string}
      * @return  {MnemonicQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -74,7 +73,7 @@ class MnemonicQR extends QRCode implements QRCodeInterface {
      */
     public static fromJSON(
         json: string,
-        password: Password,
+        password: string,
     ): MnemonicQR {
 
         // create the QRCode object from JSON

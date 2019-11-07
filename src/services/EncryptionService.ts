@@ -41,19 +41,19 @@ class EncryptionService {
      * First we generate a random salt of 32 bytes, then we iterate
      * 2000 times with PBKDF2 and encrypt with AES.
      *
-     * @param password {Password}
+     * @param password {string}
      * @param data {string}
      */
     public static encrypt(
         data: string,
-        password: Password,
+        password: string,
     ): EncryptedPayload {
 
         // create random salt (32 bytes)
         const salt = CryptoJS.lib.WordArray.random(32);
 
         // derive key of 8 bytes with 2000 iterations of PBKDF2
-        const key = CryptoJS.PBKDF2(password.value, salt, {
+        const key = CryptoJS.PBKDF2(password, salt, {
           keySize: 8,
           iterations: 2000,
         });
@@ -82,7 +82,7 @@ class EncryptionService {
      */
     public static decrypt(
         payloadOrJson: EncryptedPayload | string,
-        password: Password,
+        password: string,
     ): string {
 
         let payload: EncryptedPayload;
@@ -104,7 +104,7 @@ class EncryptionService {
         const cipher: string = priv.substr(32);
 
         // re-generate key (PBKDF2)
-        const key = CryptoJS.PBKDF2(password.value, salt, {
+        const key = CryptoJS.PBKDF2(password, salt, {
           keySize: 8,
           iterations: 2000,
         });

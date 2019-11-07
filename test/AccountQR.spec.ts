@@ -36,10 +36,9 @@ describe('AccountQR -->', () => {
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
                 NetworkType.MIJIN_TEST,
             );
-            const password = new Password('password');
 
             // Act:
-            const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportAccount = new AccountQR(account, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
             const actualJSON = exportAccount.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
@@ -57,10 +56,9 @@ describe('AccountQR -->', () => {
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
                 NetworkType.MIJIN_TEST,
             );
-            const password = new Password('password');
 
             // Act:
-            const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportAccount = new AccountQR(account, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
             const actualJSON = exportAccount.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
@@ -78,15 +76,13 @@ describe('AccountQR -->', () => {
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
                 NetworkType.MIJIN_TEST,
             );
-            const password = new Password('password');
-            const wrongPw = new Password('passw0rd');
 
             // Act:
-            const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportAccount = new AccountQR(account, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
 
             // Act + Assert
             expect((() => {
-                const importAccount = AccountQR.fromJSON(exportAccount.toJSON(), wrongPw);
+                const importAccount = AccountQR.fromJSON(exportAccount.toJSON(), 'wrong-password');
             })).to.throw('Could not parse encrypted account information.');
         });
 
@@ -102,11 +98,10 @@ describe('AccountQR -->', () => {
                     salt: '42c8615bc6b2bc88cd239f08a5a17cc62bb0ebaece53f3e458a1cd67cd0888bc',
                 },
             };
-            const password = new Password('password');
 
             // Act + Assert
             expect((() => {
-                const importAccount = AccountQR.fromJSON(JSON.stringify(accountInfo), password);
+                const importAccount = AccountQR.fromJSON(JSON.stringify(accountInfo), 'password');
             })).to.throw('Could not parse encrypted account information.');
         });
 
@@ -116,11 +111,10 @@ describe('AccountQR -->', () => {
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
                 NetworkType.MIJIN_TEST,
             );
-            const password = new Password('password');
 
             // Act:
-            const exportAccount = new AccountQR(account, password, NetworkType.MIJIN_TEST, 'no-chain-id');
-            const importAccount = AccountQR.fromJSON(exportAccount.toJSON(), password);
+            const exportAccount = new AccountQR(account, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+            const importAccount = AccountQR.fromJSON(exportAccount.toJSON(), 'password');
 
             // Assert
             expect(importAccount.account.privateKey).to.be.equal(exportAccount.account.privateKey);
@@ -139,10 +133,9 @@ describe('AccountQR -->', () => {
                     salt: '42c8615bc6b2bc88cd239f08a5a17cc62bb0ebaece53f3e458a1cd67cd0888bc',
                 },
             };
-            const password = new Password('password');
 
             // Act:
-            const importAccount = AccountQR.fromJSON(JSON.stringify(accountInfo), password);
+            const importAccount = AccountQR.fromJSON(JSON.stringify(accountInfo), 'password');
 
             // Assert
             expect(importAccount.account.privateKey).to.be.equal('749F1FF1972CD465CAB74566FF0AA021F846FBE3916ABB6A6C1373E962C76331');
