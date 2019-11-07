@@ -7,6 +7,7 @@ var PATHS = {
 }
 
 var config = {
+  mode: 'production',
   // These are the entry point of our library. We tell webpack to use
   // the name we assign later, when creating the bundle. We also use
   // the name to filter the second entry point for applying code
@@ -46,6 +47,9 @@ var config = {
     fs: 'empty',
     tls: 'empty',
     net: 'empty'
+  },
+  performance: { 
+    hints: false
   }
 }
 

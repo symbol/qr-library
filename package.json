@@ -50,7 +50,7 @@
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "pretest": "npm run build",
     "test": "mocha --compilers js:babel-core/register --ui bdd --recursive ./dist/test",
-    "examples": "npm run build && node dist/examples/index.js"
+    "examples": "node dist/examples/index.js"
   },
   "repository": {
     "type": "git",
