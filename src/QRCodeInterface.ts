@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
-import {QRCode} from 'qrcode-generator-ts';
+//import {QRCode} from 'qrcode-generator-ts';
 
 // internal dependencies
 import {QRCodeType} from '../index';
@@ -24,7 +24,7 @@ import {QRCodeType} from '../index';
  *
  * @since 0.2.0
  */
-export interface QRCodeInterface {
+interface QRCodeInterface {
 
     /**
      * The base64 representation of the QR Code content.
@@ -43,7 +43,7 @@ export interface QRCodeInterface {
      *
      * @return {QRCode}
      */
-    build(): QRCode;
+    //build(): QRCode;
 
     /**
      * The `toJSON()` method should return the JSON
@@ -59,5 +59,7 @@ export interface QRCodeInterface {
      *
      * @return {string}
      */
-    toBase64(): string;
+    toBase64(): Promise<string>;
 }
+
+export {QRCodeInterface};

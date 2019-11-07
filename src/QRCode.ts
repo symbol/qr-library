@@ -11,13 +11,15 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
+/*
 import {
     ErrorCorrectLevel,
     QRCode as QRCodeImpl,
     QR8BitByte,
 } from 'qrcode-generator-ts';
+*/
 
 import * as QRCodeCanvas from 'qrcode';
 import { createCanvas } from 'canvas';
@@ -32,10 +34,10 @@ import {
     QRCodeType,
     QRCodeSettings,
     QRCodeDataSchema,
-    EncoderASCII,
+    //EncoderASCII,
 } from "../index";
 
-export abstract class QRCode implements QRCodeInterface {
+abstract class QRCode implements QRCodeInterface {
 
     /**
      * Construct a QR Code instance out of its base64
@@ -64,7 +66,6 @@ export abstract class QRCode implements QRCodeInterface {
                  * @var {string}
                  */
                 public readonly base64: string|undefined = undefined) {
-
     }
 
     /// region Abstract Methods
@@ -94,8 +95,8 @@ export abstract class QRCode implements QRCodeInterface {
      * 
      * @return {number}
      */
-    public getCorrectionLevel(): number {
-        return QRCodeSettings.CORRECTION_LEVEL;
+    public getCorrectionLevel(): 'M' | 'L' | 'S' {
+        return 'M' //QRCodeSettings.CORRECTION_LEVEL;
     }
 
     /**
@@ -117,49 +118,28 @@ export abstract class QRCode implements QRCodeInterface {
     }
 
     /**
-     * The `build()` method should return the QRCode
-     * representation of the QR Code content.
-     *
-     * @return {QRCodeImpl}
-     */
-    public build(): QRCodeImpl {
-
-        // prepare QR generation
-        const qr = new QRCodeImpl();
-        qr.setTypeNumber(this.getTypeNumber());
-        qr.setErrorCorrectLevel(this.getCorrectionLevel());
-
-        // get JSON representation
-        const json = this.toJSON();
-
-        // build QR code
-        qr.addData(new QR8BitByte(json));
-        qr.make();
-        return qr;
-    }
-
-    /**
      * Generate QRcode image Base64.
      *
      * @return  {string} Return image data in Base64.
      */
-    public toBase64(): string {
+    public async toBase64(): Promise<string> {
 
-        // build QR Code
-        const qr = this.build();
+        // get JSON representation
+        const json = this.toJSON()
 
         // get base64 representation
-        return qr.toDataURL(
-            QRCodeSettings.CELL_PIXEL_SIZE,
-            QRCodeSettings.MARGIN_PIXEL
-        );
+        return await QRCodeCanvas.toDataURL(json, {
+            errorCorrectionLevel: 'M', //this.getCorrectionLevel(),
+            width: 250,
+            // do-not-set-'version'
+        });
     }
 
     /**
      * Generate QRCode to be printed in ASCII format.
      *
      * @return {string}
-     */
+     
     public toASCII() {
 
         // build the QR Code
@@ -170,7 +150,7 @@ export abstract class QRCode implements QRCodeInterface {
 
         // return string representation
         return encoder.toString();
-    }
+    }*/
 
     /**
      * Generate QRCode to be printed on a `node-canvas`. This
@@ -191,18 +171,13 @@ export abstract class QRCode implements QRCodeInterface {
         const canvas = createCanvas(250, 250);
         const context = canvas.getContext('2d');
 
-        // QRCodeCanvas correction level
-        const corrections: any = {};
-        corrections[ErrorCorrectLevel.L] = 'L';
-        corrections[ErrorCorrectLevel.M] = 'M';
-        corrections[ErrorCorrectLevel.Q] = 'Q';
-        corrections[ErrorCorrectLevel.H] = 'H';
-
         // build the QR Code
         return await QRCodeCanvas.toCanvas(canvas, json, {
-            errorCorrectionLevel: corrections[this.getCorrectionLevel()],
+            errorCorrectionLevel: 'M', // this.getCorrectionLevel(),
             width: 250,
             // do-not-set-'version'
         });
     }
 }
+
+export {QRCode};

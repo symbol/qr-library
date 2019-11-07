@@ -11,26 +11,26 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
     Account,
-    PublicAccount,
-    NetworkType,
     Address,
-} from "nem2-sdk";
+    NetworkType,
+    PublicAccount,
+} from 'nem2-sdk';
 
 // internal dependencies
 import {
+    AddContactDataSchema,
     QRCode,
-    QRCodeInterface,
-    QRCodeType,
-    QRCodeSettings,
     QRCodeDataSchema,
-    AddContactDataSchema
+    QRCodeInterface,
+    QRCodeSettings,
+    QRCodeType,
 } from '../index';
 
-export class ContactQR extends QRCode implements QRCodeInterface {
+class ContactQR extends QRCode implements QRCodeInterface {
     /**
      * Construct a Contact QR Code out of the
      * nem2-sdk Account or PublicAccount instance.
@@ -72,8 +72,8 @@ export class ContactQR extends QRCode implements QRCodeInterface {
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static fromJSON(
-        json: string
+    public static fromJSON(
+        json: string,
     ): ContactQR {
 
         // create the QRCode object from JSON
@@ -104,3 +104,5 @@ export class ContactQR extends QRCode implements QRCodeInterface {
         return new AddContactDataSchema();
     }
 }
+
+export {ContactQR};

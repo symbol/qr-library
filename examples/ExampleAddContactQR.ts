@@ -52,7 +52,7 @@ export class ExampleAddContactQR extends Example {
         console.log("BASE64: ", contactQR.toBase64());
         console.log("");
         console.log("ASCII: ");
-        console.log(contactQR.toASCII());
+        //console.log(contactQR.toASCII());
         console.log("");
         return this.resolve(0);
     }

@@ -11,7 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 // internal dependencies
 import {QRCode} from '../index';
@@ -23,7 +23,7 @@ import {QRCode} from '../index';
  *
  * @since 0.3.0
  */
-export abstract class QRCodeDataSchema {
+abstract class QRCodeDataSchema {
 
     /**
      * The AccountQR QR Code version
@@ -61,7 +61,9 @@ export abstract class QRCodeDataSchema {
             "type": qr.type,
             "network_id": qr.networkType,
             "chain_id": qr.generationHash,
-            "data": data
+            "data": data,
         };
     }
 }
+
+export {QRCodeDataSchema};

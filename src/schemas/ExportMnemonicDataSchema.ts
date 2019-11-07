@@ -11,22 +11,22 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
+import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 import {
     NetworkType,
     Password,
 } from "nem2-sdk";
-import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
-    QRCodeDataSchema,
-    QRCode,
-    QRCodeType,
-    MnemonicQR,
-    EncryptionService,
     EncryptedPayload,
+    EncryptionService,
+    MnemonicQR,
+    QRCode,
+    QRCodeDataSchema,
+    QRCodeType,
 } from '../../index';
 
 /**
@@ -35,7 +35,7 @@ import {
  *
  * @since 0.3.2
  */
-export class ExportMnemonicDataSchema extends QRCodeDataSchema {
+class ExportMnemonicDataSchema extends QRCodeDataSchema {
 
     constructor() {
         super();
@@ -71,9 +71,9 @@ export class ExportMnemonicDataSchema extends QRCodeDataSchema {
      * @throws  {Error}     On unrecognized QR code `type` field value.
      * @throws  {Error}     On invalid password.
      */
-    static parse(
+    public static parse(
         json: string,
-        password: Password
+        password: Password,
     ): MnemonicQR {
         if (! json.length) {
             throw new Error('JSON argument cannot be empty.');
@@ -107,8 +107,10 @@ export class ExportMnemonicDataSchema extends QRCodeDataSchema {
 
             return new MnemonicQR(mnemonic, password, network, generationHash);
         }
-        catch(e) {
+        catch (e) {
             throw new Error('Could not parse encrypted mnemonic pass phrase.');
         }
     }
 }
+
+export {ExportMnemonicDataSchema};

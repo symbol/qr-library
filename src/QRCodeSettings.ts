@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
+/*
 import {
     ErrorCorrectLevel,
 } from 'qrcode-generator-ts';
-
+*/
 // internal dependencies
 import {QRCodeType} from '../index';
 
@@ -26,14 +27,14 @@ import {QRCodeType} from '../index';
  *
  * @since 0.2.0
  */
-export class QRCodeSettings {
+class QRCodeSettings {
 
     /**
      * The Error correction level.
      *
      * @var {ErrorCorrectLevel}
      */
-    public static CORRECTION_LEVEL = ErrorCorrectLevel.M;
+    public static CORRECTION_LEVEL = 'M'; //ErrorCorrectLevel.M;
 
     /**
      * The QR Code cell size in pixels.
@@ -49,3 +50,5 @@ export class QRCodeSettings {
      */
     public static MARGIN_PIXEL: number = 2;
 }
+
+export {QRCodeSettings};

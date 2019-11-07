@@ -11,29 +11,29 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
     Account,
-    PublicAccount,
     NetworkType,
+    PublicAccount,
 } from "nem2-sdk";
 
 // internal dependencies
 import {
+    ExportObjectDataSchema,
     QRCode,
-    QRCodeInterface,
-    QRCodeType,
-    QRCodeSettings,
     QRCodeDataSchema,
-    ExportObjectDataSchema
+    QRCodeInterface,
+    QRCodeSettings,
+    QRCodeType,
 } from '../index';
 
-export class ObjectQR extends QRCode implements QRCodeInterface {
+class ObjectQR extends QRCode implements QRCodeInterface {
     /**
      * Construct a Object QR Code out of the
      * JSON object.
-     * 
+     *
      * @param   object          {Object}
      * @param   networkType     {NetworkType}
      * @param   generationHash         {string}
@@ -42,7 +42,7 @@ export class ObjectQR extends QRCode implements QRCodeInterface {
                  * The object to display
                  * @var {Object}
                  */
-                public readonly object: Object,
+                public readonly object: object,
                 /**
                  * The network type.
                  * @var {NetworkType}
@@ -66,8 +66,8 @@ export class ObjectQR extends QRCode implements QRCodeInterface {
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static fromJSON(
-        json: string
+    public static fromJSON(
+        json: string,
     ): ObjectQR {
 
         // create the QRCode object from JSON
@@ -98,3 +98,5 @@ export class ObjectQR extends QRCode implements QRCodeInterface {
         return new ExportObjectDataSchema();
     }
 }
+
+export {ObjectQR};

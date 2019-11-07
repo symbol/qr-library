@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  *limitations under the License.
  */
+/*
 import {
     QRCode as QRCodeImpl,
 } from 'qrcode-generator-ts';
-
+*/
+import {QRCode} from 'qrcode'
 // internal dependencies
 import {
     EncoderInterface,
@@ -44,7 +46,7 @@ export class EncoderASCII implements EncoderInterface {
                  * The QR Code that will be encoded.
                  * @var {QRCodeImpl}
                  */
-                public readonly qr: QRCodeImpl,
+                public readonly qr: QRCode,
                 /**
                  * The Cell Size used for encoding in Pixel.
                  * @var {number}

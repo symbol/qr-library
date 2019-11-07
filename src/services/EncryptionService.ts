@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as CryptoJS from "crypto-js";
 import {
     Password,
 } from "nem2-sdk";
-import * as CryptoJS from "crypto-js";
 
 // internal dependencies
 import {
-    EncryptedPayload
+    EncryptedPayload,
 } from '../../index';
 
 /**
  * Class `EncryptionService` describes a high level service
  * for encryption/decryption of data.
- * 
+ *
  * Implemented algorithms for encryption/decryption include:
  * - AES with PBKDF2 (Password-Based Key Derivation Function)
- * 
+ *
  * @since 0.3.0
  */
-export class EncryptionService {
+class EncryptionService {
 
     /**
      * The `encrypt` method will encrypt given `data` raw string
@@ -46,7 +46,7 @@ export class EncryptionService {
      */
     public static encrypt(
         data: string,
-        password: Password
+        password: Password,
     ): EncryptedPayload {
 
         // create random salt (32 bytes)
@@ -63,9 +63,9 @@ export class EncryptionService {
 
         // encrypt with AES
         const encrypted = CryptoJS.AES.encrypt(data, key,  {
-            iv: iv, 
+            iv: iv,
             padding: CryptoJS.pad.Pkcs7,
-            mode: CryptoJS.mode.CBC
+            mode: CryptoJS.mode.CBC,
         });
 
         // create our `EncryptedPayload` (16 bytes iv as hex || cipher text)
@@ -82,7 +82,7 @@ export class EncryptionService {
      */
     public static decrypt(
         payloadOrJson: EncryptedPayload | string,
-        password: Password
+        password: Password,
     ): string {
 
         let payload: EncryptedPayload;
@@ -113,9 +113,11 @@ export class EncryptionService {
         const decrypted = CryptoJS.AES.decrypt(cipher, key, {
             iv: iv,
             padding: CryptoJS.pad.Pkcs7,
-            mode: CryptoJS.mode.CBC
+            mode: CryptoJS.mode.CBC,
         });
 
         return decrypted.toString(CryptoJS.enc.Utf8);
     }
 }
+
+export {EncryptionService};

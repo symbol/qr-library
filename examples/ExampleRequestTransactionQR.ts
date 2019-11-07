@@ -72,7 +72,7 @@ export class ExampleRequestTransactionQR extends Example {
         console.log("BASE64: ", transactionQR.toBase64());
         console.log("");
         console.log("ASCII: ");
-        console.log(transactionQR.toASCII());
+        //console.log(transactionQR.toASCII());
         console.log("");
         return this.resolve(0);
     }

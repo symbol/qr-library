@@ -72,7 +72,7 @@ describe('QRCodeGenerator -->', () => {
 
     describe('createTransactionRequest() should', () => {
 
-        it('generate correct Base64 representation for TransferTransaction', () => {
+        it('generate correct Base64 representation for TransferTransaction', async () => {
             // Arrange:
             const transfer = TransferTransaction.create(
                 Deadline.create(),
@@ -87,7 +87,7 @@ describe('QRCodeGenerator -->', () => {
 
             // Act:
             const requestTx = QRCodeGenerator.createTransactionRequest(transfer);
-            const actualBase64 = requestTx.toBase64();
+            const actualBase64 = await requestTx.toBase64();
 
             // Assert:
             expect(actualBase64).to.not.be.equal('');
@@ -98,7 +98,7 @@ describe('QRCodeGenerator -->', () => {
 
     describe('createAddContact() should', () => {
 
-        it('generate correct Base64 representation for AddContact', () => {
+        it('generate correct Base64 representation for AddContact', async () => {
             // Arrange:
             const name = 'test-contact-1';
             const account = PublicAccount.createFromPublicKey(
@@ -108,7 +108,7 @@ describe('QRCodeGenerator -->', () => {
 
             // Act:
             const createContact = QRCodeGenerator.createAddContact(name, account);
-            const actualBase64 = createContact.toBase64();
+            const actualBase64 = await createContact.toBase64();
 
             // Assert:
             expect(actualBase64).to.not.be.equal('');
@@ -119,7 +119,7 @@ describe('QRCodeGenerator -->', () => {
 
     describe('createExportAccount() should', () => {
 
-        it('generate correct Base64 representation for ExportAccount', () => {
+        it('generate correct Base64 representation for ExportAccount', async () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
@@ -129,7 +129,7 @@ describe('QRCodeGenerator -->', () => {
 
             // Act:
             const exportAccount = QRCodeGenerator.createExportAccount(account, password);
-            const actualBase64 = exportAccount.toBase64();
+            const actualBase64 = await exportAccount.toBase64();
 
             // Assert:
             expect(actualBase64).to.not.be.equal('');
@@ -140,14 +140,14 @@ describe('QRCodeGenerator -->', () => {
 
     describe('createExportMnemonic() should', () => {
 
-        it('generate correct Base64 representation for ExportMnemonic', () => {
+        it('generate correct Base64 representation for ExportMnemonic', async () => {
             // Arrange:
             const mnemonic = MnemonicPassPhrase.createRandom();
             const password = new Password('password');
 
             // Act:
             const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, password);
-            const actualBase64 = exportMnemonic.toBase64();
+            const actualBase64 = await exportMnemonic.toBase64();
 
             // Assert:
             expect(actualBase64).to.not.be.equal('');

@@ -66,7 +66,7 @@ export class ExampleExportMnemonicQR extends Example {
         console.log("BASE64: ", mnemonicQR.toBase64());
         console.log("");
         console.log("ASCII: ");
-        console.log(mnemonicQR.toASCII());
+        //console.log(mnemonicQR.toASCII());
         console.log("");
         return this.resolve(0);
     }

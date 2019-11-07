@@ -11,14 +11,14 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 // internal dependencies
 import {
-    QRCodeDataSchema,
+    ObjectQR,
     QRCode,
+    QRCodeDataSchema,
     QRCodeType,
-    ObjectQR
 } from '../../index';
 
 /**
@@ -27,7 +27,7 @@ import {
  *
  * @since 0.3.0
  */
-export class ExportObjectDataSchema extends QRCodeDataSchema {
+class ExportObjectDataSchema extends QRCodeDataSchema {
 
     constructor() {
         super();
@@ -55,8 +55,8 @@ export class ExportObjectDataSchema extends QRCodeDataSchema {
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static parse(
-        json: string
+    public static parse(
+        json: string,
     ): ObjectQR {
         if (! json.length) {
             throw Error('JSON argument cannot be empty.');
@@ -75,3 +75,5 @@ export class ExportObjectDataSchema extends QRCodeDataSchema {
         return new ObjectQR(obj, network, generationHash);
     }
 }
+
+export {ExportObjectDataSchema};

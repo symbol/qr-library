@@ -11,20 +11,20 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
-    Address,
     Account,
+    Address,
     PublicAccount,
 } from "nem2-sdk";
 
 // internal dependencies
 import {
-    QRCodeDataSchema,
+    ContactQR,
     QRCode,
+    QRCodeDataSchema,
     QRCodeType,
-    ContactQR
 } from '../../index';
 
 /**
@@ -33,7 +33,7 @@ import {
  *
  * @since 0.3.0
  */
-export class AddContactDataSchema extends QRCodeDataSchema {
+class AddContactDataSchema extends QRCodeDataSchema {
 
     constructor() {
         super();
@@ -63,8 +63,8 @@ export class AddContactDataSchema extends QRCodeDataSchema {
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static parse(
-        json: string
+    public static parse(
+        json: string,
     ): ContactQR {
         if (! json.length) {
             throw Error('JSON argument cannot be empty.');
@@ -84,3 +84,5 @@ export class AddContactDataSchema extends QRCodeDataSchema {
         return new ContactQR(name, account, network, generationHash);
     }
 }
+
+export {AddContactDataSchema};

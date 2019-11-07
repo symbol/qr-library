@@ -14,16 +14,19 @@
  *limitations under the License.
  */
 
+import * as QRCodeSettings from './src/QRCodeSettings';
+
 // enumerations / interfaces
 export { QRCodeType } from './src/QRCodeType';
 export { QRCodeSettings } from './src/QRCodeSettings';
 export { QRCodeInterface } from './src/QRCodeInterface';
 
 // encoder classes
+/*
 export { EncoderInterface } from './src/encoders/EncoderInterface';
 export { EncoderMinimalASCII } from './src/encoders/EncoderMinimalASCII';
 export { EncoderASCII } from './src/encoders/EncoderASCII';
-
+*/
 // abstract QRCode
 export { QRCode } from './src/QRCode';
 

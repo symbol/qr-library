@@ -6,17 +6,20 @@
         <meta name="description" content="Browser Examples for nem2-qr-library">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script>var exports = {};</script>
-        <script src="../dist/index.js"></script>
+        <script src="../_bundles/catapult-qr.js"></script>
     </head>
 
     <body>
 <script>
+const QRCodeType = CatapultQR.QRCodeType;
+const ContactQR = CatapultQR.ContactQR;
+const AccountQR = CatapultQR.AccountQR;
+
 // ContactQR created from JSON
 const contactInfo = {
     v: 3,
     type: QRCodeType.AddContact,
-    network_id: NetworkType.MIJIN_TEST,
+    network_id: 144,
     chain_id: 'no-chain-id',
     data: {
         name: 'nemtech',
@@ -25,32 +28,12 @@ const contactInfo = {
 };
 const contactQR = ContactQR.fromJSON(JSON.stringify(contactInfo));
 
-// AccountQR created from JSON
-const accountInfo = {
-    v: 3,
-    type: 2,
-    network_id: 144,
-    chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
-    data: {
-        ciphertext: 'cdc2f1ff390dd21b4528f5b75e69b30aNkYsuMlvsC7bShwqilk8P0txdWiQptMNypbjV9p5VFw766YIGqOfm336U1mMrMGwbPeIqbuPXsc8+stuGJ/M0OswzzDJ9BZyDQ+UK7sYBwE=',
-        salt: '9860f8643b3b1d77514a63eb4cbc0d9dbd6091bca10e742663d2bcc6b79fe7fb'
-    }
-};
-
-// create QR Code with JSON content and password
-const accountQR = AccountQR.fromJSON(
-    JSON.stringify(accountInfo),
-    new Password('Intranet123')
-);
-
-// Updagte DOM
-
-let dom = document;
-let qr1_1 = dom.getElementById("qr-code-1-1");
-let qr1_2 = dom.getElementById("qr-code-1-2");
-
-qr1_1.setAttribute('src', contactQR.toBase64());
-qr1_2.setAttribute('src', accountQR.toBase64());
+window.addEventListener('DOMContentLoaded', function() {
+    (async function() {
+        const base64 = await contactQR.toBase64();
+        document.getElementById("qr-code-1-1").setAttribute('src', base64);
+    })();
+});
 </script>
 
         <div id="examples-wrapper">
@@ -60,11 +43,11 @@ qr1_2.setAttribute('src', accountQR.toBase64());
                      height="500px"
                      id="qr-code-1-1" />
 
-                    
+                    <!---
                 <img src=""
                     width="500px"
                     height="500px"
-                    id="qr-code-1-2" />
+                    id="qr-code-1-2" />-->
             </div>
         </div>
 	</body>

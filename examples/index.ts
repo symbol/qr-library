@@ -19,6 +19,7 @@ import {
 
 // internal dependencies
 import {Example} from './Example';
+
 import {ExampleAddContactQR} from './ExampleAddContactQR';
 import {ExampleExportAccountQR} from './ExampleExportAccountQR';
 import {ExampleExportMnemonicQR} from './ExampleExportMnemonicQR';

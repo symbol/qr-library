@@ -11,21 +11,21 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
-    NetworkType,
-    TransactionMapping,
-    Transaction,
     AggregateTransaction,
+    NetworkType,
+    Transaction,
+    TransactionMapping,
 } from "nem2-sdk";
 
 // internal dependencies
 import {
-    QRCodeDataSchema,
-    QRCode,
-    QRCodeType,
     CosignatureQR,
+    QRCode,
+    QRCodeDataSchema,
+    QRCodeType,
     RequestTransactionDataSchema,
 } from '../../index';
 
@@ -35,7 +35,7 @@ import {
  *
  * @since 0.3.0
  */
-export class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
+class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
 
     constructor() {
         super();
@@ -51,8 +51,8 @@ export class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static parse(
-        json: string
+    public static parse(
+        json: string,
     ): CosignatureQR {
         if (! json.length) {
             throw Error('JSON argument cannot be empty.');
@@ -71,3 +71,5 @@ export class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
         return new CosignatureQR(transaction as AggregateTransaction, network, generationHash);
     }
 }
+
+export {RequestCosignatureDataSchema};

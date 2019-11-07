@@ -11,23 +11,23 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
     Account,
-    PublicAccount,
     NetworkType,
     Password,
+    PublicAccount,
 } from "nem2-sdk";
 
 // internal dependencies
 import {
-    QRCodeDataSchema,
-    QRCode,
-    QRCodeType,
     AccountQR,
-    EncryptionService,
     EncryptedPayload,
+    EncryptionService,
+    QRCode,
+    QRCodeDataSchema,
+    QRCodeType,
 } from '../../index';
 
 /**
@@ -36,7 +36,7 @@ import {
  *
  * @since 0.3.0
  */
-export class ExportAccountDataSchema extends QRCodeDataSchema {
+class ExportAccountDataSchema extends QRCodeDataSchema {
 
     constructor() {
         super();
@@ -72,9 +72,9 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
      * @throws  {Error}     On unrecognized QR code `type` field value.
      * @throws  {Error}     On invalid password.
      */
-    static parse(
+    public static parse(
         json: string,
-        password: Password
+        password: Password,
     ): AccountQR {
         if (! json.length) {
             throw new Error('JSON argument cannot be empty.');
@@ -97,7 +97,7 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
             const privKey = EncryptionService.decrypt(payload, password);
 
             // more content validation
-            if (!privKey || (privKey.length != 64 && privKey.length != 66)) {
+            if (!privKey || (privKey.length !== 64 && privKey.length !== 66)) {
                 throw new Error('Invalid encrypted private key.');
             }
 
@@ -108,8 +108,10 @@ export class ExportAccountDataSchema extends QRCodeDataSchema {
             const account = Account.createFromPrivateKey(privKey, network);
             return new AccountQR(account, password, network, generationHash);
         }
-        catch(e) {
+        catch (e) {
             throw new Error('Could not parse encrypted account information.');
         }
     }
 }
+
+export {ExportAccountDataSchema};

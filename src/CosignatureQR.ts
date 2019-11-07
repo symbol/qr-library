@@ -11,27 +11,27 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
-    NetworkType,
-    TransactionMapping,
-    Transaction,
     AggregateTransaction,
-} from "nem2-sdk";
+    NetworkType,
+    Transaction,
+    TransactionMapping,
+} from 'nem2-sdk';
 
 // internal dependencies
 import {
     QRCode,
-    QRCodeInterface,
-    QRCodeType,
-    QRCodeSettings,
     QRCodeDataSchema,
+    QRCodeInterface,
+    QRCodeSettings,
+    QRCodeType,
     RequestCosignatureDataSchema,
     TransactionQR,
 } from '../index';
 
-export class CosignatureQR extends TransactionQR implements QRCodeInterface {
+class CosignatureQR extends TransactionQR implements QRCodeInterface {
     /**
      * Construct a Transaction Request QR Code out of the
      * nem2-sdk Transaction instance.
@@ -68,8 +68,8 @@ export class CosignatureQR extends TransactionQR implements QRCodeInterface {
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static fromJSON(
-        json: string
+    public static fromJSON(
+        json: string,
     ): CosignatureQR {
 
         // create the QRCode object from JSON
@@ -100,3 +100,5 @@ export class CosignatureQR extends TransactionQR implements QRCodeInterface {
         return new RequestCosignatureDataSchema();
     }
 }
+
+export {CosignatureQR};

@@ -11,7 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 // internal dependencies
 import {QRCodeType} from '../index';
@@ -22,7 +22,7 @@ import {QRCodeType} from '../index';
  *
  * @since 0.3.0
  */
-export class EncryptedPayload {
+class EncryptedPayload {
 
     constructor(/**
                  * The payload ciphertext.
@@ -33,7 +33,7 @@ export class EncryptedPayload {
                 public readonly ciphertext: string,
                 /**
                  * The payload salt.
-                 * 
+                 *
                  * @var {string}
                  */
                 public readonly salt: string) {}
@@ -41,15 +41,15 @@ export class EncryptedPayload {
     /**
      * Parse a JSON representation of an encrypted
      * payload into a `EncryptedPayload` instance.
-     * 
+     *
      * The provided JSON must contain fields 'ciphertext'
      * and 'salt'.
-     * 
+     *
      * @param   {string}    json
      * @return  {EncryptedPayload}
      */
     public static fromJSON(
-        json: string
+        json: string,
     ): EncryptedPayload {
 
         if (! json.length) {
@@ -79,3 +79,5 @@ export class EncryptedPayload {
     }
 
 }
+
+export {EncryptedPayload};
