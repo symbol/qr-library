@@ -11,15 +11,10 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
-import {
-    NetworkType,
-} from 'nem2-sdk';
 
 // internal dependencies
-import {Example} from './Example';
-
 import {ExampleAddContactQR} from './ExampleAddContactQR';
 import {ExampleExportAccountQR} from './ExampleExportAccountQR';
 import {ExampleExportMnemonicQR} from './ExampleExportMnemonicQR';
@@ -28,42 +23,45 @@ import {ExampleRequestTransactionQR} from './ExampleRequestTransactionQR';
 console.log("Starting examples for nem2-qr-library");
 console.log("");
 
+(async () => {
+        
 // -----------------------------
 // EX 1: Contact QR Code example
 // -----------------------------
-console.log("1) Creating Contact QR-Code");
-console.log("");
+    console.log("1) Creating Contact QR-Code");
+    console.log("");
 
-const contactQR = new ExampleAddContactQR();
-contactQR.execute();
-console.log("");
+    const contactQR = new ExampleAddContactQR();
+    await contactQR.execute();
+    console.log("");
 
 // -----------------------------
 // EX 2: Account QR Code example
 // -----------------------------
-console.log("2) Creating Account QR-Code");
-console.log("");
+    console.log("2) Creating Account QR-Code");
+    console.log("");
 
-const accountQR = new ExampleExportAccountQR();
-accountQR.execute();
-console.log("");
+    const accountQR = new ExampleExportAccountQR();
+    await accountQR.execute();
+    console.log("");
 
 // -----------------------------
 // EX 3: Mnemonic QR Code example
 // -----------------------------
-console.log("3) Creating Mnemonic QR-Code");
-console.log("");
+    console.log("3) Creating Mnemonic QR-Code");
+    console.log("");
 
-const mnemonicQR = new ExampleExportMnemonicQR();
-mnemonicQR.execute();
-console.log("");
+    const mnemonicQR = new ExampleExportMnemonicQR();
+    await mnemonicQR.execute();
+    console.log("");
 
 // -----------------------------
 // EX 4: Transaction QR Code example
 // -----------------------------
-console.log("3) Creating Transaction Request QR-Code");
-console.log("");
+    console.log("3) Creating Transaction Request QR-Code");
+    console.log("");
 
-const transactionQR = new ExampleRequestTransactionQR();
-transactionQR.execute();
-console.log("");
+    const transactionQR = new ExampleRequestTransactionQR();
+    await transactionQR.execute();
+    console.log("");
+})();

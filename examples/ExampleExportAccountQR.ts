@@ -11,22 +11,21 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
     NetworkType,
-    Account,
-    Password,
 } from 'nem2-sdk';
 
 // internal dependencies
 import {
     AccountQR,
+    QRCodeSettings,
     QRCodeType,
 } from '../index';
 import {Example} from './Example';
 
-export class ExampleExportAccountQR extends Example {
+class ExampleExportAccountQR extends Example {
 
     /**
      * The `execute()` method should run the underlying
@@ -60,10 +59,12 @@ export class ExampleExportAccountQR extends Example {
             'password'
         );
 
-        console.log("JSON: ", accountQR.toJSON());
-        console.log("BASE64: ", await accountQR.toBase64().toPromise());
+        console.log("AccountQR JSON: ", accountQR.toJSON());
+        console.log("AccountQR BASE64: ", await accountQR.toBase64().toPromise());
+        console.log("AccountQR OBJECT: ", await accountQR.toString(new QRCodeSettings('M', 100)).toPromise());
         console.log("");
         return this.resolve(0);
     }
 }
 
+export {ExampleExportAccountQR};

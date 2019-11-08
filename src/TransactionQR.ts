@@ -11,7 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
     NetworkType,
@@ -21,10 +21,10 @@ import {
 // internal dependencies
 import {
     QRCode,
+    QRCodeDataSchema,
     QRCodeInterface,
     QRCodeType,
-    QRCodeDataSchema,
-    RequestTransactionDataSchema
+    RequestTransactionDataSchema,
 } from '../index';
 
 class TransactionQR extends QRCode implements QRCodeInterface {
@@ -53,8 +53,8 @@ class TransactionQR extends QRCode implements QRCodeInterface {
                 public readonly generationHash: string,
                 /**
                  * The QR Code Type
-                 * 
-                 * @var {QRCodeType} 
+                 *
+                 * @var {QRCodeType}
                  */
                 public readonly type: QRCodeType = QRCodeType.RequestTransaction) {
         super(type, networkType, generationHash);
@@ -70,8 +70,8 @@ class TransactionQR extends QRCode implements QRCodeInterface {
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static fromJSON(
-        json: string
+    public static fromJSON(
+        json: string,
     ): TransactionQR {
 
         // create the QRCode object from JSON

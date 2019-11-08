@@ -13,23 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as QRCodeCanvas from 'qrcode';
 import { createCanvas } from 'canvas';
+import { NetworkType } from 'nem2-sdk';
+import * as QRCodeCanvas from 'qrcode';
 import {
-    NetworkType,
-} from 'nem2-sdk';
-import { 
     from as observableFrom,
-    Observable
-} from 'rxjs'
+    Observable,
+} from 'rxjs';
 
 // internal dependencies
 import {
-    QRCodeInterface,
-    QRCodeType,
-    QRCodeSettings,
+    CorrectionLevel,
     QRCodeDataSchema,
-    //EncoderASCII,
+    QRCodeInterface,
+    QRCodeSettings,
+    QRCodeStreamType,
+    QRCodeType,
 } from "../index";
 
 abstract class QRCode implements QRCodeInterface {
@@ -60,7 +59,7 @@ abstract class QRCode implements QRCodeInterface {
                  * The base64 representation of the QR Code content.
                  * @var {string}
                  */
-                public readonly base64: string|undefined = undefined) {
+                public readonly base64?: string) {
     }
 
     /// region Abstract Methods
@@ -84,13 +83,13 @@ abstract class QRCode implements QRCodeInterface {
     /**
      * The `getCorrectionLevel()` method should return the
      * QR Code correction level.
-     * 
+     *
      * Sub-classes may overload this method to provide with
      * a different correction level.
-     * 
+     *
      * @return {number}
      */
-    public getCorrectionLevel(): 'H' | 'M' | 'L' | 'S' {
+    public getCorrectionLevel(): CorrectionLevel {
         return 'M';
     }
 
@@ -115,19 +114,74 @@ abstract class QRCode implements QRCodeInterface {
     /**
      * Generate QRcode image Base64.
      *
-     * @return  {string} Return image data in Base64.
+     * The returned string can be put in the `src` attribute
+     * of a `<img />` tag directly in HTML. The produced image
+     * will be a PNG.
+     *
+     * @param   {QRCodeSettings}    settings     (Optional) Settings for generation
+     * @return  {Observable<string>} Return image data in Base64.
      */
-    public toBase64(): Observable<string> {
+    public toBase64(
+        settings: QRCodeSettings = new QRCodeSettings(),
+    ): Observable<string> {
 
         // get JSON representation
-        const json = this.toJSON()
+        const json = this.toJSON();
 
         // get base64 representation
         return observableFrom(QRCodeCanvas.toDataURL(json, {
-            errorCorrectionLevel: 'M',
-            width: 250,
+            errorCorrectionLevel: settings.correctionLevel,
+            width: settings.widthPixel,
             // do-not-set-'version'
         }));
+    }
+
+    /**
+     * Generate QRCode as a string. This permits to display SVG
+     * format, Terminal format or utf-8 format.
+     *
+     * @see https://www.npmjs.com/package/qrcode
+     * @param   {QRCodeSettings}    settings     (Optional) Settings for generation
+     * @param   {QRCodeTextType}    streamType   (Optional) The QR Code text type, defaults to "terminal"
+     * @return  {Observable<string>}
+     */
+    public toString(
+        settings: QRCodeSettings = new QRCodeSettings(),
+        streamType: QRCodeStreamType = QRCodeStreamType.Terminal,
+    ): Observable<string> {
+
+        // get JSON representation
+        const json = this.toJSON();
+
+        // build the QR Code
+        return observableFrom(QRCodeCanvas.toString(json, {
+            errorCorrectionLevel: settings.correctionLevel,
+            width: settings.widthPixel,
+            type: streamType,
+            // do-not-set-'version'
+        }));
+    }
+
+    /**
+     * Generate QRCode and return object.
+     *
+     * @see https://www.npmjs.com/package/qrcode
+     * @param   {QRCodeSettings}    settings     (Optional) Settings for generation
+     * @return  {Observable<string>}
+     */
+    public toObject(
+        settings: QRCodeSettings = new QRCodeSettings(),
+    ): Observable<any> {
+
+        // get JSON representation
+        const json = this.toJSON();
+
+        // build the QR Code
+        return observableFrom([QRCodeCanvas.create(json, {
+            errorCorrectionLevel: settings.correctionLevel,
+            // do-not-set-'width'
+            // do-not-set-'version'
+        })]);
     }
 
     /**
@@ -136,11 +190,12 @@ abstract class QRCode implements QRCodeInterface {
      *
      * @see https://www.npmjs.com/package/qrcode
      * @see https://www.npmjs.com/package/canvas
-     * @param   {number}    cellSize     QRcode cell size
-     * @param   {number}    margin       QRcode cell margin
-     * @return  {string}
+     * @param   {QRCodeSettings}    settings     (Optional) Settings for generation
+     * @return  {Observable<string>}
      */
-    public toCanvas(): Observable<any> {
+    public toCanvas(
+        settings: QRCodeSettings = new QRCodeSettings(),
+    ): Observable<string> {
 
         // get JSON representation
         const json = this.toJSON();
@@ -151,8 +206,8 @@ abstract class QRCode implements QRCodeInterface {
 
         // build the QR Code
         return observableFrom(QRCodeCanvas.toCanvas(canvas, json, {
-            errorCorrectionLevel: 'M',
-            width: 250,
+            errorCorrectionLevel: settings.correctionLevel,
+            width: settings.widthPixel,
             // do-not-set-'version'
         }));
     }

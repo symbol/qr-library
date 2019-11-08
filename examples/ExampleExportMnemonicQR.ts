@@ -11,23 +11,21 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
     NetworkType,
-    Account,
-    Password,
 } from 'nem2-sdk';
-import {MnemonicPassPhrase} from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
     MnemonicQR,
+    QRCodeSettings,
     QRCodeType,
 } from '../index';
 import {Example} from './Example';
 
-export class ExampleExportMnemonicQR extends Example {
+class ExampleExportMnemonicQR extends Example {
 
     /**
      * The `execute()` method should run the underlying
@@ -62,10 +60,12 @@ export class ExampleExportMnemonicQR extends Example {
             'password'
         );
 
-        console.log("JSON: ", mnemonicQR.toJSON());
-        console.log("BASE64: ", await mnemonicQR.toBase64().toPromise());
+        console.log("MnemonicQR JSON: ", mnemonicQR.toJSON());
+        console.log("MnemonicQR BASE64: ", await mnemonicQR.toBase64().toPromise());
+        console.log("MnemonicQR OBJECT: ", await mnemonicQR.toString(new QRCodeSettings('M', 100)).toPromise());
         console.log("");
         return this.resolve(0);
     }
 }
 
+export {ExampleExportMnemonicQR};

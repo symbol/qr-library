@@ -11,28 +11,21 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
     NetworkType,
-    Account,
-    TransferTransaction,
-    Deadline,
-    EmptyMessage,
-    Mosaic,
-    NamespaceId,
-    UInt64,
 } from 'nem2-sdk';
-import {MnemonicPassPhrase} from 'nem2-hd-wallets';
 
 // internal dependencies
 import {
     TransactionQR,
+    QRCodeSettings,
     QRCodeType,
 } from '../index';
 import {Example} from './Example';
 
-export class ExampleRequestTransactionQR extends Example {
+class ExampleRequestTransactionQR extends Example {
 
     /**
      * The `execute()` method should run the underlying
@@ -50,7 +43,7 @@ export class ExampleRequestTransactionQR extends Example {
 
         const unsignedTransferInfo = {
             v: 3,
-            type: 3,
+            type: QRCodeType.RequestTransaction,
             network_id: NetworkType.MIJIN_TEST,
             chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
             data: {
@@ -68,10 +61,12 @@ export class ExampleRequestTransactionQR extends Example {
             JSON.stringify(unsignedTransferInfo),
         );
 
-        console.log("JSON: ", transactionQR.toJSON());
-        console.log("BASE64: ", await transactionQR.toBase64().toPromise());
+        console.log("TransactionQR JSON: ", transactionQR.toJSON());
+        console.log("TransactionQR BASE64: ", await transactionQR.toBase64().toPromise());
+        console.log("TransactionQR OBJECT: ", await transactionQR.toString(new QRCodeSettings('M', 100)).toPromise());
         console.log("");
         return this.resolve(0);
     }
 }
 
+export {ExampleRequestTransactionQR};

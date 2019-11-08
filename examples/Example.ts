@@ -11,10 +11,9 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
-
-export abstract class Example {
+abstract class Example {
     /**
      * Construct an example instance
      *
@@ -32,7 +31,11 @@ export abstract class Example {
     /// end-region Abstract Methods
 
     /**
-     * 
+     * Resolve the execution promise.
+     *
+     * @template T
+     * @param   {T}     resp    The execution result
+     * @return  {Promise<T>}
      */
     public resolve<T>(resp: T): Promise<T> {
         return new Promise((resolve, reject) => {
@@ -41,7 +44,11 @@ export abstract class Example {
     }
 
     /**
-     * 
+     * Reject the execution promise.
+     *
+     * @template T
+     * @param   {T}     resp    The execution result
+     * @return  {Promise<T>}
      */
     public reject<T>(resp: T): Promise<T> {
         return new Promise((resolve, reject) => {
@@ -49,3 +56,5 @@ export abstract class Example {
         });
     }
 }
+
+export {Example};

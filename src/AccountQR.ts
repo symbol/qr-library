@@ -20,11 +20,11 @@ import {
 
 // internal dependencies
 import {
+    ExportAccountDataSchema,
     QRCode,
+    QRCodeDataSchema,
     QRCodeInterface,
     QRCodeType,
-    QRCodeDataSchema,
-    ExportAccountDataSchema
 } from '../index';
 
 class AccountQR extends QRCode implements QRCodeInterface {
@@ -71,9 +71,9 @@ class AccountQR extends QRCode implements QRCodeInterface {
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static fromJSON(
+    public static fromJSON(
         json: string,
-        password: string
+        password: string,
     ): AccountQR {
 
         // create the QRCode object from JSON

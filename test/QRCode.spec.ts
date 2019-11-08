@@ -77,4 +77,33 @@ describe('QRCode -->', () => {
             expect(await fakeQR1.toBase64().toPromise()).to.not.be.equal(await fakeQR2.toBase64().toPromise());
         });
     });
+
+    describe('toString() should', () => {
+
+        it('create same string given same objects', async () => {
+            // Arrange:
+            const object1 = {"test1": "test1"};
+            const object2 = {"test1": "test1"};
+
+            // Act:
+            const fakeQR1 = new FakeQR(object1, NetworkType.TEST_NET, 'no-chain-id');
+            const fakeQR2 = new FakeQR(object2, NetworkType.TEST_NET, 'no-chain-id');
+
+            // Assert:
+            expect(await fakeQR1.toString().toPromise()).to.be.equal(await fakeQR2.toString().toPromise());
+        });
+
+        it('create different string given different objects', async () => {
+            // Arrange:
+            const object1 = {"test1": "test1"};
+            const object2 = {"test2": "test2"};
+
+            // Act:
+            const fakeQR1 = new FakeQR(object1, NetworkType.TEST_NET, 'no-chain-id');
+            const fakeQR2 = new FakeQR(object2, NetworkType.TEST_NET, 'no-chain-id');
+
+            // Assert:
+            expect(await fakeQR1.toString().toPromise()).to.not.be.equal(await fakeQR2.toString().toPromise());
+        });
+    });
 });

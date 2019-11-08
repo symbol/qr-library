@@ -17,16 +17,11 @@
 import * as QRCodeSettings from './src/QRCodeSettings';
 
 // enumerations / interfaces
-export { QRCodeType } from './src/QRCodeType';
-export { QRCodeSettings } from './src/QRCodeSettings';
 export { QRCodeInterface } from './src/QRCodeInterface';
+export { QRCodeType } from './src/QRCodeType';
+export { CorrectionLevel, QRCodeSettings } from './src/QRCodeSettings';
+export { QRCodeStreamType } from './src/QRCodeStreamType';
 
-// encoder classes
-/*
-export { EncoderInterface } from './src/encoders/EncoderInterface';
-export { EncoderMinimalASCII } from './src/encoders/EncoderMinimalASCII';
-export { EncoderASCII } from './src/encoders/EncoderASCII';
-*/
 // abstract QRCode
 export { QRCode } from './src/QRCode';
 

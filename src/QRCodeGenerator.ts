@@ -13,25 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    NetworkType,
-    Transaction,
-    Account,
-    PublicAccount,
-    Password,
-} from "nem2-sdk";
 import { MnemonicPassPhrase } from 'nem2-hd-wallets';
+import {
+    Account,
+    NetworkType,
+    PublicAccount,
+    Transaction,
+} from "nem2-sdk";
 
 // internal dependencies
 import {
-    QRCodeType,
-    QRCode,
     AccountQR,
     ContactQR,
-    ObjectQR,
-    TransactionQR,
     CosignatureQR,
     MnemonicQR,
+    ObjectQR,
+    QRCode,
+    QRCodeType,
+    TransactionQR,
 } from '../index';
 
 /**
@@ -58,9 +57,9 @@ class QRCodeGenerator {
      * @param   chainId         {string}
      */
     public static createExportObject(
-        object: Object,
+        object: object,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): ObjectQR {
         return new ObjectQR(object, networkType, chainId);
     }
@@ -78,7 +77,7 @@ class QRCodeGenerator {
         name: string,
         account: Account | PublicAccount,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): ContactQR {
         return new ContactQR(name, account, networkType, chainId);
     }
@@ -97,7 +96,7 @@ class QRCodeGenerator {
         account: Account,
         password: string,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): AccountQR {
         return new AccountQR(account, password, networkType, chainId);
     }
@@ -114,7 +113,7 @@ class QRCodeGenerator {
     public static createTransactionRequest(
         transaction: Transaction,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): TransactionQR {
         return new TransactionQR(transaction, networkType, chainId);
     }
@@ -133,7 +132,7 @@ class QRCodeGenerator {
         mnemonic: MnemonicPassPhrase,
         password: string,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = 'E2A9F95E129283EF47B92A62FD748DBA4D32AA718AE6F8AC99C105CFA9F27A31'
+        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): MnemonicQR {
         return new MnemonicQR(mnemonic, password, networkType, chainId);
     }
@@ -148,9 +147,9 @@ class QRCodeGenerator {
      * @throws  {Error}     On missing `type` field value.
      * @throws  {Error}     On unrecognized QR code `type` field value.
      */
-    static fromJSON(
+    public static fromJSON(
         json: string,
-        password: string | undefined = undefined
+        password?: string,
     ): QRCode {
 
         if (! json.length) {
@@ -164,7 +163,7 @@ class QRCodeGenerator {
                 throw new Error('Missing mandatory field with name "type".');
             }
         }
-        catch(e) {
+        catch (e) {
             // Invalid JSON provided, forward error
             throw new Error(e);
         }

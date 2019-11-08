@@ -11,7 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- *limitations under the License.
+ * limitations under the License.
  */
 import {
     NetworkType,
@@ -23,8 +23,9 @@ import {
     QRCodeType,
 } from '../index';
 import {Example} from './Example';
+import { QRCodeSettings } from '../src/QRCodeSettings';
 
-export class ExampleAddContactQR extends Example {
+class ExampleAddContactQR extends Example {
 
     /**
      * The `execute()` method should run the underlying
@@ -48,10 +49,12 @@ export class ExampleAddContactQR extends Example {
 
         // create QR Code with JSON content
         const contactQR = ContactQR.fromJSON(JSON.stringify(contactInfo));
-        console.log("JSON: ", contactQR.toJSON());
-        console.log("BASE64: ", await contactQR.toBase64().toPromise());
+        console.log("ContactQR JSON: ", contactQR.toJSON());
+        console.log("ContactQR BASE64: ", await contactQR.toBase64().toPromise());
+        console.log("ContactQR OBJECT: ", await contactQR.toString(new QRCodeSettings('M', 100)).toPromise());
         console.log("");
         return this.resolve(0);
     }
 }
 
+export {ExampleAddContactQR};
