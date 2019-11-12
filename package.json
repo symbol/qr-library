@@ -12,7 +12,7 @@
     "canvas": "^2.6.0",
     "crypto-js": "^3.1.9-1",
     "nem2-hd-wallets": "0.4.1",
-    "nem2-sdk": "^0.14.3",
+    "nem2-sdk": "^0.14.4",
     "open": ">=6.0.0",
     "qrcode": "^1.4.0",
     "rimraf": "^3.0.0"
