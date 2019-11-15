@@ -54,14 +54,14 @@ class QRCodeGenerator {
      * @see {ObjectQR}
      * @param   object          {Object}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     public static createExportObject(
         object: object,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): ObjectQR {
-        return new ObjectQR(object, networkType, chainId);
+        return new ObjectQR(object, networkType, generationHash);
     }
 
     /**
@@ -71,15 +71,15 @@ class QRCodeGenerator {
      * @see {ContactQR}
      * @param   transaction     {Transaction}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     public static createAddContact(
         name: string,
         account: Account | PublicAccount,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): ContactQR {
-        return new ContactQR(name, account, networkType, chainId);
+        return new ContactQR(name, account, networkType, generationHash);
     }
 
     /**
@@ -90,15 +90,15 @@ class QRCodeGenerator {
      * @param   account         {Account}
      * @param   password        {string}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     public static createExportAccount(
         account: Account,
         password: string,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): AccountQR {
-        return new AccountQR(account, password, networkType, chainId);
+        return new AccountQR(account, password, networkType, generationHash);
     }
 
     /**
@@ -108,14 +108,14 @@ class QRCodeGenerator {
      * @see {TransactionQR}
      * @param   transaction     {Transaction}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     public static createTransactionRequest(
         transaction: Transaction,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): TransactionQR {
-        return new TransactionQR(transaction, networkType, chainId);
+        return new TransactionQR(transaction, networkType, generationHash);
     }
 
     /**
@@ -126,15 +126,15 @@ class QRCodeGenerator {
      * @param   mnemonic        {MnemonicPassPhrase}
      * @param   password        {string}
      * @param   networkType     {NetworkType}
-     * @param   chainId         {string}
+     * @param   generationHash         {string}
      */
     public static createExportMnemonic(
         mnemonic: MnemonicPassPhrase,
         password: string,
         networkType: NetworkType = NetworkType.MIJIN_TEST,
-        chainId: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
     ): MnemonicQR {
-        return new MnemonicQR(mnemonic, password, networkType, chainId);
+        return new MnemonicQR(mnemonic, password, networkType, generationHash);
     }
 
     /**

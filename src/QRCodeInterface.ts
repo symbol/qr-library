@@ -31,12 +31,6 @@ import {
 interface QRCodeInterface {
 
     /**
-     * The base64 representation of the QR Code content.
-     * @var {string}
-     */
-    base64?: string|undefined;
-
-    /**
      * The type of the QR Code.
      */
     type: QRCodeType;
