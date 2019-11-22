@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v0.6.0
+
+- Updated dependency tree
+
+## v0.5.3
+
+- Using standard `qrcode` package
+- Added `npm run build.browser`
+- Fixed TransactionQR and MnemonicQR
+
 ## v0.3.0
 
 - Added class `EncryptedPayload`
