@@ -14,7 +14,7 @@ script:
 - npx embedme README.md
 
 deploy:
-  provider: script
+  provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   on:
