@@ -1,4 +1,5 @@
 import { QRCodeGenerator } from 'nem2-qr-library';
+import { NetworkType } from 'nem2-sdk';
 
 // define custom object to suit your application use case.
 const object = {"obj": "test"};

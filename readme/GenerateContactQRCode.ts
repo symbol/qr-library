@@ -1,7 +1,9 @@
 import {
-    PublicAccount,
     NetworkType,
+    PublicAccount,
 } from 'nem2-sdk';
+import { QRCodeGenerator } from 'nem2-qr-library';
+
 
 const name = 'test-contact-1';
 const account = PublicAccount.createFromPublicKey(
