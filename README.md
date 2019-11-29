@@ -63,6 +63,7 @@ const base64 = request.toBase64();
 
 ```ts
 // readme/GenerateContactQRCode.ts
+
 import {
     PublicAccount,
     NetworkType,
@@ -86,6 +87,7 @@ const base64 = request.toBase64();
 
 ```ts
 // readme/GenerateQRCodeForMnemonic.ts
+
 import {
     Account,
     NetworkType,
