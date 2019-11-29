@@ -21,13 +21,14 @@ This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](ht
 // readme/GenerateQRCodeForTransaction.ts
 
 import { QRCodeGenerator } from 'nem2-qr-library';
+import { Address, Deadline, Mosaic, NetworkType, PlainMessage, TransferTransaction, UInt64 } from 'nem2-sdk';
 
 // (Optional) create transfer transaction (or read from network)
 const transfer = TransferTransaction.create(
   Deadline.create(),
   Address.createFromPublicKey(
     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-    NetworkType.MIJIN_TEST
+     NetworkType.MIJIN_TEST
   ),
   [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
   PlainMessage.create('Welcome to NEM!'),
@@ -47,6 +48,7 @@ const base64 = request.toBase64();
 // readme/GenerateQRCodeForCustomObject.ts
 
 import { QRCodeGenerator } from 'nem2-qr-library';
+import { NetworkType } from 'nem2-sdk';
 
 // define custom object to suit your application use case.
 const object = {"obj": "test"};
@@ -65,9 +67,11 @@ const base64 = request.toBase64();
 // readme/GenerateContactQRCode.ts
 
 import {
-    PublicAccount,
     NetworkType,
+    PublicAccount,
 } from 'nem2-sdk';
+import { QRCodeGenerator } from 'nem2-qr-library';
+
 
 const name = 'test-contact-1';
 const account = PublicAccount.createFromPublicKey(
@@ -76,7 +80,7 @@ const account = PublicAccount.createFromPublicKey(
             );
 
 // create QR Code base64
-  const request = QRCodeGenerator.createAddContact(name, account);
+const request = QRCodeGenerator.createAddContact(name, account);
 
 // get base64 notation for <img> HTML attribute
 const base64 = request.toBase64();
@@ -87,6 +91,24 @@ const base64 = request.toBase64();
 
 ```ts
 // readme/GenerateQRCodeForMnemonic.ts
+
+import {
+    Account,
+    NetworkType,
+    Password,
+} from 'nem2-sdk';
+import { MnemonicPassPhrase } from 'nem2-hd-wallets';
+
+// create a mnemonic and password.
+const mnemonic = MnemonicPassPhrase.createRandom();
+const password = new Password('password');
+
+
+// create QR Code base64
+const exportMnemonic = new MnemonicQR(mnemonic, password, NetworkType.MIJIN_TEST, 'no-chain-id');
+
+// get base64 notation for <img> HTML attribute
+const base64 = exportMnemonic.toBase64();
 
 ```
 
