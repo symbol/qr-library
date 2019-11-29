@@ -10,7 +10,7 @@ const account = PublicAccount.createFromPublicKey(
             );
 
 // create QR Code base64
-  const request = QRCodeGenerator.createAddContact(name, account);
+const request = QRCodeGenerator.createAddContact(name, account);
 
 // get base64 notation for <img> HTML attribute
 const base64 = request.toBase64();
