@@ -17,6 +17,7 @@ This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](ht
 ## Usage
 
 ### Generate QRCode for a Transaction Request
+
 ```ts
 // readme/GenerateQRCodeForTransaction.ts
 
