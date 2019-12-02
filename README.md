@@ -1,7 +1,7 @@
 # nem2-qr-library
 
 [![npm version](https://badge.fury.io/js/nem2-qr-library.svg)](https://badge.fury.io/js/nem2-qr-library)
-[![Build Status](https://travis-ci.org/anthonylaw/nem2-qr-library.svg?branch=master)](https://travis-ci.org/anthonylaw/nem2-qr-library)
+[![Build Status](https://travis-ci.org/nemfoundation/nem2-qr-library.svg?branch=master)](https://travis-ci.org/nemfoundation/nem2-qr-library)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-green.svg)](https://nem2.slack.com/messages/CB0UU89GS//)
 
 :warning: **This package is currently still in development, please do not use in production.** *The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.*
@@ -19,7 +19,7 @@ This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](ht
 ### Generate QRCode for a Transaction Request
 
 ```ts
-// readme/GenerateQRCodeForTransaction.ts
+// examples/readme/GenerateQRCodeForTransaction.ts
 
 import { QRCodeGenerator } from 'nem2-qr-library';
 import { Address, Deadline, Mosaic, NetworkType, PlainMessage, TransferTransaction, UInt64 } from 'nem2-sdk';
@@ -46,7 +46,7 @@ const base64 = request.toBase64();
 ### Generate QRCode for a custom object
 
 ```ts
-// readme/GenerateQRCodeForCustomObject.ts
+// examples/readme/GenerateQRCodeForCustomObject.ts
 
 import { QRCodeGenerator } from 'nem2-qr-library';
 import { NetworkType } from 'nem2-sdk';
@@ -65,7 +65,7 @@ const base64 = request.toBase64();
 ### Generate ContactQR code
 
 ```ts
-// readme/GenerateContactQRCode.ts
+// examples/readme/GenerateContactQRCode.ts
 
 import {
     NetworkType,
@@ -91,7 +91,7 @@ const base64 = request.toBase64();
 ### Generate QRCode for a Mnemonic data
 
 ```ts
-// readme/GenerateQRCodeForMnemonic.ts
+// examples/readme/GenerateQRCodeForMnemonic.ts
 
 import {
     Account,
