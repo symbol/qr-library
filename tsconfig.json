@@ -20,7 +20,8 @@
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "examples/readme/"
   ],
   "include": [
     "test/*.spec.ts",
