@@ -12,10 +12,13 @@ before_script:
 script:
 - npm run test
 - npx embedme README.md
-
+before_deploy:
+- npx typedoc --out ts-docs src
+- touch ./ts-docs/.nojekyll
 deploy:
   provider: pages
   skip_cleanup: true
+  local_dir: ts-docs
   github_token: $GITHUB_TOKEN
   on:
     branch: master
