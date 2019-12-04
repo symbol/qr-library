@@ -19,7 +19,7 @@ This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](ht
 ### Generate QRCode for a Transaction Request
 
 ```ts
-// examples/readme/GenerateQRCodeForTransaction.ts
+// examples/GenerateQRCodeForTransaction.ts
 
 import { QRCodeGenerator } from 'nem2-qr-library';
 import { Address, Deadline, Mosaic, NetworkType, PlainMessage, TransferTransaction, UInt64 } from 'nem2-sdk';
@@ -46,7 +46,7 @@ const base64 = request.toBase64();
 ### Generate QRCode for a custom object
 
 ```ts
-// examples/readme/GenerateQRCodeForCustomObject.ts
+// examples/GenerateQRCodeForCustomObject.ts
 
 import { QRCodeGenerator } from 'nem2-qr-library';
 import { NetworkType } from 'nem2-sdk';
@@ -65,7 +65,7 @@ const base64 = request.toBase64();
 ### Generate ContactQR code
 
 ```ts
-// examples/readme/GenerateContactQRCode.ts
+// examples/GenerateContactQRCode.ts
 
 import {
     NetworkType,
@@ -91,7 +91,7 @@ const base64 = request.toBase64();
 ### Generate QRCode for a Mnemonic data
 
 ```ts
-// examples/readme/GenerateQRCodeForMnemonic.ts
+// examples/GenerateQRCodeForMnemonic.ts
 
 import {
     Account,

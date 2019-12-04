@@ -21,11 +21,10 @@
   "exclude": [
     "node_modules",
     "dist",
-    "examples/readme/"
+    "examples/*.ts"
   ],
   "include": [
     "test/*.spec.ts",
     "src/*.ts",
-    "examples/*.ts"
   ]
 }
