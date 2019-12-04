@@ -21,7 +21,7 @@
   "exclude": [
     "node_modules",
     "dist",
-    "examples/*.ts"
+    "examples"
   ],
   "include": [
     "test/*.spec.ts",
