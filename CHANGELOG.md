@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.6.1
+
+- Updated sdk to v0.15.0
+
 ## v0.6.0
 
 - Updated dependency tree
