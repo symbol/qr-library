@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.7.0
+
+- Update sdk to v0.16.0
+
 ## v0.6.1
 
 - Updated sdk to v0.15.0
