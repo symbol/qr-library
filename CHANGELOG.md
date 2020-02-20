@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.8.0
+
+- Updated upstream nem2-sdk@v0.17.0
+- Updated upstream nem2-hd-wallets@v0.8.0
+- Fixed public key generation tests
+- Updated vulnerable dependencies
+
 ## v0.7.0
 
 - Update sdk to v0.16.0
