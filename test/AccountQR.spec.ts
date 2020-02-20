@@ -139,7 +139,7 @@ describe('AccountQR -->', () => {
 
             // Assert
             expect(importAccount.account.privateKey).to.be.equal('749F1FF1972CD465CAB74566FF0AA021F846FBE3916ABB6A6C1373E962C76331');
-            expect(importAccount.account.publicKey).to.be.equal('9741183860ED711BD986A464004DB9A6D26B25F4CBB51F3B0FF1B220510B86B0');
+            expect(importAccount.account.publicKey).to.be.equal('50BFEB16AA0A3E00B8AB9385A2686991A09522DCDA4AC31B400BB5674EE4CDF8');
         });
     });
 
