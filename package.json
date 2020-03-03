@@ -1,5 +1,5 @@
 {
-  "name": "symnbol-qr-library",
+  "name": "symbol-qr-library",
   "version": "0.8.0",
   "description": "Symbol library to handle QR Codes",
   "main": "dist/index.js",
