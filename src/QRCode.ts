@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { createCanvas } from 'canvas';
-import { NetworkType } from 'nem2-sdk';
+import { NetworkType } from 'symbol-sdk';
 import * as QRCodeCanvas from 'qrcode';
 import {
     from as observableFrom,

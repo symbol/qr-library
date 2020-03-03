@@ -16,7 +16,7 @@
 import * as CryptoJS from "crypto-js";
 import {
     Password,
-} from "nem2-sdk";
+} from "symbol-sdk";
 
 // internal dependencies
 import {
