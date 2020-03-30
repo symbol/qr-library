@@ -1,25 +1,25 @@
 # nem2-qr-library
 
-[![npm version](https://badge.fury.io/js/nem2-qr-library.svg)](https://badge.fury.io/js/nem2-qr-library)
-[![Build Status](https://travis-ci.org/anthonylaw/nem2-qr-library.svg?branch=master)](https://travis-ci.org/anthonylaw/nem2-qr-library)
+[![npm version](https://badge.fury.io/js/symbol-qr-library.svg)](https://badge.fury.io/js/symbol-qr-library)
+[![Build Status](https://travis-ci.org/anthonylaw/symbol-qr-library.svg?branch=master)](https://travis-ci.org/anthonylaw/symbol-qr-library)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-green.svg)](https://nem2.slack.com/messages/CB0UU89GS//)
 
 :warning: **This package is currently still in development, please do not use in production.** *The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.*
 
-NEM2 QR Library generator to generate QR codes for Catapult (NEM2) accounts and transactions.
+SYMBOL QR Library generator to generate QR codes for Catapult (NEM2) accounts and transactions.
 
 This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](https://github.com/nemtech/NIP/issues/3). When stable, the repository will be moved to the [nemtech](https://github.com/nemtech) organization.
 
 ## Installation
 
-`npm install nem2-qr-library`
+`npm install symbol-qr-library`
 
 ## Usage
 
 ### Generate QRCode for a Transaction Request
 
 ```typescript
-import { QRCodeGenerator } from 'nem2-qr-library';
+import { QRCodeGenerator } from 'symbol-qr-library';
 
 // (Optional) create transfer transaction (or read from network)
 const transfer = TransferTransaction.create(
@@ -43,7 +43,7 @@ const base64 = request.toBase64();
 ### Generate QRCode for a custom object
 
 ```typescript
-import { QRCodeGenerator } from 'nem2-qr-library';
+import { QRCodeGenerator } from 'symbol-qr-library';
 
 // define custom object to suit your application use case.
 const object = {"obj": "test"};
@@ -90,11 +90,9 @@ import { MnemonicPassPhrase } from 'nem2-hd-wallets';
 
 // create a mnemonic and password.
 const mnemonic = MnemonicPassPhrase.createRandom();
-const password = new Password('password');
-
 
 // create QR Code base64
-const exportMnemonic = new MnemonicQR(mnemonic, password, NetworkType.MIJIN_TEST, 'no-chain-id');
+const exportMnemonic = new MnemonicQR(mnemonic, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
 
 // get base64 notation for <img> HTML attribute
 const base64 = exportMnemonic.toBase64();
