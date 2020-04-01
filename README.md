@@ -19,11 +19,7 @@ This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](ht
 
 ## Requirements
 
-### NodeJS
-
-- NodeJS 8.9.X
-- NodeJS 9.X.X
-- NodeJS 10.X.X
+- Node.js 12 LTS
 
 ## Installation
 
