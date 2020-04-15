@@ -16,7 +16,7 @@
 import {
     Account,
     Password,
-} from "nem2-sdk";
+} from "symbol-sdk";
 
 // internal dependencies
 import {

@@ -16,7 +16,7 @@
 import {
     AggregateTransaction,
     NetworkType,
-} from 'nem2-sdk';
+} from 'symbol-sdk';
 
 // internal dependencies
 import {
@@ -30,7 +30,7 @@ import {
 class CosignatureQR extends TransactionQR implements QRCodeInterface {
     /**
      * Construct a Transaction Request QR Code out of the
-     * nem2-sdk Transaction instance.
+     * symbol-sdk Transaction instance.
      *
      * @param   transaction     {Transaction}
      * @param   networkType     {NetworkType}

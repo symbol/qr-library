@@ -16,7 +16,7 @@
 import {expect} from "chai";
 import {
     NetworkType,
-} from 'nem2-sdk';
+} from 'symbol-sdk';
 
 // internal dependencies
 import {

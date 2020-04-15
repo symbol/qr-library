@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.9.0
+
+- rebranded package to symbol-qr-library
+- replaced deps to symbol-sdk and symbol-hd-wallets
+
 ## v0.8.0
 
 - Updated upstream nem2-sdk@v0.17.0
