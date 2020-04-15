@@ -17,7 +17,7 @@ import {
     Account,
     NetworkType,
     PublicAccount,
-} from 'nem2-sdk';
+} from 'symbol-sdk';
 
 // internal dependencies
 import {
@@ -31,7 +31,7 @@ import {
 class ContactQR extends QRCode implements QRCodeInterface {
     /**
      * Construct a Contact QR Code out of the
-     * nem2-sdk Account or PublicAccount instance.
+     * symbol-sdk Account or PublicAccount instance.
      *
      * @param   account         {Account|PublicAccount}
      * @param   networkType     {NetworkType}

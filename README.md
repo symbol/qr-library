@@ -4,7 +4,13 @@
 [![Build Status](https://travis-ci.com/nemfoundation/symbol-qr-library.svg?branch=master)](https://travis-ci.com/nemfoundation/symbol-qr-library)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-green.svg)](https://nem2.slack.com/messages/CB0UU89GS//)
 
-Library to generate QR codes for Symbol. 
+Library to generate QR codes for Symbol.
+
+This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](https://github.com/nemtech/NIP/issues/3). When stable, the repository will be moved to the [nemtech](https://github.com/nemtech) organization.
+
+**NOTE**: The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.
+
+## Features
 
 The software allows you to create the following QR types:
 
@@ -12,10 +18,6 @@ The software allows you to create the following QR types:
 * **CreateAddContact**: QR to share the account address with others.
 * **Mnemonic**: QR to generate account mnemonic backups.
 * **CustomObject**: QR to export  a custom object.
-
-This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](https://github.com/nemtech/NIP/issues/3). When stable, the repository will be moved to the [nemtech](https://github.com/nemtech) organization.
-
-**NOTE**: The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.
 
 ## Requirements
 
@@ -74,7 +76,7 @@ const base64 = request.toBase64();
 import {
     PublicAccount,
     NetworkType,
-} from 'nem2-sdk';
+} from 'symbol-sdk';
 
 const name = 'test-contact-1';
 const account = PublicAccount.createFromPublicKey(
@@ -97,8 +99,8 @@ import {
     Account,
     NetworkType,
     Password,
-} from 'nem2-sdk';
-import { MnemonicPassPhrase } from 'nem2-hd-wallets';
+} from 'symbol-sdk';
+import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 
 // create a mnemonic and password.
 const mnemonic = MnemonicPassPhrase.createRandom();

@@ -26,8 +26,8 @@ import {
     PublicAccount,
     Account,
     Password
-} from 'nem2-sdk';
-import { MnemonicPassPhrase } from 'nem2-hd-wallets';
+} from 'symbol-sdk';
+import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 
 // internal dependencies
 import {
