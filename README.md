@@ -1,12 +1,12 @@
-# nem2-qr-library
+# symbol-qr-library
 
 [![npm version](https://badge.fury.io/js/symbol-qr-library.svg)](https://badge.fury.io/js/symbol-qr-library)
-[![Build Status](https://travis-ci.org/anthonylaw/symbol-qr-library.svg?branch=master)](https://travis-ci.org/anthonylaw/symbol-qr-library)
+[![Build Status](https://travis-ci.org/nemfoundation/symbol-qr-library.svg?branch=master)](https://travis-ci.org/nemfoundation/symbol-qr-library)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-green.svg)](https://nem2.slack.com/messages/CB0UU89GS//)
 
 :warning: **This package is currently still in development, please do not use in production.** *The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.*
 
-SYMBOL QR Library generator to generate QR codes for Catapult (NEM2) accounts and transactions.
+Symbol QR Library generator to generate QR codes for Catapult (Symbol) accounts and transactions.
 
 This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](https://github.com/nemtech/NIP/issues/3). When stable, the repository will be moved to the [nemtech](https://github.com/nemtech) organization.
 
@@ -62,7 +62,7 @@ const base64 = request.toBase64();
 import {
     PublicAccount,
     NetworkType,
-} from 'nem2-sdk';
+} from 'symbol-sdk';
 
 const name = 'test-contact-1';
 const account = PublicAccount.createFromPublicKey(
@@ -85,8 +85,8 @@ import {
     Account,
     NetworkType,
     Password,
-} from 'nem2-sdk';
-import { MnemonicPassPhrase } from 'nem2-hd-wallets';
+} from 'symbol-sdk';
+import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 
 // create a mnemonic and password.
 const mnemonic = MnemonicPassPhrase.createRandom();
@@ -112,6 +112,7 @@ The produced Base64 encoded payload can be used to display the QR Code. An examp
 
 Important versions listed below. Refer to the [Changelog](CHANGELOG.md) for a full history of the project.
 
+- [0.9.0](CHANGELOG.md) - 2020-03-03
 - [0.7.0](CHANGELOG.md) - 2019-12-15
 - [0.6.1](CHANGELOG.md) - 2019-12-06
 - [0.6.0](CHANGELOG.md) - 2019-11-18

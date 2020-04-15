@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 import {expect} from "chai";
-import { MnemonicPassPhrase } from 'nem2-hd-wallets';
+import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 import {
     NetworkType,
     Password,
-} from 'nem2-sdk';
+} from 'symbol-sdk';
 
 // internal dependencies
 import {

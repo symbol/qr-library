@@ -25,7 +25,7 @@ import {
     PublicAccount,
     TransferTransaction,
     UInt64,
-} from 'nem2-sdk';
+} from 'symbol-sdk';
 
 // internal dependencies
 import {
