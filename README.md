@@ -1,18 +1,32 @@
-# nem2-qr-library
+# Symbol QR Library
 
 [![npm version](https://badge.fury.io/js/symbol-qr-library.svg)](https://badge.fury.io/js/symbol-qr-library)
-[![Build Status](https://travis-ci.org/anthonylaw/symbol-qr-library.svg?branch=master)](https://travis-ci.org/anthonylaw/symbol-qr-library)
+[![Build Status](https://travis-ci.com/nemfoundation/symbol-qr-library.svg?branch=master)](https://travis-ci.com/nemfoundation/symbol-qr-library)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-green.svg)](https://nem2.slack.com/messages/CB0UU89GS//)
 
-:warning: **This package is currently still in development, please do not use in production.** *The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.*
-
-SYMBOL QR Library generator to generate QR codes for Catapult (NEM2) accounts and transactions.
+Library to generate QR codes for Symbol.
 
 This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](https://github.com/nemtech/NIP/issues/3). When stable, the repository will be moved to the [nemtech](https://github.com/nemtech) organization.
+
+**NOTE**: The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.
+
+## Features
+
+The software allows you to create the following QR types:
+
+* **TransactionRequest**: QR to prepare transactions ready to be signed.
+* **CreateAddContact**: QR to share the account address with others.
+* **Mnemonic**: QR to generate account mnemonic backups.
+* **CustomObject**: QR to export  a custom object.
+
+## Requirements
+
+- Node.js 12 LTS
 
 ## Installation
 
 `npm install symbol-qr-library`
+
 
 ## Usage
 
@@ -62,7 +76,7 @@ const base64 = request.toBase64();
 import {
     PublicAccount,
     NetworkType,
-} from 'nem2-sdk';
+} from 'symbol-sdk';
 
 const name = 'test-contact-1';
 const account = PublicAccount.createFromPublicKey(
@@ -85,8 +99,8 @@ import {
     Account,
     NetworkType,
     Password,
-} from 'nem2-sdk';
-import { MnemonicPassPhrase } from 'nem2-hd-wallets';
+} from 'symbol-sdk';
+import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 
 // create a mnemonic and password.
 const mnemonic = MnemonicPassPhrase.createRandom();
@@ -99,24 +113,34 @@ const base64 = exportMnemonic.toBase64();
 
 ```
 
-
-
-
 The produced Base64 encoded payload can be used to display the QR Code. An example of display can be done easily with HTML, as follows:
 
 ```html
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Transfer Transaction QR code" />
 ```
 
-## Changelog
+## Getting help
 
-Important versions listed below. Refer to the [Changelog](CHANGELOG.md) for a full history of the project.
+Use the following available resources to get help:
 
-- [0.7.0](CHANGELOG.md) - 2019-12-15
-- [0.6.1](CHANGELOG.md) - 2019-12-06
-- [0.6.0](CHANGELOG.md) - 2019-11-18
-- [0.3.0](CHANGELOG.md) - 2019-05-27
+- [Symbol Documentation][docs]
+- Join the community [slack group (#sig-client)][slack] 
+- If you found a bug, [open a new issue][issues]
+
+## Contributing
+
+This project is developed and maintained by NEM Foundation.
+
+Contributions are welcome and appreciated. 
+Check [CONTRIBUTING](CONTRIBUTING.md) for information on how to contribute.
 
 ## License
 
-Licensed under the [Apache License](LICENSE.md), Version 2.
+Copyright 2019-present NEM
+
+Licensed under the [Apache License 2.0](LICENSE)
+
+[self]: https://github.com/nemfoundation/symbol-qr-library
+[docs]: https://nemtech.github.io
+[issues]: https://github.com/nemfoundation/symbol-qr-library/issues
+[slack]: https://join.slack.com/t/nem2/shared_invite/enQtMzY4MDc2NTg0ODgyLWZmZWRiMjViYTVhZjEzOTA0MzUyMTA1NTA5OWQ0MWUzNTA4NjM5OTJhOGViOTBhNjkxYWVhMWRiZDRkOTE0YmU

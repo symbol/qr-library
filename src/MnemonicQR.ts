@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { MnemonicPassPhrase } from 'nem2-hd-wallets';
+import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 import {
     NetworkType,
-} from "nem2-sdk";
+} from "symbol-sdk";
 
 // internal dependencies
 import {

@@ -15,7 +15,7 @@
  */
 import {
     PublicAccount,
-} from "nem2-sdk";
+} from "symbol-sdk";
 
 // internal dependencies
 import {
