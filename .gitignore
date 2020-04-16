@@ -1,5 +1,7 @@
 .idea/
 .nyc_output/
+.awcache/
+_bundles/
 dist/
 node_modules/
 ts-docs/
