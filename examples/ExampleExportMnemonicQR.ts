@@ -33,7 +33,7 @@ class ExampleExportMnemonicQR extends Example {
      *
      * This example uses an encryption password value of `password`
      * and following 24-words mnemonic pass phrase:
-     * 
+     *
      *    stumble shoot spawn bitter forest waste attitude chest
      *    square kite dawn photo twice message bargain trap
      *    spin vote lamp wire also either else pupil

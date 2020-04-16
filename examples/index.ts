@@ -24,7 +24,7 @@ console.log("Starting examples for nem2-qr-library");
 console.log("");
 
 (async () => {
-        
+
 // -----------------------------
 // EX 1: Contact QR Code example
 // -----------------------------
