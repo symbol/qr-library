@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as CryptoJS from "crypto-js";
-import {
-    Password,
-} from "symbol-sdk";
+const CryptoJS = require("crypto-js");
 
 // internal dependencies
 import {

@@ -18,7 +18,7 @@ import {expect} from "chai";
 // internal dependencies
 import {
     EncryptionService,
-} from "../index";
+} from "../../index";
 
 describe('EncryptionService -->', () => {
 

@@ -1,4 +1,9 @@
 .idea/
+.nyc_output/
+.awcache/
+_bundles/
 dist/
-_bundles
 node_modules/
+ts-docs/
+examples/node_modules/
+coverage/
