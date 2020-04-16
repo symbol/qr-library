@@ -71,5 +71,10 @@
   "bugs": {
     "url": "https://github.com/nemfoundation/symbol-qr-library/issues"
   },
-  "homepage": "https://github.com/nemfoundation/symbol-qr-library#readme"
+  "homepage": "https://github.com/nemfoundation/symbol-qr-library#readme",
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js"
+    ]
+  }
 }
