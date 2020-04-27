@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [v0.10.0][v0.10.0] - 27-Apr-2020
+
+### Milestone: [catapult-server@v0.9.4.1](https://github.com/nemtech/catapult-server/releases/tag/v0.9.4.1)
+
+- Upgraded symbol-sdk to v0.18.0
+- Upgraded symbol-hd-wallets to v0.10.0
+
 ## [v0.9.1][v0.9.1] - 16-Apr-2020
 
 ### Milestone: [catapult-server@v0.9.3.2](https://github.com/nemtech/catapult-server/releases/tag/v0.9.3.2)
