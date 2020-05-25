@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [v0.11.0][v0.11.0] - 25-May-2020
+
+- Upgraded symbol-sdk to v0.19.1
+- Upgraded symbol-hd-wallets to v0.11.0
+
 ## [v0.10.0][v0.10.0] - 27-Apr-2020
 
 ### Milestone: [catapult-server@v0.9.4.1](https://github.com/nemtech/catapult-server/releases/tag/v0.9.4.1)
@@ -95,6 +100,8 @@
 - generate image base64 string by string.
 
 
+[v0.11.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.10.0...v0.11.0
+[v0.10.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.9.1...v0.10.0
 [v0.9.1]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.9.0...v0.9.1
 [v0.9.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.8.0...v0.9.0
 [v0.8.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.7.0...v0.8.0
