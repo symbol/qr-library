@@ -11,8 +11,8 @@
     "braces": ">=2.3.1",
     "canvas": "^2.6.1",
     "crypto-js": "^3.3.0",
-    "symbol-hd-wallets": "^0.11.0",
-    "symbol-sdk": "^0.19.1",
+    "symbol-hd-wallets": "^0.12.0",
+    "symbol-sdk": "^0.20.6",
     "open": "^7.0.2",
     "qrcode": "^1.4.4"
   },
@@ -60,7 +60,7 @@
     "type": "git",
     "url": "git+https://github.com/nemfoundation/symbol-qr-library.git"
   },
-  "author": "nemfoundation",
+  "author": "Grégory Saive from Using Blockchain Ltd <greg@ubc.digital>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/nemfoundation/symbol-qr-library/issues"
