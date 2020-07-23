@@ -1,7 +1,7 @@
 # Symbol QR Library
 
 [![npm version](https://badge.fury.io/js/symbol-qr-library.svg)](https://badge.fury.io/js/symbol-qr-library)
-[![Build Status](https://travis-ci.com/nemfoundation/symbol-qr-library.svg?branch=master)](https://travis-ci.com/nemfoundation/symbol-qr-library)
+[![Build Status](https://travis-ci.com/nemtech/symbol-qr-library.svg?branch=main)](https://travis-ci.com/nemtech/symbol-qr-library)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-green.svg)](https://nem2.slack.com/messages/CB0UU89GS//)
 
 Library to generate QR codes for Symbol.
@@ -129,8 +129,6 @@ Use the following available resources to get help:
 
 ## Contributing
 
-This project is developed and maintained by NEM Foundation.
-
 Contributions are welcome and appreciated. 
 Check [CONTRIBUTING](CONTRIBUTING.md) for information on how to contribute.
 
@@ -140,7 +138,7 @@ Copyright 2019-present NEM
 
 Licensed under the [Apache License 2.0](LICENSE)
 
-[self]: https://github.com/nemfoundation/symbol-qr-library
+[self]: https://github.com/nemtech/symbol-qr-library
 [docs]: https://nemtech.github.io
-[issues]: https://github.com/nemfoundation/symbol-qr-library/issues
+[issues]: https://github.com/nemtech/symbol-qr-library/issues
 [slack]: https://join.slack.com/t/nem2/shared_invite/enQtMzY4MDc2NTg0ODgyLWZmZWRiMjViYTVhZjEzOTA0MzUyMTA1NTA5OWQ0MWUzNTA4NjM5OTJhOGViOTBhNjkxYWVhMWRiZDRkOTE0YmU
