@@ -58,14 +58,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nemfoundation/symbol-qr-library.git"
+    "url": "git+https://github.com/nemtech/symbol-qr-library.git"
   },
   "author": "Grégory Saive from Using Blockchain Ltd <greg@ubc.digital>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/nemfoundation/symbol-qr-library/issues"
+    "url": "https://github.com/nemtech/symbol-qr-library/issues"
   },
-  "homepage": "https://github.com/nemfoundation/symbol-qr-library#readme",
+  "homepage": "https://github.com/nemtech/symbol-qr-library#readme",
   "nyc": {
     "exclude": [
       "**/*.spec.js"
