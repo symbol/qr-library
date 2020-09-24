@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.12.1 - 25-Sep-2020
+
+- Upgraded symbol-sdk to v0.20.8 alpha
+- Upgraded symbol-hd-wallets to use next tag
+
 ## [v0.12.0][v0.12.0] - 13-Jul-2020
 
 - Upgraded symbol-sdk to v0.20.6
