@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [v0.13.0][v0.13.0] - 29-Sep-2020
+
+- Upgraded symbol-sdk to v0.21.0
+- Upgraded symbol-hd-wallets to v0.13.0
+
 ## v0.12.1 - 25-Sep-2020
 
 - Upgraded symbol-sdk to v0.20.8 alpha
@@ -111,6 +116,7 @@
 - generate image base64 string by string.
 
 
+[v0.13.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.12.0...v0.13.0
 [v0.12.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.11.0...v0.12.0
 [v0.11.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.10.0...v0.11.0
 [v0.10.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.9.1...v0.10.0
