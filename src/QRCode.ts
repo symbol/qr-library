@@ -131,7 +131,7 @@ abstract class QRCode implements QRCodeInterface {
         // get base64 representation
         return observableFrom(QRCodeCanvas.toDataURL(json, {
             errorCorrectionLevel: settings.correctionLevel,
-            width: settings.widthPixel,
+            // do-not-set-'width'
             // do-not-set-'version'
         }));
     }
