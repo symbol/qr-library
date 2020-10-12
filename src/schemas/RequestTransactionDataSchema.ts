@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    TransactionMapping,
-} from "symbol-sdk";
 
 // internal dependencies
 import {
+    ITransaction,
     QRCodeDataSchema,
     QRCodeType,
     TransactionQR,
@@ -58,6 +56,7 @@ class RequestTransactionDataSchema extends QRCodeDataSchema {
      * object.
      *
      * @param   json    {string}
+     * @param   transactionCreateFromPayload the transaction parser that creates a transaction from a binary payload.
      * @return  {TransactionQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -65,6 +64,7 @@ class RequestTransactionDataSchema extends QRCodeDataSchema {
      */
     public static parse(
         json: string,
+        transactionCreateFromPayload: (payload: string) => ITransaction
     ): TransactionQR {
         if (! json.length) {
             throw Error('JSON argument cannot be empty.');
@@ -76,7 +76,7 @@ class RequestTransactionDataSchema extends QRCodeDataSchema {
         }
 
         // read contact data
-        const transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
+        const transaction = transactionCreateFromPayload(jsonObj.data.payload);
         const network = jsonObj.network_id;
         const generationHash = jsonObj.chain_id;
 

@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 import { MnemonicPassPhrase } from 'symbol-hd-wallets';
-import {
-    Account,
-    NetworkType,
-    PublicAccount,
-    Transaction,
-} from "symbol-sdk";
 
 // internal dependencies
 import {
@@ -32,6 +26,7 @@ import {
     QRCodeType,
     TransactionQR,
 } from '../index';
+import { INetworkType, ITransaction } from "./sdk";
 
 /**
  * Class `QRCodeGenerator` describes a NIP-7 compliant QR Code
@@ -58,8 +53,8 @@ class QRCodeGenerator {
      */
     public static createExportObject(
         object: object,
-        networkType: NetworkType = NetworkType.MIJIN_TEST,
-        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        networkType: INetworkType,
+        generationHash: string,
     ): ObjectQR {
         return new ObjectQR(object, networkType, generationHash);
     }
@@ -69,17 +64,18 @@ class QRCodeGenerator {
      * and account.
      *
      * @see {ContactQR}
-     * @param   transaction     {Transaction}
+     * @param   name the name
+     * @param   accountPublicKey     the account public key
      * @param   networkType     {NetworkType}
      * @param   generationHash         {string}
      */
     public static createAddContact(
         name: string,
-        account: Account | PublicAccount,
-        networkType: NetworkType = NetworkType.MIJIN_TEST,
-        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        accountPublicKey: string,
+        networkType: INetworkType,
+        generationHash: string,
     ): ContactQR {
-        return new ContactQR(name, account, networkType, generationHash);
+        return new ContactQR(name, accountPublicKey, networkType, generationHash);
     }
 
     /**
@@ -87,18 +83,18 @@ class QRCodeGenerator {
      * instance, encrypted with given password.
      *
      * @see {AccountQR}
-     * @param   account         {Account}
+     * @param   accountPrivateKey    the account private key.
      * @param   password        {string}
      * @param   networkType     {NetworkType}
      * @param   generationHash         {string}
      */
     public static createExportAccount(
-        account: Account,
+        accountPrivateKey: string,
         password: string,
-        networkType: NetworkType = NetworkType.MIJIN_TEST,
-        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        networkType: INetworkType,
+        generationHash: string,
     ): AccountQR {
-        return new AccountQR(account, password, networkType, generationHash);
+        return new AccountQR(accountPrivateKey, password, networkType, generationHash);
     }
 
     /**
@@ -111,9 +107,9 @@ class QRCodeGenerator {
      * @param   generationHash         {string}
      */
     public static createTransactionRequest(
-        transaction: Transaction,
-        networkType: NetworkType = NetworkType.MIJIN_TEST,
-        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        transaction: ITransaction,
+        networkType: INetworkType,
+        generationHash: string,
     ): TransactionQR {
         return new TransactionQR(transaction, networkType, generationHash);
     }
@@ -131,8 +127,8 @@ class QRCodeGenerator {
     public static createExportMnemonic(
         mnemonic: MnemonicPassPhrase,
         password: string,
-        networkType: NetworkType = NetworkType.MIJIN_TEST,
-        generationHash: string = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB',
+        networkType: INetworkType,
+        generationHash: string,
     ): MnemonicQR {
         return new MnemonicQR(mnemonic, password, networkType, generationHash);
     }
@@ -142,6 +138,8 @@ class QRCodeGenerator {
      * of QRCode.
      *
      * @param   json    {string}
+     * @param   transactionCreateFromPayload the transaction factory to create ITransaction from a binary payload if the qr is a transaction based one.
+     * @param   password to decrypt private keys.
      * @return  {QRCode}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -149,6 +147,7 @@ class QRCodeGenerator {
      */
     public static fromJSON(
         json: string,
+        transactionCreateFromPayload: (payload: string) => ITransaction,
         password?: string,
     ): QRCode {
 
@@ -195,11 +194,11 @@ class QRCodeGenerator {
 
         // create a CosignatureQR from JSON
         case QRCodeType.RequestCosignature:
-            return CosignatureQR.fromJSON(json);
+            return CosignatureQR.fromJSON(json, transactionCreateFromPayload);
 
         // create a TransactionQR from JSON
         case QRCodeType.RequestTransaction:
-            return TransactionQR.fromJSON(json);
+            return TransactionQR.fromJSON(json, transactionCreateFromPayload);
 
         // create an MnemonicQR from JSON
         case QRCodeType.ExportMnemonic:

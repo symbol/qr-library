@@ -22,14 +22,14 @@ import {
     NamespaceId,
     NetworkType,
     PlainMessage,
-    PublicAccount,
+    PublicAccount, TransactionMapping,
     TransferTransaction,
     UInt64,
 } from 'symbol-sdk';
 
 // internal dependencies
 import {
-    CosignatureQR,
+    CosignatureQR, ITransaction,
     QRCodeType,
 } from "../index";
 
@@ -100,7 +100,7 @@ describe('CosignatureQR -->', () => {
 
             // Act:
             const exportCosig = new CosignatureQR(bonded, NetworkType.MIJIN_TEST, 'no-chain-id');
-            const importCosig = CosignatureQR.fromJSON(exportCosig.toJSON());
+            const importCosig = CosignatureQR.fromJSON(exportCosig.toJSON(), TransactionMapping.createFromPayload);
 
             // Assert
             expect(importCosig.transaction.serialize()).to.be.equal(exportCosig.transaction.serialize());
@@ -126,7 +126,7 @@ describe('CosignatureQR -->', () => {
             };
 
             // Act:
-            const importCosig = CosignatureQR.fromJSON(JSON.stringify(cosigInfo));
+            const importCosig = CosignatureQR.fromJSON(JSON.stringify(cosigInfo), TransactionMapping.createFromPayload);
 
             // Assert:
             expect(importCosig.transaction.serialize()).to.be.equal(cosigInfo.data.payload);

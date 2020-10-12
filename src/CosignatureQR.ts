@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    AggregateTransaction,
-    NetworkType,
-} from 'symbol-sdk';
+
 
 // internal dependencies
 import {
@@ -26,13 +23,14 @@ import {
     RequestCosignatureDataSchema,
     TransactionQR,
 } from '../index';
+import {INetworkType, ITransaction} from "./sdk";
 
 class CosignatureQR extends TransactionQR implements QRCodeInterface {
     /**
      * Construct a Transaction Request QR Code out of the
      * symbol-sdk Transaction instance.
      *
-     * @param   transaction     {Transaction}
+     * @param   transaction     {ITransaction}
      * @param   networkType     {NetworkType}
      * @param   generationHash         {string}
      */
@@ -40,17 +38,17 @@ class CosignatureQR extends TransactionQR implements QRCodeInterface {
                  * The transaction for the request.
                  * @var {AggregateTransaction}
                  */
-                public readonly transaction: AggregateTransaction,
+                transaction: ITransaction,
                 /**
                  * The network type.
                  * @var {NetworkType}
                  */
-                public readonly networkType: NetworkType,
+                networkType: INetworkType,
                 /**
                  * The network generation hash.
                  * @var {string}
                  */
-                public readonly generationHash: string) {
+                generationHash: string) {
         super(transaction, networkType, generationHash, QRCodeType.RequestCosignature);
     }
 
@@ -59,6 +57,7 @@ class CosignatureQR extends TransactionQR implements QRCodeInterface {
      * object.
      *
      * @param   json        {string}
+     * @param   transactionCreateFromPayload the transaction parser that creates a transaction from a binary payload.
      * @return  {CosignatureQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -66,10 +65,11 @@ class CosignatureQR extends TransactionQR implements QRCodeInterface {
      */
     public static fromJSON(
         json: string,
+        transactionCreateFromPayload: (payload: string) => ITransaction,
     ): CosignatureQR {
 
         // create the QRCode object from JSON
-        return RequestCosignatureDataSchema.parse(json);
+        return RequestCosignatureDataSchema.parse(json, transactionCreateFromPayload);
     }
 
     /**
