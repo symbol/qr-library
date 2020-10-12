@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 
 // internal dependencies
 import {
@@ -119,18 +118,18 @@ class QRCodeGenerator {
      * instance, encrypted with given password.
      *
      * @see {MnemonicQR}
-     * @param   mnemonic        {MnemonicPassPhrase}
+     * @param   mnemonicPlainText  {string} plain text
      * @param   password        {string}
      * @param   networkType     {NetworkType}
      * @param   generationHash         {string}
      */
     public static createExportMnemonic(
-        mnemonic: MnemonicPassPhrase,
+        mnemonicPlainText: string,
         password: string,
         networkType: INetworkType,
         generationHash: string,
     ): MnemonicQR {
-        return new MnemonicQR(mnemonic, password, networkType, generationHash);
+        return new MnemonicQR(mnemonicPlainText, password, networkType, generationHash);
     }
 
     /**

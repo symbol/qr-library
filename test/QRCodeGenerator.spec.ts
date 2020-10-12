@@ -146,7 +146,7 @@ describe('QRCodeGenerator -->', () => {
             const mnemonic = MnemonicPassPhrase.createRandom();
 
             // Act:
-            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, 'password', networkType, generationHash);
+            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic.plain, 'password', networkType, generationHash);
             const actualBase64 = await exportMnemonic.toBase64().toPromise();
 
             // Assert:
@@ -250,17 +250,25 @@ describe('QRCodeGenerator -->', () => {
             // Arrange:
             const mnemonic = MnemonicPassPhrase.createRandom();
 
-            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, 'password', networkType, generationHash);
+            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic.plain, 'password', networkType, generationHash);
             const actualObj = exportMnemonic.toJSON();
 
             // Act:
             const mnemonicObj: MnemonicQR = QRCodeGenerator.fromJSON(actualObj, TransactionMapping.createFromPayload, 'password') as MnemonicQR;
 
+            // create mnemonic
+            const exportedMnemonic = new MnemonicPassPhrase(mnemonicObj.mnemonicPlainText);
+
+            // more content validation
+            if (!exportedMnemonic.isValid()) {
+                throw new Error('Invalid encrypted mnemonic pass phrase.');
+            }
+
             // Assert:
             expect(mnemonicObj.toJSON()).to.not.be.equal('');
             expect(mnemonicObj.type).to.be.equal(QRCodeType.ExportMnemonic);
-            expect(mnemonicObj.mnemonic).to.deep.equal(mnemonic);
-            expect(mnemonicObj.mnemonic.plain).to.be.equal(mnemonic.plain);
+            expect(exportedMnemonic).to.deep.equal(mnemonic);
+            expect(mnemonicObj.mnemonicPlainText).to.be.equal(mnemonic.plain);
         });
     });
 

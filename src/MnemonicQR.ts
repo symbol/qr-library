@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { MnemonicPassPhrase } from 'symbol-hd-wallets';
-
 
 // internal dependencies
 import {
@@ -24,36 +22,32 @@ import {
     QRCodeInterface,
     QRCodeType,
 } from '../index';
-import {INetworkType} from "./sdk/INetworkType";
+import {INetworkType} from "./sdk";
 
 class MnemonicQR extends QRCode implements QRCodeInterface {
     /**
      * Construct a Mnemonic Export QR Code out of the
      * MnemonicPassPhrase and Password instances.
      *
-     * @param   mnemonic        {MnemonicPassPhrase}
+     * @param   mnemonic        {string}
      * @param   password        {Password}
      * @param   networkType     {NetworkType}
      * @param   generationHash  {string}
      */
     constructor(/**
                  * The mnemonic pass phrase to be exported
-                 * @var {MnemonicPassPhrase}
                  */
-                public readonly mnemonic: MnemonicPassPhrase,
+                public readonly mnemonicPlainText: string,
                 /**
                  * The password for encryption
-                 * @var {string}
                  */
                 public readonly password: string,
                 /**
                  * The network type.
-                 * @var {NetworkType}
                  */
                 public readonly networkType: INetworkType,
                 /**
                  * The network generation hash.
-                 * @var {string}
                  */
                 public readonly generationHash: string) {
         super(QRCodeType.ExportMnemonic, networkType, generationHash);
