@@ -33,7 +33,8 @@ The software allows you to create the following QR types:
 ### Generate QRCode for a Transaction Request
 
 ```typescript
-import { QRCodeGenerator } from 'symbol-qr-library';
+import { QRCodeGenerator } from 'symbol-qr-library'; 
+import {Address, Deadline,Mosaic,NamespaceId,NetworkType,PlainMessage, TransferTransaction,UInt64} from "symbol-sdk";
 
 // (Optional) create transfer transaction (or read from network)
 const transfer = TransferTransaction.create(
