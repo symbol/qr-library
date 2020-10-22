@@ -38,7 +38,7 @@ describe('AccountQR -->', () => {
             );
 
             // Act:
-            const exportAccount = new AccountQR(account, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportAccount = new AccountQR(account.privateKey, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
             const actualJSON = exportAccount.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
@@ -58,7 +58,7 @@ describe('AccountQR -->', () => {
             );
 
             // Act:
-            const exportAccount = new AccountQR(account, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportAccount = new AccountQR(account.privateKey, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
             const actualJSON = exportAccount.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
@@ -70,15 +70,16 @@ describe('AccountQR -->', () => {
 
     describe('fromJSON() should', () => {
 
+        const networkType = NetworkType.MIJIN_TEST;
         it('throw error given wrong password', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.MIJIN_TEST,
+                networkType,
             );
 
             // Act:
-            const exportAccount = new AccountQR(account, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportAccount = new AccountQR(account.privateKey, 'password', networkType, 'no-chain-id');
 
             // Act + Assert
             expect((() => {
@@ -91,7 +92,7 @@ describe('AccountQR -->', () => {
             const accountInfo: any = {
                 v: 3,
                 type: QRCodeType.ExportAccount,
-                network_id: NetworkType.MIJIN_TEST,
+                network_id: networkType,
                 chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
                 data: {
                     // 'ciphertext' field for encrypted payload missing
@@ -109,16 +110,15 @@ describe('AccountQR -->', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.MIJIN_TEST,
+                networkType,
             );
 
             // Act:
-            const exportAccount = new AccountQR(account, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportAccount = new AccountQR(account.privateKey, 'password', networkType, 'no-chain-id');
             const importAccount = AccountQR.fromJSON(exportAccount.toJSON(), 'password');
 
             // Assert
-            expect(importAccount.account.privateKey).to.be.equal(exportAccount.account.privateKey);
-            expect(importAccount.account.publicKey).to.be.equal(exportAccount.account.publicKey);
+            expect(importAccount.accountPrivateKey).to.be.equal(exportAccount.accountPrivateKey);
         });
 
         it('reconstruct account given correct ciphertext and password', () => {
@@ -126,7 +126,7 @@ describe('AccountQR -->', () => {
             const accountInfo = {
                 v: 3,
                 type: QRCodeType.ExportAccount,
-                network_id: NetworkType.MIJIN_TEST,
+                network_id: networkType,
                 chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
                 data: {
                     ciphertext: '56d310848ee93d0794eb1f64a5195778ded2q7IxvtPbO+sA7jZZyhpu/khbaNdx1pzuoGoPJRw1A4aBsWPlex3y/gy5da8WjF0i4d+/D0B5ESy+zX5P+AoFAw3EFi3UVBdnav4rnqg=',
@@ -138,8 +138,8 @@ describe('AccountQR -->', () => {
             const importAccount = AccountQR.fromJSON(JSON.stringify(accountInfo), 'password');
 
             // Assert
-            expect(importAccount.account.privateKey).to.be.equal('749F1FF1972CD465CAB74566FF0AA021F846FBE3916ABB6A6C1373E962C76331');
-            expect(importAccount.account.publicKey).to.be.equal('50BFEB16AA0A3E00B8AB9385A2686991A09522DCDA4AC31B400BB5674EE4CDF8');
+            expect(importAccount.accountPrivateKey).to.be.equal('749F1FF1972CD465CAB74566FF0AA021F846FBE3916ABB6A6C1373E962C76331');
+            expect(Account.createFromPrivateKey(importAccount.accountPrivateKey, networkType).publicKey).to.be.equal('50BFEB16AA0A3E00B8AB9385A2686991A09522DCDA4AC31B400BB5674EE4CDF8');
         });
     });
 

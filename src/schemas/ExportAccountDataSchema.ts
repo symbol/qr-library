@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    Account,
-    Password,
-} from "symbol-sdk";
 
 // internal dependencies
 import {
@@ -49,7 +45,7 @@ class ExportAccountDataSchema extends QRCodeDataSchema {
     public getData(qr: AccountQR): any {
 
         // we will store a password encrypted copy of the private key
-        const encrypted = EncryptionService.encrypt(qr.account.privateKey, qr.password);
+        const encrypted = EncryptionService.encrypt(qr.accountPrivateKey, qr.password);
 
         return {
             "ciphertext": encrypted.ciphertext,
@@ -102,8 +98,7 @@ class ExportAccountDataSchema extends QRCodeDataSchema {
             const generationHash = jsonObj.chain_id;
 
             // create account
-            const account = Account.createFromPrivateKey(privKey, network);
-            return new AccountQR(account, password, network, generationHash);
+            return new AccountQR(privKey, password, network, generationHash);
         }
         catch (e) {
             throw new Error('Could not parse encrypted account information.');

@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 import { MnemonicPassPhrase } from 'symbol-hd-wallets';
-import {
-    Password,
-} from "symbol-sdk";
 
 // internal dependencies
 import {

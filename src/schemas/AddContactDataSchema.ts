@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    PublicAccount,
-} from "symbol-sdk";
 
 // internal dependencies
 import {
@@ -46,7 +43,7 @@ class AddContactDataSchema extends QRCodeDataSchema {
     public getData(qr: ContactQR): any {
         return {
             "name": qr.name,
-            "publicKey": qr.account.publicKey.toString(),
+            "publicKey": qr.accountPublicKey,
         };
     }
 
@@ -75,10 +72,9 @@ class AddContactDataSchema extends QRCodeDataSchema {
         // read contact data
         const name = jsonObj.data.name;
         const network = jsonObj.network_id;
-        const account = PublicAccount.createFromPublicKey(jsonObj.data.publicKey, network);
         const generationHash = jsonObj.chain_id;
 
-        return new ContactQR(name, account, network, generationHash);
+        return new ContactQR(name, jsonObj.data.publicKey, network, generationHash);
     }
 }
 
