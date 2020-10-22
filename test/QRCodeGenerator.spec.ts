@@ -25,7 +25,7 @@ import {
     NetworkType,
     PublicAccount,
     Account,
-    Password
+    Password, TransactionMapping
 } from 'symbol-sdk';
 import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 
@@ -40,6 +40,9 @@ import {
     MnemonicQR,
 } from "../index";
 
+const generationHash = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB';
+const networkType = NetworkType.MIJIN_TEST
+
 describe('QRCodeGenerator -->', () => {
 
     describe('createExportObject() should', () => {
@@ -49,7 +52,7 @@ describe('QRCodeGenerator -->', () => {
             const object = {};
 
             // Act:
-            const objectQR = QRCodeGenerator.createExportObject(object);
+            const objectQR = QRCodeGenerator.createExportObject(object, networkType, generationHash);
 
             // Assert:
             expect(objectQR.networkType).to.be.equal(NetworkType.MIJIN_TEST);
@@ -62,7 +65,7 @@ describe('QRCodeGenerator -->', () => {
             const object = {test: "test"};
 
             // Act:
-            const objectQR = QRCodeGenerator.createExportObject(object);
+            const objectQR = QRCodeGenerator.createExportObject(object, networkType, generationHash);
 
             // Assert:
             expect(objectQR.object).to.deep.equal(object);
@@ -85,7 +88,7 @@ describe('QRCodeGenerator -->', () => {
             );
 
             // Act:
-            const requestTx = QRCodeGenerator.createTransactionRequest(transfer);
+            const requestTx = QRCodeGenerator.createTransactionRequest(transfer, networkType, generationHash);
             const actualBase64 = await requestTx.toBase64().toPromise();
 
             // Assert:
@@ -106,7 +109,7 @@ describe('QRCodeGenerator -->', () => {
             );
 
             // Act:
-            const createContact = QRCodeGenerator.createAddContact(name, account);
+            const createContact = QRCodeGenerator.createAddContact(name, account.publicKey, networkType, generationHash);
             const actualBase64 = await createContact.toBase64().toPromise();
 
             // Assert:
@@ -126,7 +129,7 @@ describe('QRCodeGenerator -->', () => {
             );
 
             // Act:
-            const exportAccount = QRCodeGenerator.createExportAccount(account, 'password');
+            const exportAccount = QRCodeGenerator.createExportAccount(account.privateKey, 'password', networkType, generationHash);
             const actualBase64 = await exportAccount.toBase64().toPromise();
 
             // Assert:
@@ -143,7 +146,7 @@ describe('QRCodeGenerator -->', () => {
             const mnemonic = MnemonicPassPhrase.createRandom();
 
             // Act:
-            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, 'password');
+            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, 'password', networkType, generationHash);
             const actualBase64 = await exportMnemonic.toBase64().toPromise();
 
             // Assert:
@@ -168,16 +171,15 @@ describe('QRCodeGenerator -->', () => {
                 NetworkType.MIJIN_TEST
             );
 
-            const requestTx = QRCodeGenerator.createTransactionRequest(transfer, NetworkType.MIJIN_TEST);
+            const requestTx = QRCodeGenerator.createTransactionRequest(transfer, networkType, generationHash);
             const txJSON = requestTx.toJSON();
 
             // Act:
-            const transactionObj: TransactionQR = QRCodeGenerator.fromJSON(txJSON) as TransactionQR;
+            const transactionObj: TransactionQR = QRCodeGenerator.fromJSON(txJSON, TransactionMapping.createFromPayload) as TransactionQR;
 
             // Assert:
             expect(transactionObj.toJSON()).to.not.be.equal('');
             expect(transactionObj.type).to.be.equal(QRCodeType.RequestTransaction);
-            expect(transactionObj.transaction.toJSON()).to.deep.equal(transfer.toJSON());
             expect(transactionObj.transaction.serialize()).to.be.equal(transfer.serialize());
         });
 
@@ -186,23 +188,22 @@ describe('QRCodeGenerator -->', () => {
             const name = 'test-contact-1';
             const account = PublicAccount.createFromPublicKey(
                 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-                NetworkType.MIJIN_TEST
+                networkType
             );
 
             const createContact = QRCodeGenerator.createAddContact(
                 name,
-                account,
-                NetworkType.MIJIN_TEST
-            );
+                account.publicKey
+                , networkType, generationHash);
             const contactJSON = createContact.toJSON();
 
             // Act:
-            const contactObj: ContactQR = QRCodeGenerator.fromJSON(contactJSON) as ContactQR;
+            const contactObj: ContactQR = QRCodeGenerator.fromJSON(contactJSON, TransactionMapping.createFromPayload) as ContactQR;
 
             // Assert:
             expect(contactObj.toJSON()).to.not.be.equal('');
             expect(contactObj.type).to.be.equal(QRCodeType.AddContact);
-            expect(contactObj.account.address).to.deep.equal(account.address);
+            expect(contactObj.accountPublicKey).to.deep.equal(account.publicKey);
             expect(contactObj.name).to.be.equal(name);
         });
 
@@ -213,17 +214,17 @@ describe('QRCodeGenerator -->', () => {
                 NetworkType.MIJIN_TEST
             );
 
-            const exportAccount = QRCodeGenerator.createExportAccount(account, 'password');
+            const exportAccount = QRCodeGenerator.createExportAccount(account.privateKey, 'password', networkType, generationHash);
             const actualObj = exportAccount.toJSON();
 
             // Act:
-            const accountObj: AccountQR = QRCodeGenerator.fromJSON(actualObj, 'password') as AccountQR;
+            const accountObj: AccountQR = QRCodeGenerator.fromJSON(actualObj, TransactionMapping.createFromPayload, 'password') as AccountQR;
 
             // Assert:
             expect(accountObj.toJSON()).to.not.be.equal('');
             expect(accountObj.type).to.be.equal(QRCodeType.ExportAccount);
-            expect(accountObj.account).to.deep.equal(account);
-            expect(accountObj.account.privateKey).to.be.equal('F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978');
+            expect(Account.createFromPrivateKey(accountObj.accountPrivateKey, networkType)).to.deep.equal(account);
+            expect(accountObj.accountPrivateKey).to.be.equal('F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978');
         });
 
         it('Populate object given ObjectQR JSON', () => {
@@ -233,11 +234,11 @@ describe('QRCodeGenerator -->', () => {
                 key2: "Value2"
             };
 
-            const exportObject = QRCodeGenerator.createExportObject(object);
+            const exportObject = QRCodeGenerator.createExportObject(object, networkType, generationHash);
             const actualObj = exportObject.toJSON();
 
             // Act:
-            const objectObj: ObjectQR = QRCodeGenerator.fromJSON(actualObj) as ObjectQR;
+            const objectObj: ObjectQR = QRCodeGenerator.fromJSON(actualObj, TransactionMapping.createFromPayload) as ObjectQR;
 
             // Assert:
             expect(objectObj.toJSON()).to.not.be.equal('');
@@ -249,11 +250,11 @@ describe('QRCodeGenerator -->', () => {
             // Arrange:
             const mnemonic = MnemonicPassPhrase.createRandom();
 
-            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, 'password');
+            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic, 'password', networkType, generationHash);
             const actualObj = exportMnemonic.toJSON();
 
             // Act:
-            const mnemonicObj: MnemonicQR = QRCodeGenerator.fromJSON(actualObj, 'password') as MnemonicQR;
+            const mnemonicObj: MnemonicQR = QRCodeGenerator.fromJSON(actualObj, TransactionMapping.createFromPayload, 'password') as MnemonicQR;
 
             // Assert:
             expect(mnemonicObj.toJSON()).to.not.be.equal('');

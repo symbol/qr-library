@@ -16,6 +16,9 @@
 
 import * as QRCodeSettings from './src/QRCodeSettings';
 
+
+export * from './src/sdk';
+
 // enumerations / interfaces
 export { QRCodeInterface } from './src/QRCodeInterface';
 export { QRCodeType } from './src/QRCodeType';

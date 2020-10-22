@@ -13,11 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    Account,
-    NetworkType,
-    PublicAccount,
-} from 'symbol-sdk';
+
 
 // internal dependencies
 import {
@@ -27,14 +23,16 @@ import {
     QRCodeInterface,
     QRCodeType,
 } from '../index';
+import {INetworkType} from "./sdk/INetworkType";
 
 class ContactQR extends QRCode implements QRCodeInterface {
     /**
      * Construct a Contact QR Code out of the
-     * symbol-sdk Account or PublicAccount instance.
+     * symbol public key.
      *
-     * @param   account         {Account|PublicAccount}
-     * @param   networkType     {NetworkType}
+     * @param name the contact name.
+     * @param   accountPublicKey         the public key
+     * @param   networkType     {INetworkType}
      * @param   generationHash         {string}
      */
     constructor(/**
@@ -43,15 +41,14 @@ class ContactQR extends QRCode implements QRCodeInterface {
                  */
                 public readonly name: string,
                 /**
-                 * The contact account.
-                 * @var {Account|PublicAccount|Address}
+                 * The account public key.
                  */
-                public readonly account: Account | PublicAccount,
+                public readonly accountPublicKey:string,
                 /**
                  * The network type.
                  * @var {NetworkType}
                  */
-                public readonly networkType: NetworkType,
+                public readonly networkType: INetworkType,
                 /**
                  * The network generation hash.
                  * @var {string}

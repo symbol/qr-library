@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import {
-    NetworkType,
+    NetworkType, TransactionMapping,
 } from 'symbol-sdk';
 
 // internal dependencies
@@ -58,7 +58,7 @@ class ExampleRequestTransactionQR extends Example {
 
         // create QR Code with JSON content
         const transactionQR = TransactionQR.fromJSON(
-            JSON.stringify(unsignedTransferInfo),
+            JSON.stringify(unsignedTransferInfo), TransactionMapping.createFromPayload,
         );
 
         console.log("TransactionQR JSON: ", transactionQR.toJSON());
