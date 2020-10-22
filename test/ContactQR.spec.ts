@@ -38,7 +38,7 @@ describe('ContactQR -->', () => {
             );
 
             // Act:
-            const addContact = new ContactQR(name, account, NetworkType.TEST_NET, '');
+            const addContact = new ContactQR(name, account.publicKey, NetworkType.TEST_NET, '');
             const actualJSON = addContact.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
@@ -59,7 +59,7 @@ describe('ContactQR -->', () => {
             );
 
             // Act:
-            const addContact = new ContactQR(name, account, NetworkType.TEST_NET, '');
+            const addContact = new ContactQR(name, account.publicKey, NetworkType.TEST_NET, '');
             const actualJSON = addContact.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
@@ -79,12 +79,12 @@ describe('ContactQR -->', () => {
             );
 
             // Act:
-            const exportContact = new ContactQR('nemtech', account, NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportContact = new ContactQR('nemtech', account.publicKey, NetworkType.MIJIN_TEST, 'no-chain-id');
             const importContact = ContactQR.fromJSON(exportContact.toJSON());
 
             // Assert
             expect(importContact.name).to.be.equal('nemtech');
-            expect(importContact.account.publicKey).to.be.equal(exportContact.account.publicKey);
+            expect(importContact.accountPublicKey).to.be.equal(exportContact.accountPublicKey);
         });
 
         it('reconstruct contact given correct JSON structure', () => {
@@ -105,7 +105,7 @@ describe('ContactQR -->', () => {
 
             // Assert
             expect(importContact.name).to.be.equal('nemtech');
-            expect(importContact.account.publicKey).to.be.equal('C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268');
+            expect(importContact.accountPublicKey).to.be.equal('C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268');
         });
 
     });

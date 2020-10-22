@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    NetworkType,
-} from "symbol-sdk";
 
 // internal dependencies
 import {
@@ -25,6 +22,7 @@ import {
     QRCodeInterface,
     QRCodeType,
 } from '../index';
+import {INetworkType} from "./sdk/INetworkType";
 
 class ObjectQR extends QRCode implements QRCodeInterface {
     /**
@@ -32,7 +30,7 @@ class ObjectQR extends QRCode implements QRCodeInterface {
      * JSON object.
      *
      * @param   object          {Object}
-     * @param   networkType     {NetworkType}
+     * @param   networkType     {INetworkType}
      * @param   generationHash         {string}
      */
     constructor(/**
@@ -44,7 +42,7 @@ class ObjectQR extends QRCode implements QRCodeInterface {
                  * The network type.
                  * @var {NetworkType}
                  */
-                public readonly networkType: NetworkType,
+                public readonly networkType: INetworkType,
                 /**
                  * The network generation hash.
                  * @var {string}

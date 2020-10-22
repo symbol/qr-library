@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    NetworkType,
-    Transaction,
-} from "symbol-sdk";
 
 // internal dependencies
 import {
+    INetworkType,
     QRCode,
     QRCodeDataSchema,
     QRCodeInterface,
     QRCodeType,
     RequestTransactionDataSchema,
 } from '../index';
+import {ITransaction} from "./sdk";
 
 class TransactionQR extends QRCode implements QRCodeInterface {
     /**
@@ -40,12 +38,12 @@ class TransactionQR extends QRCode implements QRCodeInterface {
                  * The transaction for the request.
                  * @var {Transaction}
                  */
-                public readonly transaction: Transaction,
+                public readonly transaction: ITransaction,
                 /**
                  * The network type.
                  * @var {NetworkType}
                  */
-                public readonly networkType: NetworkType,
+                public readonly networkType: INetworkType,
                 /**
                  * The chain Id.
                  * @var {string}
@@ -65,6 +63,7 @@ class TransactionQR extends QRCode implements QRCodeInterface {
      * object.
      *
      * @param   json        {string}
+     * @param   transactionCreateFromPayload the transaction parser that creates a transaction from a binary payload.
      * @return  {TransactionQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -72,10 +71,11 @@ class TransactionQR extends QRCode implements QRCodeInterface {
      */
     public static fromJSON(
         json: string,
+        transactionCreateFromPayload: (payload: string) => ITransaction,
     ): TransactionQR {
 
         // create the QRCode object from JSON
-        return RequestTransactionDataSchema.parse(json);
+        return RequestTransactionDataSchema.parse(json, transactionCreateFromPayload);
     }
 
     /**

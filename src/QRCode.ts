@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 import { createCanvas } from 'canvas';
-import { NetworkType } from 'symbol-sdk';
 import * as QRCodeCanvas from 'qrcode';
 import {
     from as observableFrom,
@@ -30,6 +29,7 @@ import {
     QRCodeStreamType,
     QRCodeType,
 } from "../index";
+import {INetworkType} from "./sdk/INetworkType";
 
 abstract class QRCode implements QRCodeInterface {
 
@@ -49,7 +49,7 @@ abstract class QRCode implements QRCodeInterface {
                  * The network ID.
                  * @var {number}
                  */
-                public readonly networkType: NetworkType,
+                public readonly networkType: INetworkType,
                 /**
                  * The network generation hash.
                  * @var {string}

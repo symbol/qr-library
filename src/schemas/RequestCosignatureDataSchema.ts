@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-    AggregateTransaction,
-    TransactionMapping,
-} from "symbol-sdk";
 
 // internal dependencies
 import {
-    CosignatureQR,
+    CosignatureQR, ITransaction,
     QRCodeType,
     RequestTransactionDataSchema,
 } from '../../index';
@@ -42,6 +38,7 @@ class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
      * object.
      *
      * @param   json    {string}
+     * @param   transactionCreateFromPayload the transaction parser that creates a transaction from a binary payload.
      * @return  {CosignatureQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -49,6 +46,7 @@ class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
      */
     public static parse(
         json: string,
+        transactionCreateFromPayload: (payload: string) => ITransaction
     ): CosignatureQR {
         if (! json.length) {
             throw Error('JSON argument cannot be empty.');
@@ -60,11 +58,11 @@ class RequestCosignatureDataSchema extends RequestTransactionDataSchema {
         }
 
         // read contact data
-        const transaction = TransactionMapping.createFromPayload(jsonObj.data.payload);
+        const transaction = transactionCreateFromPayload(jsonObj.data.payload);
         const network = jsonObj.network_id;
         const generationHash = jsonObj.chain_id;
 
-        return new CosignatureQR(transaction as AggregateTransaction, network, generationHash);
+        return new CosignatureQR(transaction, network, generationHash);
     }
 }
 

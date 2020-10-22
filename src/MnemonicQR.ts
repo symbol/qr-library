@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 import { MnemonicPassPhrase } from 'symbol-hd-wallets';
-import {
-    NetworkType,
-} from "symbol-sdk";
+
 
 // internal dependencies
 import {
@@ -26,6 +24,7 @@ import {
     QRCodeInterface,
     QRCodeType,
 } from '../index';
+import {INetworkType} from "./sdk/INetworkType";
 
 class MnemonicQR extends QRCode implements QRCodeInterface {
     /**
@@ -51,7 +50,7 @@ class MnemonicQR extends QRCode implements QRCodeInterface {
                  * The network type.
                  * @var {NetworkType}
                  */
-                public readonly networkType: NetworkType,
+                public readonly networkType: INetworkType,
                 /**
                  * The network generation hash.
                  * @var {string}
