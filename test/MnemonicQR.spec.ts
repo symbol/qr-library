@@ -171,7 +171,7 @@ describe('MnemonicQR -->', () => {
                 const actualObject = JSON.parse(actualJSON);
 
                 // Assert:
-                expect(actualObject.data).to.have.property('mnemonicPlain');
+                expect(actualObject.data).to.have.property('plainMnemonic');
             });
         });
 
@@ -190,7 +190,7 @@ describe('MnemonicQR -->', () => {
                 })).not.to.throw('Could not parse mnemonic pass phrase.');
             });
 
-            it('reconstruct mnemonic pass phrase given a correct mnemonicPlain data', () => {
+            it('reconstruct mnemonic pass phrase given a correct plainMnemonic data', () => {
                 // Arrange:
                 const mnemonic = MnemonicPassPhrase.createRandom();
 

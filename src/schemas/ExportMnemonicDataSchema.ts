@@ -53,7 +53,7 @@ class ExportMnemonicDataSchema extends QRCodeDataSchema {
             };
         } else {
             return {
-                "mnemonicPlain": qr.mnemonicPlainText
+                "plainMnemonic": qr.mnemonicPlainText
             }
         }
     }
@@ -89,7 +89,7 @@ class ExportMnemonicDataSchema extends QRCodeDataSchema {
 
         try {
             // decrypt mnemonic pass phrase
-            const plainTxt = EncryptedPayload.isDataEncrypted(jsonObj.data) ? EncryptionService.decrypt(EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data)), password) : jsonObj.data.mnemonicPlain;
+            const plainTxt = EncryptedPayload.isDataEncrypted(jsonObj.data) ? EncryptionService.decrypt(EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data)), password) : jsonObj.data.plainMnemonic;
             if (!plainTxt) {
                 throw new Error('Mnemonic pass phrase is not valid!')
             }
