@@ -129,7 +129,7 @@ describe('QRCodeGenerator -->', () => {
             );
 
             // Act:
-            const exportAccount = QRCodeGenerator.createExportAccount(account.privateKey, 'password', networkType, generationHash);
+            const exportAccount = QRCodeGenerator.createExportAccount(account.privateKey, networkType, generationHash, 'password');
             const actualBase64 = await exportAccount.toBase64().toPromise();
 
             // Assert:
@@ -146,7 +146,7 @@ describe('QRCodeGenerator -->', () => {
             const mnemonic = MnemonicPassPhrase.createRandom();
 
             // Act:
-            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic.plain, 'password', networkType, generationHash);
+            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic.plain, networkType, generationHash, 'password');
             const actualBase64 = await exportMnemonic.toBase64().toPromise();
 
             // Assert:
@@ -214,7 +214,7 @@ describe('QRCodeGenerator -->', () => {
                 NetworkType.MIJIN_TEST
             );
 
-            const exportAccount = QRCodeGenerator.createExportAccount(account.privateKey, 'password', networkType, generationHash);
+            const exportAccount = QRCodeGenerator.createExportAccount(account.privateKey, networkType, generationHash, 'password');
             const actualObj = exportAccount.toJSON();
 
             // Act:
@@ -250,7 +250,7 @@ describe('QRCodeGenerator -->', () => {
             // Arrange:
             const mnemonic = MnemonicPassPhrase.createRandom();
 
-            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic.plain, 'password', networkType, generationHash);
+            const exportMnemonic = QRCodeGenerator.createExportMnemonic(mnemonic.plain, networkType, generationHash, 'password');
             const actualObj = exportMnemonic.toJSON();
 
             // Act:

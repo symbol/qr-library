@@ -43,14 +43,18 @@ class ExportAccountDataSchema extends QRCodeDataSchema {
      * @return {any}
      */
     public getData(qr: AccountQR): any {
-
-        // we will store a password encrypted copy of the private key
-        const encrypted = EncryptionService.encrypt(qr.accountPrivateKey, qr.password);
-
-        return {
-            "ciphertext": encrypted.ciphertext,
-            "salt": encrypted.salt,
-        };
+        if (qr.encrypted) {
+            // we will store a password encrypted copy of the private key
+            const encryptedData = EncryptionService.encrypt(qr.accountPrivateKey, qr.password);
+            return {
+                "ciphertext": encryptedData.ciphertext,
+                "salt": encryptedData.salt,
+            };
+        } else {
+            return {
+                "privateKey": qr.accountPrivateKey
+            }
+        }
     }
 
     /**
@@ -58,7 +62,7 @@ class ExportAccountDataSchema extends QRCodeDataSchema {
      * object.
      *
      * @param   json        {string}
-     * @param   password    {string}
+     * @param   password    {string=} Optional password
      * @return  {AccountQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -67,7 +71,7 @@ class ExportAccountDataSchema extends QRCodeDataSchema {
      */
     public static parse(
         json: string,
-        password: string,
+        password?: string,
     ): AccountQR {
         if (! json.length) {
             throw new Error('JSON argument cannot be empty.');
@@ -79,29 +83,27 @@ class ExportAccountDataSchema extends QRCodeDataSchema {
         }
 
         if (!jsonObj.hasOwnProperty('data')) {
-            throw new Error('Missing mandatory property for encrypted payload.');
+            throw new Error('Missing mandatory property for payload.');
         }
 
         try {
-            // encrypted payload validation
-            const payload = EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data));
-
+            
             // decrypt private key
-            const privKey = EncryptionService.decrypt(payload, password);
+            const privKey = EncryptedPayload.isDataEncrypted(jsonObj.data) ? EncryptionService.decrypt(EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data)), password) : JSON.stringify(jsonObj.data);
 
             // more content validation
             if (!privKey || (privKey.length !== 64 && privKey.length !== 66)) {
-                throw new Error('Invalid encrypted private key.');
+                throw new Error('Invalid private key.');
             }
 
             const network = jsonObj.network_id;
             const generationHash = jsonObj.chain_id;
 
             // create account
-            return new AccountQR(privKey, password, network, generationHash);
+            return new AccountQR(privKey, network, generationHash, password);
         }
         catch (e) {
-            throw new Error('Could not parse encrypted account information.');
+            throw new Error('Could not parse account information.');
         }
     }
 }
