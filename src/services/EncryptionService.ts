@@ -74,23 +74,13 @@ class EncryptionService {
 
     /**
      * AES_PBKF2_decryption will decrypt privateKey with provided password
-     * @param password
-     * @param json
+     * @param payload the object containing the encrypted data.
+     * @param password the password to decrypt the encrypted data
      */
     public static decrypt(
-        payloadOrJson: EncryptedPayload | string,
+        payload: EncryptedPayload,
         password: string,
     ): string {
-
-        let payload: EncryptedPayload;
-
-        // parse input if necessary
-        if (payloadOrJson instanceof EncryptedPayload) {
-            payload = payloadOrJson;
-        }
-        else {
-            payload = EncryptedPayload.fromJSON(payloadOrJson);
-        }
 
         // read payload
         const salt = CryptoJS.enc.Hex.parse(payload.salt);
@@ -113,7 +103,12 @@ class EncryptionService {
             mode: CryptoJS.mode.CBC,
         });
 
-        return decrypted.toString(CryptoJS.enc.Utf8);
+        const decryptedText = decrypted.toString(CryptoJS.enc.Utf8);
+        if (!decryptedText){
+            // This happens sometimes when the wrong password is used instead of an Error.
+            throw Error('Empty decrypted text!!');
+        }
+        return decryptedText;
     }
 }
 

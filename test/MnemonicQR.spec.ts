@@ -73,7 +73,7 @@ describe('MnemonicQR -->', () => {
 
             // Act + Assert
             expect((() => {
-                const importMnemonic = MnemonicQR.fromJSON(exportMnemonic.toJSON(), 'wrong-password');
+                MnemonicQR.fromJSON(exportMnemonic.toJSON(), 'wrong-password');
             })).to.throw('Could not parse encrypted mnemonic pass phrase.');
         });
 
