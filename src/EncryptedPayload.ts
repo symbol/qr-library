@@ -66,7 +66,7 @@ class EncryptedPayload {
 
     /**
      * Validates given json string and returns json object
-     * @param json 
+     * @param json
      * @return json object
      * @throws {Error} If validation fails
      */
@@ -88,7 +88,7 @@ class EncryptedPayload {
 
     /**
      * Checks if the data ojbect is encrypted
-     * @param jsonObject 
+     * @param jsonObject
      */
     public static isDataEncrypted(jsonObject: any) : boolean {
         return jsonObject.hasOwnProperty('ciphertext') && jsonObject.hasOwnProperty('salt');

@@ -87,7 +87,6 @@ class ExportAccountDataSchema extends QRCodeDataSchema {
         }
 
         try {
-            
             // decrypt private key
             const privKey = EncryptedPayload.isDataEncrypted(jsonObj.data) ? EncryptionService.decrypt(EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data)), password) : JSON.stringify(jsonObj.data);
 
