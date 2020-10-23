@@ -61,7 +61,7 @@ class EncryptedPayload {
         }
         catch (e) {
             // Invalid JSON provided, forward error
-            throw new Error(e);
+            throw new Error('Invalid json body in payload! ' + e.message);
         }
 
         // validate obligatory fields

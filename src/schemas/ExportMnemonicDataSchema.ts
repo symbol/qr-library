@@ -46,7 +46,7 @@ class ExportMnemonicDataSchema extends QRCodeDataSchema {
     public getData(qr: MnemonicQR): any {
 
         // we will store a password encrypted copy of the private key
-        const encrypted = EncryptionService.encrypt(qr.mnemonic.plain, qr.password);
+        const encrypted = EncryptionService.encrypt(qr.mnemonicPlainText, qr.password);
 
         return {
             "ciphertext": encrypted.ciphertext,
@@ -92,15 +92,7 @@ class ExportMnemonicDataSchema extends QRCodeDataSchema {
             const network  = jsonObj.network_id;
             const generationHash = jsonObj.chain_id;
 
-            // create mnemonic
-            const mnemonic = new MnemonicPassPhrase(plainTxt);
-
-            // more content validation
-            if (!mnemonic.isValid()) {
-                throw new Error('Invalid encrypted mnemonic pass phrase.');
-            }
-
-            return new MnemonicQR(mnemonic, password, network, generationHash);
+            return new MnemonicQR(plainTxt, password, network, generationHash);
         }
         catch (e) {
             throw new Error('Could not parse encrypted mnemonic pass phrase.');

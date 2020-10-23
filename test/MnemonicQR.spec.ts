@@ -35,7 +35,7 @@ describe('MnemonicQR -->', () => {
             const mnemonic = MnemonicPassPhrase.createRandom();
 
             // Act:
-            const exportMnemonic = new MnemonicQR(mnemonic, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportMnemonic = new MnemonicQR(mnemonic.plain, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
             const actualJSON = exportMnemonic.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
@@ -52,7 +52,7 @@ describe('MnemonicQR -->', () => {
             const mnemonic = MnemonicPassPhrase.createRandom();
 
             // Act:
-            const exportMnemonic = new MnemonicQR(mnemonic, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportMnemonic = new MnemonicQR(mnemonic.plain, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
             const actualJSON = exportMnemonic.toJSON();
             const actualObject = JSON.parse(actualJSON);
 
@@ -69,11 +69,11 @@ describe('MnemonicQR -->', () => {
             const mnemonic = MnemonicPassPhrase.createRandom();
 
             // Act:
-            const exportMnemonic = new MnemonicQR(mnemonic, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportMnemonic = new MnemonicQR(mnemonic.plain, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
 
             // Act + Assert
             expect((() => {
-                const importMnemonic = MnemonicQR.fromJSON(exportMnemonic.toJSON(), 'wrong-password');
+                MnemonicQR.fromJSON(exportMnemonic.toJSON(), 'wrong-password');
             })).to.throw('Could not parse encrypted mnemonic pass phrase.');
         });
 
@@ -101,11 +101,11 @@ describe('MnemonicQR -->', () => {
             const mnemonic = MnemonicPassPhrase.createRandom();
 
             // Act:
-            const exportMnemonic = new MnemonicQR(mnemonic, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportMnemonic = new MnemonicQR(mnemonic.plain, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
             const importMnemonic = MnemonicQR.fromJSON(exportMnemonic.toJSON(), 'password');
 
             // Assert
-            expect(importMnemonic.mnemonic.plain).to.be.equal(mnemonic.plain);
+            expect(importMnemonic.mnemonicPlainText).to.be.equal(mnemonic.plain);
         });
 
         it('reconstruct mnemonic pass phrase given correct ciphertext and password', () => {
@@ -125,7 +125,7 @@ describe('MnemonicQR -->', () => {
             const importMnemonic = MnemonicQR.fromJSON(JSON.stringify(mnemonicInfo), 'password');
 
             // Assert
-            expect(importMnemonic.mnemonic.plain).to.be.equal(
+            expect(importMnemonic.mnemonicPlainText).to.be.equal(
                 'stumble shoot spawn bitter '
               + 'forest waste attitude chest '
               + 'square kite dawn photo '
