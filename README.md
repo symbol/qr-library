@@ -16,8 +16,8 @@ The software allows you to create the following QR types:
 
 * **TransactionRequest**: QR to prepare transactions ready to be signed.
 * **Contact**: QR to share the account address with others.
-* **Mnemonic**: QR to generate account mnemonic backups (encrypted|plain).
-* **Account**: QR to generate account private key backups (encrypted|plain).
+* **Mnemonic**: QR to generate account mnemonic backups (encrypted | plain).
+* **Account**: QR to generate account private key backups (encrypted | plain).
 * **Object**: QR to export  a custom object.
 
 ## Requirements
