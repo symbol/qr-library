@@ -50,7 +50,7 @@ const transfer = TransferTransaction.create(
 );
 
 // generation hash of the connected network
-const generationHash = 'no-chain-id'
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
 const qrCode: TransactionQR = QRCodeGenerator.createTransactionRequest(transfer, NetworkType.MIJIN_TEST, generationHash);
@@ -66,10 +66,10 @@ import { QRCodeGenerator, ContactQR } from 'symbol-qr-library';
 import { NetworkType } from 'symbol-sdk';
 
 const name = 'test-contact-1';
-const accountPublicKey = 'no-chain-id'
+const accountPublicKey = 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268'
 
 // generation hash of the connected network
-const generationHash = 'no-chain-id'
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
 const qrCode: ContactQR = QRCodeGenerator.createAddContact(name, accountPublicKey, NetworkType.MIJIN_TEST, generationHash);
@@ -89,10 +89,13 @@ import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 // create a mnemonic and password.
 const mnemonic = MnemonicPassPhrase.createRandom();
 
+// generation hash of the connected network
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
+
 // create QR Code base64
-const encryptedMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, 'no-chain-id', 'password');
+const encryptedMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, generationHash, 'password');
 // or
-const plainMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, 'no-chain-id'); // no password
+const plainMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, generationHash); // no password
 
 // get base64 notation for <img> HTML attribute
 const base64 = encryptedMnemonicQR.toBase64();
@@ -111,10 +114,10 @@ The produced Base64 encoded payload can be used to display the QR Code. An examp
 import { QRCodeGenerator, AccountQR } from 'symbol-qr-library';
 import { NetworkType } from 'symbol-sdk';
 
-const accountPrivateKey = '### privateKey ###'
+const accountPrivateKey = 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978'
 
 // generation hash of the connected network
-const generationHash = 'no-chain-id'
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
 const encryptedAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.MIJIN_TEST, generationHash, 'password')
@@ -134,8 +137,11 @@ import { NetworkType } from 'symbol-sdk';
 // define custom object to suit your application use case.
 const object = {"obj": "test"};
 
+// generation hash of the connected network
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
+
 // create QR Code base64
-const qrCode: ObjectQR = QRCodeGenerator.createExportObject(object, NetworkType.MIJIN_TEST, 'no-chain-id');
+const qrCode: ObjectQR = QRCodeGenerator.createExportObject(object, NetworkType.MIJIN_TEST, generationHash);
 
 // get base64 notation for <img> HTML attribute
 const base64 = qrCode.toBase64();
