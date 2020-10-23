@@ -18,8 +18,8 @@ enum QRCodeType {
     ExportAccount = 2,
     RequestTransaction = 3,
     RequestCosignature = 4,
-    ExportObject = 5,
-    ExportMnemonic = 6,
+    ExportMnemonic = 5,
+    ExportObject = 6,
 }
 
 export {QRCodeType};
