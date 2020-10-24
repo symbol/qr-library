@@ -83,17 +83,17 @@ class QRCodeGenerator {
      *
      * @see {AccountQR}
      * @param   accountPrivateKey    the account private key.
-     * @param   password        {string}
      * @param   networkType     {NetworkType}
      * @param   generationHash         {string}
+     * @param   password        {string=}
      */
     public static createExportAccount(
         accountPrivateKey: string,
-        password: string,
         networkType: INetworkType,
         generationHash: string,
+        password?: string,
     ): AccountQR {
-        return new AccountQR(accountPrivateKey, password, networkType, generationHash);
+        return new AccountQR(accountPrivateKey, networkType, generationHash, password);
     }
 
     /**
@@ -118,18 +118,17 @@ class QRCodeGenerator {
      * instance, encrypted with given password.
      *
      * @see {MnemonicQR}
-     * @param   mnemonicPlainText  {string} plain text
-     * @param   password        {string}
      * @param   networkType     {NetworkType}
      * @param   generationHash         {string}
+     * @param   password        {string=}
      */
     public static createExportMnemonic(
         mnemonicPlainText: string,
-        password: string,
         networkType: INetworkType,
         generationHash: string,
+        password: string,
     ): MnemonicQR {
-        return new MnemonicQR(mnemonicPlainText, password, networkType, generationHash);
+        return new MnemonicQR(mnemonicPlainText, networkType, generationHash, password);
     }
 
     /**
@@ -173,47 +172,35 @@ class QRCodeGenerator {
 
         switch (jsonObject.type) {
 
-        // create a ContactQR from JSON
-        case QRCodeType.AddContact:
-            return ContactQR.fromJSON(json);
+            // create a ContactQR from JSON
+            case QRCodeType.AddContact:
+                return ContactQR.fromJSON(json);
 
-        // create an AccountQR from JSON
-        case QRCodeType.ExportAccount:
+            // create an AccountQR from JSON
+            case QRCodeType.ExportAccount:
+                return AccountQR.fromJSON(json, password);
 
-            // password obligatory for encryption
-            if (! password) {
-                throw new Error('Missing password to decrypt AccountQR QR code.');
+            // create a ObjectQR from JSON
+            case QRCodeType.ExportObject:
+                return ObjectQR.fromJSON(json);
+
+            // create a CosignatureQR from JSON
+            case QRCodeType.RequestCosignature:
+                return CosignatureQR.fromJSON(json, transactionCreateFromPayload);
+
+            // create a TransactionQR from JSON
+            case QRCodeType.RequestTransaction:
+                return TransactionQR.fromJSON(json, transactionCreateFromPayload);
+
+            // create an MnemonicQR from JSON
+            case QRCodeType.ExportMnemonic:
+                return MnemonicQR.fromJSON(json, password);
+
+            default:
+                break;
             }
 
-            return AccountQR.fromJSON(json, password);
-
-        // create a ObjectQR from JSON
-        case QRCodeType.ExportObject:
-            return ObjectQR.fromJSON(json);
-
-        // create a CosignatureQR from JSON
-        case QRCodeType.RequestCosignature:
-            return CosignatureQR.fromJSON(json, transactionCreateFromPayload);
-
-        // create a TransactionQR from JSON
-        case QRCodeType.RequestTransaction:
-            return TransactionQR.fromJSON(json, transactionCreateFromPayload);
-
-        // create an MnemonicQR from JSON
-        case QRCodeType.ExportMnemonic:
-
-            // password obligatory for encryption
-            if (! password) {
-                throw new Error('Missing password to decrypt MnemonicQR QR code.');
-            }
-
-            return MnemonicQR.fromJSON(json, password);
-
-        default:
-            break;
-        }
-
-        throw new Error("Unrecognized QR Code 'type': '" + jsonObject.type + "'.");
+            throw new Error("Unrecognized QR Code 'type': '" + jsonObject.type + "'.");
     }
 }
 

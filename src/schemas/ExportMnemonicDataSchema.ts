@@ -44,14 +44,18 @@ class ExportMnemonicDataSchema extends QRCodeDataSchema {
      * @return {any}
      */
     public getData(qr: MnemonicQR): any {
-
-        // we will store a password encrypted copy of the private key
-        const encrypted = EncryptionService.encrypt(qr.mnemonicPlainText, qr.password);
-
-        return {
-            "ciphertext": encrypted.ciphertext,
-            "salt": encrypted.salt,
-        };
+        if (qr.encrypted) {
+            // we will store a password encrypted copy of the mnemonic plain text
+            const encryptedData = EncryptionService.encrypt(qr.mnemonicPlainText, qr.password);
+            return {
+                "ciphertext": encryptedData.ciphertext,
+                "salt": encryptedData.salt,
+            };
+        } else {
+            return {
+                "plainMnemonic": qr.mnemonicPlainText
+            }
+        }
     }
 
     /**
@@ -59,7 +63,7 @@ class ExportMnemonicDataSchema extends QRCodeDataSchema {
      * object.
      *
      * @param   json        {string}
-     * @param   password    {string}
+     * @param   password    {string=} Optional password
      * @return  {MnemonicQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -68,7 +72,7 @@ class ExportMnemonicDataSchema extends QRCodeDataSchema {
      */
     public static parse(
         json: string,
-        password: string,
+        password?: string,
     ): MnemonicQR {
         if (! json.length) {
             throw new Error('JSON argument cannot be empty.');
@@ -84,18 +88,18 @@ class ExportMnemonicDataSchema extends QRCodeDataSchema {
         }
 
         try {
-            // encrypted payload validation
-            const payload = EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data));
-
             // decrypt mnemonic pass phrase
-            const plainTxt = EncryptionService.decrypt(payload, password);
+            const plainTxt = EncryptedPayload.isDataEncrypted(jsonObj.data) ? EncryptionService.decrypt(EncryptedPayload.fromJSON(JSON.stringify(jsonObj.data)), password) : jsonObj.data.plainMnemonic;
+            if (!plainTxt) {
+                throw new Error('Mnemonic pass phrase is not valid!')
+            }
             const network  = jsonObj.network_id;
             const generationHash = jsonObj.chain_id;
 
-            return new MnemonicQR(plainTxt, password, network, generationHash);
+            return new MnemonicQR(plainTxt, network, generationHash, password);
         }
         catch (e) {
-            throw new Error('Could not parse encrypted mnemonic pass phrase.');
+            throw new Error('Could not parse mnemonic pass phrase.');
         }
     }
 }

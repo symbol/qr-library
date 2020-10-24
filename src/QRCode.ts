@@ -56,10 +56,16 @@ abstract class QRCode implements QRCodeInterface {
                  */
                 public readonly generationHash: string,
                 /**
+                 * Whether the data is encrypted
+                 * @var {boolean}
+                 */
+                public readonly encrypted: boolean = false,
+                /**
                  * The base64 representation of the QR Code content.
                  * @var {string}
                  */
-                public readonly base64?: string) {
+                public readonly base64?: string
+                ) {
     }
 
     /// region Abstract Methods

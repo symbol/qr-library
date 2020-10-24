@@ -50,19 +50,7 @@ class EncryptedPayload {
         json: string,
     ): EncryptedPayload {
 
-        if (! json.length) {
-            throw new Error('JSON argument cannot be empty.');
-        }
-
-        // validate JSON
-        let jsonObject: any;
-        try {
-            jsonObject = JSON.parse(json);
-        }
-        catch (e) {
-            // Invalid JSON provided, forward error
-            throw new Error('Invalid json body in payload! ' + e.message);
-        }
+        const jsonObject = EncryptedPayload.validateJson(json);
 
         // validate obligatory fields
         if (!jsonObject.hasOwnProperty('ciphertext')) {
@@ -74,6 +62,36 @@ class EncryptedPayload {
         }
 
         return new EncryptedPayload(jsonObject.ciphertext, jsonObject.salt);
+    }
+
+    /**
+     * Validates given json string and returns json object
+     * @param json
+     * @return json object
+     * @throws {Error} If validation fails
+     */
+    private static validateJson(json: string) {
+        if (! json.length) {
+            throw new Error('JSON argument cannot be empty.');
+        }
+
+        // validate JSON
+        let jsonObject: any;
+        try {
+            jsonObject = JSON.parse(json);
+        } catch (e) {
+            // Invalid JSON provided, forward error
+            throw new Error('Invalid json body in payload! ' + e.message);
+        }
+        return jsonObject;
+    }
+
+    /**
+     * Checks if the data ojbect is encrypted
+     * @param jsonObject
+     */
+    public static isDataEncrypted(jsonObject: any) : boolean {
+        return jsonObject.hasOwnProperty('ciphertext') && jsonObject.hasOwnProperty('salt');
     }
 
 }

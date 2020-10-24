@@ -15,9 +15,10 @@ This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](ht
 The software allows you to create the following QR types:
 
 * **TransactionRequest**: QR to prepare transactions ready to be signed.
-* **CreateAddContact**: QR to share the account address with others.
-* **Mnemonic**: QR to generate account mnemonic backups.
-* **CustomObject**: QR to export  a custom object.
+* **Contact**: QR to share the account address with others.
+* **Mnemonic**: QR to generate account mnemonic backups (encrypted | plain).
+* **Account**: QR to generate account private key backups (encrypted | plain).
+* **Object**: QR to export  a custom object.
 
 ## Requirements
 
@@ -33,8 +34,8 @@ The software allows you to create the following QR types:
 ### Generate QRCode for a Transaction Request
 
 ```typescript
-import { QRCodeGenerator } from 'symbol-qr-library'; 
-import {Address, Deadline,Mosaic,NamespaceId,NetworkType,PlainMessage, TransferTransaction,UInt64} from "symbol-sdk";
+import { QRCodeGenerator, TransactionQR } from 'symbol-qr-library';
+import { Address, Deadline, Mosaic, NamespaceId, NetworkType, PlainMessage, TransferTransaction, UInt64 } from "symbol-sdk";
 
 // (Optional) create transfer transaction (or read from network)
 const transfer = TransferTransaction.create(
@@ -48,69 +49,56 @@ const transfer = TransferTransaction.create(
   NetworkType.MIJIN_TEST
 );
 
-// create QR Code base64
-const request = QRCodeGenerator.createTransactionRequest(transfer);
-
-// get base64 notation for <img> HTML attribute
-const base64 = request.toBase64();
-```
-
-### Generate QRCode for a custom object
-
-```typescript
-import { QRCodeGenerator } from 'symbol-qr-library';
-
-// define custom object to suit your application use case.
-const object = {"obj": "test"};
+// generation hash of the connected network
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const request = QRCodeGenerator.createExportObject(object, NetworkType.TEST_NET);
+const qrCode: TransactionQR = QRCodeGenerator.createTransactionRequest(transfer, NetworkType.MIJIN_TEST, generationHash);
 
 // get base64 notation for <img> HTML attribute
-const base64 = request.toBase64();
-
+const base64 = qrCode.toBase64();
 ```
 
 ### Generate ContactQR code
 
 ```typescript
-import {
-    PublicAccount,
-    NetworkType,
-} from 'symbol-sdk';
+import { QRCodeGenerator, ContactQR } from 'symbol-qr-library';
+import { NetworkType } from 'symbol-sdk';
 
 const name = 'test-contact-1';
-const account = PublicAccount.createFromPublicKey(
-                'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-                NetworkType.TEST_NET
-            );
+const accountPublicKey = 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268'
+
+// generation hash of the connected network
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-  const request = QRCodeGenerator.createAddContact(name, account);
+const qrCode: ContactQR = QRCodeGenerator.createAddContact(name, accountPublicKey, NetworkType.MIJIN_TEST, generationHash);
 
 // get base64 notation for <img> HTML attribute
-const base64 = request.toBase64();
+const base64 = qrCode.toBase64();
 
 ```
 
 ### Generate QRCode for a Mnemonic data
 
 ```typescript
-import {
-    Account,
-    NetworkType,
-    Password,
-} from 'symbol-sdk';
+import { QRCodeGenerator, MnemonicQR } from 'symbol-qr-library';
+import { NetworkType } from 'symbol-sdk';
 import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 
 // create a mnemonic and password.
 const mnemonic = MnemonicPassPhrase.createRandom();
 
+// generation hash of the connected network
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
+
 // create QR Code base64
-const exportMnemonic = new MnemonicQR(mnemonic, 'password', NetworkType.MIJIN_TEST, 'no-chain-id');
+const encryptedMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, generationHash, 'password');
+// or
+const plainMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, generationHash); // no password
 
 // get base64 notation for <img> HTML attribute
-const base64 = exportMnemonic.toBase64();
+const base64 = encryptedMnemonicQR.toBase64();
 
 ```
 
@@ -118,6 +106,45 @@ The produced Base64 encoded payload can be used to display the QR Code. An examp
 
 ```html
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Transfer Transaction QR code" />
+```
+
+### Generate QRCode for an Account Private Key
+
+```typescript
+import { QRCodeGenerator, AccountQR } from 'symbol-qr-library';
+import { NetworkType } from 'symbol-sdk';
+
+const accountPrivateKey = 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978'
+
+// generation hash of the connected network
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
+
+// create QR Code base64
+const encryptedAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.MIJIN_TEST, generationHash, 'password')
+const plainAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.MIJIN_TEST, generationHash) // no password
+
+// get base64 notation for <img> HTML attribute
+const base64 = encryptedAccountQR.toBase64();
+```
+
+
+### Generate QRCode for a custom object
+
+```typescript
+import { QRCodeGenerator, ObjectQR } from 'symbol-qr-library';
+import { NetworkType } from 'symbol-sdk';
+
+// define custom object to suit your application use case.
+const object = {"obj": "test"};
+
+// generation hash of the connected network
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
+
+// create QR Code base64
+const qrCode: ObjectQR = QRCodeGenerator.createExportObject(object, NetworkType.MIJIN_TEST, generationHash);
+
+// get base64 notation for <img> HTML attribute
+const base64 = qrCode.toBase64();
 ```
 
 ## Getting help

@@ -40,11 +40,6 @@ class AccountQR extends QRCode implements QRCodeInterface {
                  */
                 public readonly accountPrivateKey: string,
                 /**
-                 * The password for encryption
-                 * @var {string}
-                 */
-                public readonly password: string,
-                /**
                  * The network type.
                  * @var {NetworkType}
                  */
@@ -53,8 +48,13 @@ class AccountQR extends QRCode implements QRCodeInterface {
                  * The network generation hash.
                  * @var {string}
                  */
-                public readonly generationHash: string) {
-        super(QRCodeType.ExportAccount, networkType, generationHash);
+                public readonly generationHash: string,
+                /**
+                 * Optional password for encryption when not provided means non-password-protected
+                 * @var {string=}
+                 */
+                public readonly password?: string) {
+        super(QRCodeType.ExportAccount, networkType, generationHash, password !== undefined);
     }
 
     /**
@@ -62,7 +62,7 @@ class AccountQR extends QRCode implements QRCodeInterface {
      * object.
      *
      * @param   json        {string}
-     * @param   password    {Password}
+     * @param   password    {string=} Optional password
      * @return  {AccountQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -70,9 +70,8 @@ class AccountQR extends QRCode implements QRCodeInterface {
      */
     public static fromJSON(
         json: string,
-        password: string,
+        password?: string,
     ): AccountQR {
-
         // create the QRCode object from JSON
         return ExportAccountDataSchema.parse(json, password);
     }

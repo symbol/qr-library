@@ -39,18 +39,19 @@ class MnemonicQR extends QRCode implements QRCodeInterface {
                  */
                 public readonly mnemonicPlainText: string,
                 /**
-                 * The password for encryption
-                 */
-                public readonly password: string,
-                /**
                  * The network type.
                  */
                 public readonly networkType: INetworkType,
                 /**
                  * The network generation hash.
                  */
-                public readonly generationHash: string) {
-        super(QRCodeType.ExportMnemonic, networkType, generationHash);
+                public readonly generationHash: string,
+                /**
+                 * Optional password for encryption when not provided means non-password-protected
+                 * @var {string}
+                 */
+                public readonly password?: string) {
+        super(QRCodeType.ExportMnemonic, networkType, generationHash, password !== undefined);
     }
 
     /**
@@ -58,7 +59,7 @@ class MnemonicQR extends QRCode implements QRCodeInterface {
      * object.
      *
      * @param   json        {string}
-     * @param   password    {string}
+     * @param   password    {string=} Optional password
      * @return  {MnemonicQR}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -66,9 +67,8 @@ class MnemonicQR extends QRCode implements QRCodeInterface {
      */
     public static fromJSON(
         json: string,
-        password: string,
+        password?: string,
     ): MnemonicQR {
-
         // create the QRCode object from JSON
         return ExportMnemonicDataSchema.parse(json, password);
     }
