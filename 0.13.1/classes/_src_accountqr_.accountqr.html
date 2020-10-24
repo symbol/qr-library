@@ -104,6 +104,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_src_accountqr_.accountqr.html#accountprivatekey" class="tsd-kind-icon">account<wbr>Private<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_src_accountqr_.accountqr.html#base64" class="tsd-kind-icon">base64</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_src_accountqr_.accountqr.html#encrypted" class="tsd-kind-icon">encrypted</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported"><a href="_src_accountqr_.accountqr.html#generationhash" class="tsd-kind-icon">generation<wbr>Hash</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported"><a href="_src_accountqr_.accountqr.html#networktype" class="tsd-kind-icon">network<wbr>Type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-not-exported"><a href="_src_accountqr_.accountqr.html#password" class="tsd-kind-icon">password</a></li>
@@ -133,14 +134,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>AccountQR<span class="tsd-signature-symbol">(</span>accountPrivateKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, networkType<span class="tsd-signature-symbol">: </span><a href="../modules/_src_sdk_inetworktype_.html#inetworktype" class="tsd-signature-type">INetworkType</a>, generationHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_accountqr_.accountqr.html" class="tsd-signature-type">AccountQR</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>AccountQR<span class="tsd-signature-symbol">(</span>accountPrivateKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, networkType<span class="tsd-signature-symbol">: </span><a href="../modules/_src_sdk_inetworktype_.html#inetworktype" class="tsd-signature-type">INetworkType</a>, generationHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_accountqr_.accountqr.html" class="tsd-signature-type">AccountQR</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/AccountQR.ts#L27">src/AccountQR.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/AccountQR.ts#L27">src/AccountQR.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -155,9 +156,6 @@
 									<h5>accountPrivateKey: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>password: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
 									<h5>networkType: <a href="../modules/_src_sdk_inetworktype_.html#inetworktype" class="tsd-signature-type">INetworkType</a></h5>
 								</li>
 								<li>
@@ -166,6 +164,9 @@
 										<div class="lead">
 										</div>
 									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> password: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_src_accountqr_.accountqr.html" class="tsd-signature-type">AccountQR</a></h4>
@@ -181,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">account<wbr>Private<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/AccountQR.ts#L41">src/AccountQR.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/AccountQR.ts#L41">src/AccountQR.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -202,12 +203,33 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#base64">base64</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/QRCode.ts#L62">src/QRCode.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCode.ts#L67">src/QRCode.ts:67</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
+					<a name="encrypted" class="tsd-anchor"></a>
+					<h3>encrypted</h3>
+					<div class="tsd-signature tsd-kind-icon">encrypted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#encrypted">encrypted</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCode.ts#L62">src/QRCode.ts:62</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the data is encrypted</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>var</dt>
+							<dd><p>{boolean}</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
@@ -217,7 +239,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#generationhash">generationHash</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/AccountQR.ts#L56">src/AccountQR.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/AccountQR.ts#L51">src/AccountQR.ts:51</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -232,7 +254,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#networktype">networkType</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/AccountQR.ts#L51">src/AccountQR.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/AccountQR.ts#L46">src/AccountQR.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -248,20 +270,20 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-not-exported">
 					<a name="password" class="tsd-anchor"></a>
-					<h3>password</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> password</h3>
 					<div class="tsd-signature tsd-kind-icon">password<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/AccountQR.ts#L46">src/AccountQR.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/AccountQR.ts#L56">src/AccountQR.ts:56</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The password for encryption</p>
+							<p>Optional password for encryption when not provided means non-password-protected</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>var</dt>
-							<dd><p>{string}</p>
+							<dd><p>{string=}</p>
 							</dd>
 						</dl>
 					</div>
@@ -274,7 +296,7 @@
 						<p>Implementation of <a href="../interfaces/_src_qrcodeinterface_.qrcodeinterface.html">QRCodeInterface</a>.<a href="../interfaces/_src_qrcodeinterface_.qrcodeinterface.html#type">type</a></p>
 						<p>Inherited from <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/QRCode.ts#L47">src/QRCode.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCode.ts#L47">src/QRCode.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -302,7 +324,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#getcorrectionlevel">getCorrectionLevel</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/QRCode.ts#L92">src/QRCode.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCode.ts#L98">src/QRCode.ts:98</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -328,7 +350,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#getschema">getSchema</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/AccountQR.ts#L101">src/AccountQR.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/AccountQR.ts#L100">src/AccountQR.ts:100</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -353,7 +375,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#gettypenumber">getTypeNumber</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/AccountQR.ts#L88">src/AccountQR.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/AccountQR.ts#L87">src/AccountQR.ts:87</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -386,7 +408,7 @@
 								<p>Implementation of <a href="../interfaces/_src_qrcodeinterface_.qrcodeinterface.html">QRCodeInterface</a>.<a href="../interfaces/_src_qrcodeinterface_.qrcodeinterface.html#tobase64">toBase64</a></p>
 								<p>Inherited from <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#tobase64">toBase64</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/QRCode.ts#L124">src/QRCode.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCode.ts#L130">src/QRCode.ts:130</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -422,7 +444,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#tocanvas">toCanvas</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/QRCode.ts#L196">src/QRCode.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCode.ts#L202">src/QRCode.ts:202</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -464,7 +486,7 @@
 								<p>Implementation of <a href="../interfaces/_src_qrcodeinterface_.qrcodeinterface.html">QRCodeInterface</a>.<a href="../interfaces/_src_qrcodeinterface_.qrcodeinterface.html#tojson">toJSON</a></p>
 								<p>Inherited from <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#tojson">toJSON</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/QRCode.ts#L102">src/QRCode.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCode.ts#L108">src/QRCode.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -488,7 +510,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#toobject">toObject</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/QRCode.ts#L172">src/QRCode.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCode.ts#L178">src/QRCode.ts:178</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -526,7 +548,7 @@
 								<p>Implementation of <a href="../interfaces/_src_qrcodeinterface_.qrcodeinterface.html">QRCodeInterface</a>.<a href="../interfaces/_src_qrcodeinterface_.qrcodeinterface.html#tostring">toString</a></p>
 								<p>Inherited from <a href="_src_qrcode_.qrcode.html">QRCode</a>.<a href="_src_qrcode_.qrcode.html#tostring">toString</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/QRCode.ts#L148">src/QRCode.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCode.ts#L154">src/QRCode.ts:154</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -563,13 +585,13 @@
 					<a name="fromjson" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> fromJSON</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_accountqr_.accountqr.html" class="tsd-signature-type">AccountQR</a></li>
+						<li class="tsd-signature tsd-kind-icon">fromJSON<span class="tsd-signature-symbol">(</span>json<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_accountqr_.accountqr.html" class="tsd-signature-type">AccountQR</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/c434a22/src/AccountQR.ts#L71">src/AccountQR.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/AccountQR.ts#L71">src/AccountQR.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -595,7 +617,10 @@
 									<h5>json: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>password: <span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> password: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional password</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_src_accountqr_.accountqr.html" class="tsd-signature-type">AccountQR</a></h4>
@@ -630,6 +655,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
 								<a href="_src_accountqr_.accountqr.html#base64" class="tsd-kind-icon">base64</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
+								<a href="_src_accountqr_.accountqr.html#encrypted" class="tsd-kind-icon">encrypted</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-not-exported">
 								<a href="_src_accountqr_.accountqr.html#generationhash" class="tsd-kind-icon">generation<wbr>Hash</a>
