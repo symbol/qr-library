@@ -44,6 +44,7 @@ export { EncryptionService } from './src/services/EncryptionService';
 // specialized QR Code classes
 export { AccountQR } from './src/AccountQR';
 export { ContactQR } from './src/ContactQR';
+export { AddressQR } from './src/AddressQR';
 export { ObjectQR } from './src/ObjectQR';
 export { TransactionQR } from './src/TransactionQR';
 export { CosignatureQR } from './src/CosignatureQR';
