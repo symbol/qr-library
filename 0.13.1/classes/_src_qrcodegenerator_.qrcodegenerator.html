@@ -105,6 +105,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="_src_qrcodegenerator_.qrcodegenerator.html#createaddcontact" class="tsd-kind-icon">create<wbr>Add<wbr>Contact</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="_src_qrcodegenerator_.qrcodegenerator.html#createexportaccount" class="tsd-kind-icon">create<wbr>Export<wbr>Account</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="_src_qrcodegenerator_.qrcodegenerator.html#createexportaddress" class="tsd-kind-icon">create<wbr>Export<wbr>Address</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="_src_qrcodegenerator_.qrcodegenerator.html#createexportmnemonic" class="tsd-kind-icon">create<wbr>Export<wbr>Mnemonic</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="_src_qrcodegenerator_.qrcodegenerator.html#createexportobject" class="tsd-kind-icon">create<wbr>Export<wbr>Object</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="_src_qrcodegenerator_.qrcodegenerator.html#createtransactionrequest" class="tsd-kind-icon">create<wbr>Transaction<wbr>Request</a></li>
@@ -126,7 +127,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCodeGenerator.ts#L36">src/QRCodeGenerator.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/1457e0b/src/QRCodeGenerator.ts#L37">src/QRCodeGenerator.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -156,7 +157,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCodeGenerator.ts#L71">src/QRCodeGenerator.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/1457e0b/src/QRCodeGenerator.ts#L91">src/QRCodeGenerator.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -207,7 +208,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCodeGenerator.ts#L90">src/QRCodeGenerator.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/1457e0b/src/QRCodeGenerator.ts#L110">src/QRCodeGenerator.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -246,6 +247,57 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
+					<a name="createexportaddress" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> create<wbr>Export<wbr>Address</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Export<wbr>Address<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, networkType<span class="tsd-signature-symbol">: </span><a href="../modules/_src_sdk_inetworktype_.html#inetworktype" class="tsd-signature-type">INetworkType</a>, generationHash<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_addressqr_.addressqr.html" class="tsd-signature-type">AddressQR</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/1457e0b/src/QRCodeGenerator.ts#L72">src/QRCodeGenerator.ts:72</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create an Address QR Code from a contact name
+									and address.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p>{AddressQR}</p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the name</p>
+									</div>
+								</li>
+								<li>
+									<h5>address: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the account address</p>
+									</div>
+								</li>
+								<li>
+									<h5>networkType: <a href="../modules/_src_sdk_inetworktype_.html#inetworktype" class="tsd-signature-type">INetworkType</a></h5>
+								</li>
+								<li>
+									<h5>generationHash: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_src_addressqr_.addressqr.html" class="tsd-signature-type">AddressQR</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
 					<a name="createexportmnemonic" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> create<wbr>Export<wbr>Mnemonic</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
@@ -255,7 +307,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCodeGenerator.ts#L125">src/QRCodeGenerator.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/1457e0b/src/QRCodeGenerator.ts#L145">src/QRCodeGenerator.ts:145</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -300,7 +352,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCodeGenerator.ts#L53">src/QRCodeGenerator.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/1457e0b/src/QRCodeGenerator.ts#L54">src/QRCodeGenerator.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -341,7 +393,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCodeGenerator.ts#L108">src/QRCodeGenerator.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/1457e0b/src/QRCodeGenerator.ts#L128">src/QRCodeGenerator.ts:128</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -383,7 +435,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/e727828/src/QRCodeGenerator.ts#L146">src/QRCodeGenerator.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/nemtech/symbol-qr-library/blob/1457e0b/src/QRCodeGenerator.ts#L166">src/QRCodeGenerator.ts:166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -471,6 +523,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
 								<a href="_src_qrcodegenerator_.qrcodegenerator.html#createexportaccount" class="tsd-kind-icon">create<wbr>Export<wbr>Account</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
+								<a href="_src_qrcodegenerator_.qrcodegenerator.html#createexportaddress" class="tsd-kind-icon">create<wbr>Export<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
 								<a href="_src_qrcodegenerator_.qrcodegenerator.html#createexportmnemonic" class="tsd-kind-icon">create<wbr>Export<wbr>Mnemonic</a>

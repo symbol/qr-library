@@ -79,7 +79,8 @@
 				<p>The software allows you to create the following QR types:</p>
 				<ul>
 					<li><strong>TransactionRequest</strong>: QR to prepare transactions ready to be signed.</li>
-					<li><strong>Contact</strong>: QR to share the account address with others.</li>
+					<li><strong>Address</strong>: QR to share the account address with others.</li>
+					<li><strong>Contact</strong>: QR to share the account address and public key with others.</li>
 					<li><strong>Mnemonic</strong>: QR to generate account mnemonic backups (encrypted | plain).</li>
 					<li><strong>Account</strong>: QR to generate account private key backups (encrypted | plain).</li>
 					<li><strong>Object</strong>: QR to export  a custom object.</li>
@@ -120,6 +121,23 @@
 
 <span class="hljs-comment">// create QR Code base64</span>
 <span class="hljs-keyword">const</span> qrCode: TransactionQR = QRCodeGenerator.createTransactionRequest(transfer, NetworkType.MIJIN_TEST, generationHash);
+
+<span class="hljs-comment">// get base64 notation for &lt;img&gt; HTML attribute</span>
+<span class="hljs-keyword">const</span> base64 = qrCode.toBase64();</code></pre>
+				<a href="#generate-addressqr-code" id="generate-addressqr-code" style="color: inherit; text-decoration: none;">
+					<h3>Generate AddressQR code</h3>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { QRCodeGenerator, AddressQR } <span class="hljs-keyword">from</span> <span class="hljs-string">'symbol-qr-library'</span>;
+<span class="hljs-keyword">import</span> { NetworkType } <span class="hljs-keyword">from</span> <span class="hljs-string">'symbol-sdk'</span>;
+
+<span class="hljs-keyword">const</span> name = <span class="hljs-string">'test-address-1'</span>;
+<span class="hljs-keyword">const</span> contactAddress = <span class="hljs-string">'TA6QZTYPOIYQYR5NRY4WQ2WRQUX2FN5UK2DO6DI'</span>
+
+<span class="hljs-comment">// generation hash of the connected network</span>
+<span class="hljs-keyword">const</span> generationHash = <span class="hljs-string">'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'</span>
+
+<span class="hljs-comment">// create QR Code base64</span>
+<span class="hljs-keyword">const</span> qrCode: AddressQR = QRCodeGenerator.createExportAddress(name, contactAddress, NetworkType.TEST_NET, generationHash);
 
 <span class="hljs-comment">// get base64 notation for &lt;img&gt; HTML attribute</span>
 <span class="hljs-keyword">const</span> base64 = qrCode.toBase64();</code></pre>
@@ -232,6 +250,9 @@
 						<a href="modules/_src_accountqr_.html">&quot;src/<wbr>AccountQR&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_addressqr_.html">&quot;src/<wbr>AddressQR&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="modules/_src_contactqr_.html">&quot;src/<wbr>ContactQR&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -275,6 +296,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_src_schemas_exportaccountdataschema_.html">&quot;src/schemas/<wbr>Export<wbr>Account<wbr>Data<wbr>Schema&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_schemas_exportaddressdataschema_.html">&quot;src/schemas/<wbr>Export<wbr>Address<wbr>Data<wbr>Schema&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_src_schemas_exportmnemonicdataschema_.html">&quot;src/schemas/<wbr>Export<wbr>Mnemonic<wbr>Data<wbr>Schema&quot;</a>
