@@ -20,6 +20,7 @@ enum QRCodeType {
     RequestCosignature = 4,
     ExportMnemonic = 5,
     ExportObject = 6,
+    ExportAddress = 7,
 }
 
 export {QRCodeType};

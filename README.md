@@ -15,7 +15,8 @@ This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](ht
 The software allows you to create the following QR types:
 
 * **TransactionRequest**: QR to prepare transactions ready to be signed.
-* **Contact**: QR to share the account address with others.
+* **Address**: QR to share the account address with others.
+* **Contact**: QR to share the account address and public key with others.
 * **Mnemonic**: QR to generate account mnemonic backups (encrypted | plain).
 * **Account**: QR to generate account private key backups (encrypted | plain).
 * **Object**: QR to export  a custom object.
@@ -54,6 +55,25 @@ const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2
 
 // create QR Code base64
 const qrCode: TransactionQR = QRCodeGenerator.createTransactionRequest(transfer, NetworkType.MIJIN_TEST, generationHash);
+
+// get base64 notation for <img> HTML attribute
+const base64 = qrCode.toBase64();
+```
+
+### Generate AddressQR code
+
+```typescript
+import { QRCodeGenerator, AddressQR } from 'symbol-qr-library';
+import { NetworkType } from 'symbol-sdk';
+
+const name = 'test-address-1';
+const contactAddress = 'TA6QZTYPOIYQYR5NRY4WQ2WRQUX2FN5UK2DO6DI'
+
+// generation hash of the connected network
+const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
+
+// create QR Code base64
+const qrCode: AddressQR = QRCodeGenerator.createExportAddress(name, contactAddress, NetworkType.TEST_NET, generationHash);
 
 // get base64 notation for <img> HTML attribute
 const base64 = qrCode.toBase64();
