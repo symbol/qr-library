@@ -198,8 +198,8 @@ describe('AccountQR -->', () => {
                 );
 
                 // Act:
-                const exportAccount = new AccountQR(account.privateKey, networkType, 'no-chain-id', 'password');
-                const importAccount = AccountQR.fromJSON(exportAccount.toJSON(), 'password');
+                const exportAccount = new AccountQR(account.privateKey, networkType, 'no-chain-id');
+                const importAccount = AccountQR.fromJSON(exportAccount.toJSON());
 
                 // Assert
                 expect(importAccount.accountPrivateKey).to.be.equal(exportAccount.accountPrivateKey);
