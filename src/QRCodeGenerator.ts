@@ -17,6 +17,7 @@
 // internal dependencies
 import {
     AccountQR,
+    AddressQR,
     ContactQR,
     CosignatureQR,
     MnemonicQR,
@@ -56,6 +57,25 @@ class QRCodeGenerator {
         generationHash: string,
     ): ObjectQR {
         return new ObjectQR(object, networkType, generationHash);
+    }
+
+    /**
+     * Create an Address QR Code from a contact name
+     * and address.
+     *
+     * @see {AddressQR}
+     * @param   name the name
+     * @param   address     the account address
+     * @param   networkType     {NetworkType}
+     * @param   generationHash         {string}
+     */
+    public static createExportAddress(
+        name: string,
+        address: string,
+        networkType: INetworkType,
+        generationHash: string,
+    ): AddressQR {
+        return new AddressQR(name, address, networkType, generationHash);
     }
 
     /**
@@ -175,6 +195,10 @@ class QRCodeGenerator {
             // create a ContactQR from JSON
             case QRCodeType.AddContact:
                 return ContactQR.fromJSON(json);
+
+            // create a AddressQR from JSON
+            case QRCodeType.ExportAddress:
+                return AddressQR.fromJSON(json);
 
             // create an AccountQR from JSON
             case QRCodeType.ExportAccount:
