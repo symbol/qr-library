@@ -13,13 +13,14 @@ before_script:
   - . ./travis/node-functions.sh
   - VERSION="$(node_load_version)"
   - log_env_variables
-script:
-  - npm run test:cov
-  - npm run coveralls-report
-  - npm run doc
-  - npm run lint:all
 jobs:
   include:
+    - stage: test
+      name: test
+      script: npm run test:cov && npm run coveralls-report
+    - stage: test
+      name: lint and doc
+      script: npm run lint:all && npm run doc
     - stage: publish
       name: github alpha pages
       script: node_push_github_pages
