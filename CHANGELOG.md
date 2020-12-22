@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [v0.13.1][v0.13.1] - ?
+## [v0.14.0][v0.14.0] - 22-Dev-2020
 
 - Removed symbol-sdk dependency.
 
