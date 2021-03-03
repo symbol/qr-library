@@ -20,6 +20,7 @@ import {
     AddressQR,
     ContactQR,
     CosignatureQR,
+    CosignatureSignedTransactionQR,
     MnemonicQR,
     ObjectQR,
     QRCode,
@@ -231,7 +232,7 @@ class QRCodeGenerator {
 
             // create an SignedTransactionQR from JSON
             case QRCodeType.CosignatureSignedTransaction:
-                return SignedTransactionQR.fromJSON(json, cosignatureSignedTransactionCreateFromPayload);
+                return CosignatureSignedTransactionQR.fromJSON(json, cosignatureSignedTransactionCreateFromPayload);
 
             default:
                 break;
