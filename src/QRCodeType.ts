@@ -22,6 +22,7 @@ enum QRCodeType {
     ExportObject = 6,
     ExportAddress = 7,
     SignedTransaction = 8,
+    CosignatureSignedTransaction = 9,
 }
 
 export {QRCodeType};

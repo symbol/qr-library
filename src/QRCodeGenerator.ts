@@ -160,6 +160,7 @@ class QRCodeGenerator {
      * @param   transactionCreateFromPayload the transaction factory to create ITransaction from a binary payload if the qr is a transaction based one.
      * @param   password to decrypt private keys.
      * @param signedTransactionCreateFromPayload
+     * @param cosignatureSignedTransactionCreateFromPayload
      * @return  {QRCode}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -170,6 +171,7 @@ class QRCodeGenerator {
         transactionCreateFromPayload: (payload: string) => ITransaction,
         password?: string,
         signedTransactionCreateFromPayload?: (payload: string) => ISignedTransaction,
+        cosignatureSignedTransactionCreateFromPayload?: (payload: string) => any,
     ): QRCode {
 
         if (! json.length) {
@@ -226,6 +228,10 @@ class QRCodeGenerator {
             // create an SignedTransactionQR from JSON
             case QRCodeType.SignedTransaction:
                 return SignedTransactionQR.fromJSON(json, signedTransactionCreateFromPayload);
+
+            // create an SignedTransactionQR from JSON
+            case QRCodeType.CosignatureSignedTransaction:
+                return SignedTransactionQR.fromJSON(json, cosignatureSignedTransactionCreateFromPayload);
 
             default:
                 break;
