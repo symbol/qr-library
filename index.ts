@@ -37,6 +37,7 @@ export { ExportObjectDataSchema } from './src/schemas/ExportObjectDataSchema';
 export { RequestTransactionDataSchema } from './src/schemas/RequestTransactionDataSchema';
 export { RequestCosignatureDataSchema } from './src/schemas/RequestCosignatureDataSchema';
 export { SignedTransactionDataSchema } from './src/schemas/SignedTransactionDataSchema';
+export { CosignatureSignedTransactionDataSchema } from './src/schemas/CosignatureSignedTransactionDataSchema';
 
 // encryption
 export { EncryptedPayload } from './src/EncryptedPayload';
@@ -51,6 +52,7 @@ export { TransactionQR } from './src/TransactionQR';
 export { CosignatureQR } from './src/CosignatureQR';
 export { MnemonicQR } from './src/MnemonicQR';
 export { SignedTransactionQR } from './src/SignedTransactionQR';
+export { CosignatureSignedTransactionQR } from './src/CosignatureSignedTransactionQR';
 
 // factory
 export { QRCodeGenerator } from './src/QRCodeGenerator';
