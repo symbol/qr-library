@@ -25,7 +25,7 @@ import {
     NetworkType,
     PublicAccount,
     Account,
-    Password, TransactionMapping
+    TransactionMapping, SignedTransaction, TransactionType, CosignatureSignedTransaction
 } from 'symbol-sdk';
 import { MnemonicPassPhrase } from 'symbol-hd-wallets';
 
@@ -37,7 +37,7 @@ import {
     AccountQR,
     TransactionQR,
     ObjectQR,
-    MnemonicQR,
+    MnemonicQR, SignedTransactionQR, CosignatureSignedTransactionQR,
 } from "../index";
 
 const generationHash = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB';
@@ -269,6 +269,54 @@ describe('QRCodeGenerator -->', () => {
             expect(mnemonicObj.type).to.be.equal(QRCodeType.ExportMnemonic);
             expect(exportedMnemonic).to.deep.equal(mnemonic);
             expect(mnemonicObj.mnemonicPlainText).to.be.equal(mnemonic.plain);
+        });
+
+        it('Populate signed transaction QR', () => {
+            // Arrange:
+            const signedTransaction = new SignedTransaction(
+                "B0000000000000008002CDB5CD04681FE26FA770968DC5144591BA15B994EBE9B1B6C72A493C3439770C069AF0786026CE271FB28125396606755DC8436DB9BB979080E61CFE4B0BF530A00F5788DC3025E7F7F6000AF50C7A91283AFB1324E0E5D1BB494339EDE2000000000198544120040000000000009DD664810900000098808E6DE3E834FC51CCB1A7F56D20628BD0F5B05265C2A400000100000000009EF30755E803F42C0000000000000000",
+                "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567",
+                "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567",
+                TransactionType.TRANSFER,
+                NetworkType.TEST_NET,
+            );
+            const qr = new SignedTransactionQR(signedTransaction, NetworkType.TEST_NET, "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567");
+            const mapper = (dto: any) => new SignedTransaction(dto.payload, dto.hash, dto.signerPublicKey, dto.type, dto.networkType);
+            const actualObj = qr.toJSON();
+
+            // Act:
+            const signedObj: SignedTransactionQR = QRCodeGenerator.fromJSON(actualObj, undefined, undefined, mapper) as SignedTransactionQR;
+
+            // more content validation
+            if (!signedObj.singedTransaction) {
+                throw new Error('Invalid signed transaction.');
+            }
+
+            // Assert:
+            expect(qr.singedTransaction.toDTO().payload).to.be.equal(signedTransaction.payload);
+        });
+
+        it('Populate cosignature signed transaction QR', () => {
+            // Arrange:
+            const signedTransaction = new CosignatureSignedTransaction(
+                "BDCBB0E32AAC378AC04FAFE4D341E002E5DC5790F8E0EDFF65FDD8249A65F97D",
+                "0FC21B9AE123CF186318AE312EFDA22634F6CF7D47324FF1731FA12AEF0481A40B449DB1F63814C57BB218496C8210F4561FE62F007139750923CB527A03BC0E",
+                "7271588CCD1EB2F8E2FD70088CEA03D55C9275D7340DC5E5DDC756833CD04DFF",
+            );
+            const qr = new CosignatureSignedTransactionQR(signedTransaction, NetworkType.TEST_NET, "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567");
+            const mapper = (dto: any) => new CosignatureSignedTransaction(dto.parentHash, dto.signature, dto.signerPublicKey);
+            const actualObj = qr.toJSON();
+
+            // Act:
+            const signedObj: SignedTransactionQR = QRCodeGenerator.fromJSON(actualObj, undefined, undefined, undefined, mapper) as SignedTransactionQR;
+
+            // more content validation
+            if (!signedObj.singedTransaction) {
+                throw new Error('Invalid signed transaction.');
+            }
+
+            // Assert:
+            expect(qr.singedTransaction.signerPublicKey).to.be.equal(signedTransaction.signerPublicKey);
         });
     });
 

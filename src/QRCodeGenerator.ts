@@ -20,13 +20,15 @@ import {
     AddressQR,
     ContactQR,
     CosignatureQR,
+    CosignatureSignedTransactionQR,
     MnemonicQR,
     ObjectQR,
     QRCode,
-    QRCodeType,
+    QRCodeType, SignedTransactionQR,
     TransactionQR,
 } from '../index';
 import { INetworkType, ITransaction } from "./sdk";
+import {ISignedTransaction} from "./sdk/ISignedTransaction";
 
 /**
  * Class `QRCodeGenerator` describes a NIP-7 compliant QR Code
@@ -158,6 +160,8 @@ class QRCodeGenerator {
      * @param   json    {string}
      * @param   transactionCreateFromPayload the transaction factory to create ITransaction from a binary payload if the qr is a transaction based one.
      * @param   password to decrypt private keys.
+     * @param signedTransactionCreateFromPayload
+     * @param cosignatureSignedTransactionCreateFromPayload
      * @return  {QRCode}
      * @throws  {Error}     On empty `json` given.
      * @throws  {Error}     On missing `type` field value.
@@ -167,6 +171,8 @@ class QRCodeGenerator {
         json: string,
         transactionCreateFromPayload: (payload: string) => ITransaction,
         password?: string,
+        signedTransactionCreateFromPayload?: (payload: string) => ISignedTransaction,
+        cosignatureSignedTransactionCreateFromPayload?: (payload: string) => any,
     ): QRCode {
 
         if (! json.length) {
@@ -219,6 +225,14 @@ class QRCodeGenerator {
             // create an MnemonicQR from JSON
             case QRCodeType.ExportMnemonic:
                 return MnemonicQR.fromJSON(json, password);
+
+            // create an SignedTransactionQR from JSON
+            case QRCodeType.SignedTransaction:
+                return SignedTransactionQR.fromJSON(json, signedTransactionCreateFromPayload);
+
+            // create an SignedTransactionQR from JSON
+            case QRCodeType.CosignatureSignedTransaction:
+                return CosignatureSignedTransactionQR.fromJSON(json, cosignatureSignedTransactionCreateFromPayload);
 
             default:
                 break;

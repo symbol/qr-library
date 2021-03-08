@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-enum QRCodeType {
-    AddContact = 1,
-    ExportAccount = 2,
-    RequestTransaction = 3,
-    RequestCosignature = 4,
-    ExportMnemonic = 5,
-    ExportObject = 6,
-    ExportAddress = 7,
-    SignedTransaction = 8,
-    CosignatureSignedTransaction = 9,
-}
 
-export {QRCodeType};
+/**
+ * An abstraction of the sdk's transaction object to avoid the dependency.
+ */
+export interface ISignedTransaction {
+    /**
+     * Create DTO object
+     */
+    toDTO(): any;
+}

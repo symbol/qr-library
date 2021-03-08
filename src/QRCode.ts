@@ -139,7 +139,7 @@ abstract class QRCode implements QRCodeInterface {
             errorCorrectionLevel: settings.correctionLevel,
             // do-not-set-'width'
             // do-not-set-'version'
-        }));
+        }) as Promise<string>);
     }
 
     /**
@@ -165,7 +165,7 @@ abstract class QRCode implements QRCodeInterface {
             width: settings.widthPixel,
             type: streamType,
             // do-not-set-'version'
-        }));
+        }) as Promise<string>);
     }
 
     /**
@@ -215,7 +215,7 @@ abstract class QRCode implements QRCodeInterface {
             errorCorrectionLevel: settings.correctionLevel,
             width: settings.widthPixel,
             // do-not-set-'version'
-        }));
+        }) as Promise<string>);
     }
 }
 
