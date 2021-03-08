@@ -46,6 +46,40 @@ describe('CosignatureSignedTransactionQR -->', () => {
             expect(actualObject).to.have.property('chain_id');
             expect(actualObject).to.have.property('data');
         });
+
+        it('include specialized schema fields', () => {
+            // Arrange:
+            const signedTransaction = new CosignatureSignedTransaction(
+                "BDCBB0E32AAC378AC04FAFE4D341E002E5DC5790F8E0EDFF65FDD8249A65F97D",
+                "0FC21B9AE123CF186318AE312EFDA22634F6CF7D47324FF1731FA12AEF0481A40B449DB1F63814C57BB218496C8210F4561FE62F007139750923CB527A03BC0E",
+                "7271588CCD1EB2F8E2FD70088CEA03D55C9275D7340DC5E5DDC756833CD04DFF",
+            );
+
+            // Act:
+            const qr = new CosignatureSignedTransactionQR(signedTransaction, NetworkType.TEST_NET, "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567");
+            const actualJSON = qr.toJSON();
+            const actualObject = JSON.parse(actualJSON);
+
+            // Assert:
+            expect(actualObject.data.payload).to.have.property('signature');
+        });
+    });
+    describe('fromJSON() should', () => {
+        it('reconstruct signed transaction', () => {
+            // Arrange:
+            const signedTransaction = new CosignatureSignedTransaction(
+                "BDCBB0E32AAC378AC04FAFE4D341E002E5DC5790F8E0EDFF65FDD8249A65F97D",
+                "0FC21B9AE123CF186318AE312EFDA22634F6CF7D47324FF1731FA12AEF0481A40B449DB1F63814C57BB218496C8210F4561FE62F007139750923CB527A03BC0E",
+                "7271588CCD1EB2F8E2FD70088CEA03D55C9275D7340DC5E5DDC756833CD04DFF",
+            );
+            const qr = new CosignatureSignedTransactionQR(signedTransaction, NetworkType.TEST_NET, "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567");
+            const mapper = (dto: any) => new CosignatureSignedTransaction(dto.parentHash, dto.signature, dto.signerPublicKey);
+            // Act:
+            const reconstructedQR = CosignatureSignedTransactionQR.fromJSON(qr.toJSON(), mapper);
+
+            // Assert
+            expect(qr.singedTransaction.signature).to.be.equal(reconstructedQR.singedTransaction.signature);
+        });
     });
 
 });

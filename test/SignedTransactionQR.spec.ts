@@ -15,16 +15,9 @@
  */
 import {expect} from "chai";
 import {
-    Address,
-    Deadline,
-    Mosaic,
-    NamespaceId,
     NetworkType,
-    PlainMessage,
     SignedTransaction,
     TransactionType,
-    TransferTransaction,
-    UInt64,
 } from 'symbol-sdk';
 import {SignedTransactionQR} from "../src/SignedTransactionQR";
 // internal dependencies
@@ -56,6 +49,43 @@ describe('SignedTransactionQR -->', () => {
             expect(actualObject).to.have.property('chain_id');
             expect(actualObject).to.have.property('data');
         });
-    });
 
+        it('include specialized schema fields', () => {
+            // Arrange:
+            const signedTransaction = new SignedTransaction(
+                "B0000000000000008002CDB5CD04681FE26FA770968DC5144591BA15B994EBE9B1B6C72A493C3439770C069AF0786026CE271FB28125396606755DC8436DB9BB979080E61CFE4B0BF530A00F5788DC3025E7F7F6000AF50C7A91283AFB1324E0E5D1BB494339EDE2000000000198544120040000000000009DD664810900000098808E6DE3E834FC51CCB1A7F56D20628BD0F5B05265C2A400000100000000009EF30755E803F42C0000000000000000",
+                "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567",
+                "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567",
+                TransactionType.TRANSFER,
+                NetworkType.TEST_NET,
+            );
+
+            // Act:
+            const qr = new SignedTransactionQR(signedTransaction, NetworkType.TEST_NET, "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567");
+            const actualJSON = qr.toJSON();
+            const actualObject = JSON.parse(actualJSON);
+
+            // Assert:
+            expect(actualObject.data.payload).to.have.property('payload');
+        });
+    });
+    describe('fromJSON() should', () => {
+        it('reconstruct signed transaction', () => {
+            // Arrange:
+            const signedTransaction = new SignedTransaction(
+                "B0000000000000008002CDB5CD04681FE26FA770968DC5144591BA15B994EBE9B1B6C72A493C3439770C069AF0786026CE271FB28125396606755DC8436DB9BB979080E61CFE4B0BF530A00F5788DC3025E7F7F6000AF50C7A91283AFB1324E0E5D1BB494339EDE2000000000198544120040000000000009DD664810900000098808E6DE3E834FC51CCB1A7F56D20628BD0F5B05265C2A400000100000000009EF30755E803F42C0000000000000000",
+                "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567",
+                "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567",
+                TransactionType.TRANSFER,
+                NetworkType.TEST_NET,
+            );
+            const qr = new SignedTransactionQR(signedTransaction, NetworkType.TEST_NET, "443931795E15914146B774AE550762046525AF94E2C8E32F8DDFA9194D89A567");
+            const mapper = (dto: any) => new SignedTransaction(dto.payload, dto.hash, dto.signerPublicKey, dto.type, dto.networkType);
+            // Act:
+            const reconstructedQR = SignedTransactionQR.fromJSON(qr.toJSON(), mapper);
+
+            // Assert
+            expect(qr.singedTransaction.toDTO().payload).to.be.equal(reconstructedQR.singedTransaction.toDTO().payload);
+        });
+    });
 });
