@@ -33,7 +33,7 @@
     "nyc": "^15.0.1",
     "rxjs": "^6.5.4",
     "symbol-hd-wallets": "^0.13.0",
-    "symbol-sdk": "^0.21.0",
+    "symbol-sdk": "1.0.1",
     "ts-loader": "^6.2.1",
     "ts-node": "^7.0.0",
     "tslint": "^6.0.0",

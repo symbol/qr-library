@@ -39,6 +39,9 @@ import {
     ObjectQR,
     MnemonicQR, SignedTransactionQR, CosignatureSignedTransactionQR,
 } from "../index";
+import {
+    EPOCH_ADJUSTMENT
+} from './Constants';
 
 const generationHash = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB';
 const networkType = NetworkType.MIJIN_TEST
@@ -77,7 +80,7 @@ describe('QRCodeGenerator -->', () => {
         it('generate correct Base64 representation for TransferTransaction', async () => {
             // Arrange:
             const transfer = TransferTransaction.create(
-                Deadline.create(),
+                Deadline.create(EPOCH_ADJUSTMENT),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
                     NetworkType.MIJIN_TEST
@@ -161,7 +164,7 @@ describe('QRCodeGenerator -->', () => {
         it('Populate transaction data given TransactionQR JSON', () => {
             // Arrange:
             const transfer = TransferTransaction.create(
-                Deadline.create(),
+                Deadline.create(EPOCH_ADJUSTMENT),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
                     NetworkType.MIJIN_TEST

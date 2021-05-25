@@ -30,6 +30,10 @@ import {
     TransactionQR,
 } from "../index";
 
+import {
+    EPOCH_ADJUSTMENT
+} from './Constants';
+
 describe('TransactionQR -->', () => {
 
     describe('toJSON() should', () => {
@@ -37,7 +41,7 @@ describe('TransactionQR -->', () => {
         it('include mandatory NIP-7 QR Code base fields', () => {
             // Arrange:
             const transfer = TransferTransaction.create(
-                Deadline.create(),
+                Deadline.create(EPOCH_ADJUSTMENT),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
                     NetworkType.MIJIN_TEST,
@@ -63,12 +67,34 @@ describe('TransactionQR -->', () => {
         it('include specialized schema fields', () => {
             // Arrange:
             const transfer = TransferTransaction.create(
-                Deadline.create(),
+                Deadline.create(EPOCH_ADJUSTMENT),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
                     NetworkType.MIJIN_TEST,
                 ),
                 [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
+                PlainMessage.create('Welcome to NEM!'),
+                NetworkType.MIJIN_TEST,
+            );
+
+            // Act:
+            const requestTx = new TransactionQR(transfer, NetworkType.TEST_NET, '');
+            const actualJSON = requestTx.toJSON();
+            const actualObject = JSON.parse(actualJSON);
+
+            // Assert:
+            expect(actualObject.data).to.have.property('payload');
+        });
+
+        it('should not require to contain mosaics', () => {
+            // Arrange:
+            const transfer = TransferTransaction.create(
+                Deadline.create(EPOCH_ADJUSTMENT),
+                Address.createFromPublicKey(
+                    'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
+                    NetworkType.MIJIN_TEST,
+                ),
+                [],
                 PlainMessage.create('Welcome to NEM!'),
                 NetworkType.MIJIN_TEST,
             );
