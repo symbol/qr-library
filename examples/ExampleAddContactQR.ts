@@ -39,7 +39,7 @@ class ExampleAddContactQR extends Example {
         const contactInfo = {
             v: 3,
             type: QRCodeType.AddContact,
-            network_id: NetworkType.MIJIN_TEST,
+            network_id: NetworkType.TEST_NET,
             chain_id: 'no-chain-id',
             data: {
                 name: 'nemtech',

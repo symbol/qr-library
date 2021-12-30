@@ -45,7 +45,7 @@ class ExampleExportAccountQR extends Example {
         const accountInfo = {
             v: 3,
             type: QRCodeType.ExportAccount,
-            network_id: NetworkType.MIJIN_TEST,
+            network_id: NetworkType.TEST_NET,
             chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
             data: {
                 ciphertext: '56d310848ee93d0794eb1f64a5195778ded2q7IxvtPbO+sA7jZZyhpu/khbaNdx1pzuoGoPJRw1A4aBsWPlex3y/gy5da8WjF0i4d+/D0B5ESy+zX5P+AoFAw3EFi3UVBdnav4rnqg=',

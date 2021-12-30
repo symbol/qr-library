@@ -44,7 +44,7 @@ class ExampleRequestTransactionQR extends Example {
         const unsignedTransferInfo = {
             v: 3,
             type: QRCodeType.RequestTransaction,
-            network_id: NetworkType.MIJIN_TEST,
+            network_id: NetworkType.TEST_NET,
             chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
             data: {
                 payload: 'A500000000000000000000000000000000000000000000000000000000000000'

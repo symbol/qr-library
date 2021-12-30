@@ -27,7 +27,7 @@ abstract class Example {
      *
      * @return {number}
      */
-    public abstract async execute(): Promise<number>;
+    public abstract execute(): Promise<number>;
     /// end-region Abstract Methods
 
     /**

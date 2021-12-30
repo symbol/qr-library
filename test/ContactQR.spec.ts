@@ -79,7 +79,7 @@ describe('ContactQR -->', () => {
             );
 
             // Act:
-            const exportContact = new ContactQR('nemtech', account.publicKey, NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportContact = new ContactQR('nemtech', account.publicKey, NetworkType.TEST_NET, 'no-chain-id');
             const importContact = ContactQR.fromJSON(exportContact.toJSON());
 
             // Assert
@@ -92,7 +92,7 @@ describe('ContactQR -->', () => {
             const contactInfo = {
                 v: 3,
                 type: QRCodeType.AddContact,
-                network_id: NetworkType.MIJIN_TEST,
+                network_id: NetworkType.TEST_NET,
                 chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
                 data: {
                     name: 'nemtech',

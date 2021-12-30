@@ -43,18 +43,18 @@ const transfer = TransferTransaction.create(
   Deadline.create(),
   Address.createFromPublicKey(
     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-    NetworkType.MIJIN_TEST
+    NetworkType.TEST_NET
   ),
   [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
   PlainMessage.create('Welcome to NEM!'),
-  NetworkType.MIJIN_TEST
+  NetworkType.TEST_NET
 );
 
 // generation hash of the connected network
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const qrCode: TransactionQR = QRCodeGenerator.createTransactionRequest(transfer, NetworkType.MIJIN_TEST, generationHash);
+const qrCode: TransactionQR = QRCodeGenerator.createTransactionRequest(transfer, NetworkType.TEST_NET, generationHash);
 
 // get base64 notation for <img> HTML attribute
 const base64 = qrCode.toBase64();
@@ -92,7 +92,7 @@ const accountPublicKey = 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const qrCode: ContactQR = QRCodeGenerator.createAddContact(name, accountPublicKey, NetworkType.MIJIN_TEST, generationHash);
+const qrCode: ContactQR = QRCodeGenerator.createAddContact(name, accountPublicKey, NetworkType.TEST_NET, generationHash);
 
 // get base64 notation for <img> HTML attribute
 const base64 = qrCode.toBase64();
@@ -113,9 +113,9 @@ const mnemonic = MnemonicPassPhrase.createRandom();
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const encryptedMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, generationHash, 'password');
+const encryptedMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.TEST_NET, generationHash, 'password');
 // or
-const plainMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, generationHash); // no password
+const plainMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.TEST_NET, generationHash); // no password
 
 // get base64 notation for <img> HTML attribute
 const base64 = encryptedMnemonicQR.toBase64();
@@ -140,8 +140,8 @@ const accountPrivateKey = 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C317
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const encryptedAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.MIJIN_TEST, generationHash, 'password')
-const plainAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.MIJIN_TEST, generationHash) // no password
+const encryptedAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.TEST_NET, generationHash, 'password')
+const plainAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.TEST_NET, generationHash) // no password
 
 // get base64 notation for <img> HTML attribute
 const base64 = encryptedAccountQR.toBase64();
@@ -161,7 +161,7 @@ const object = {"obj": "test"};
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const qrCode: ObjectQR = QRCodeGenerator.createExportObject(object, NetworkType.MIJIN_TEST, generationHash);
+const qrCode: ObjectQR = QRCodeGenerator.createExportObject(object, NetworkType.TEST_NET, generationHash);
 
 // get base64 notation for <img> HTML attribute
 const base64 = qrCode.toBase64();

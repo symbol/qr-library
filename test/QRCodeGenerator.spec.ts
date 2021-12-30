@@ -41,7 +41,7 @@ import {
 } from "../index";
 
 const generationHash = '17FA4747F5014B50413CCF968749604D728D7065DC504291EEE556899A534CBB';
-const networkType = NetworkType.MIJIN_TEST
+const networkType = NetworkType.TEST_NET
 
 describe('QRCodeGenerator -->', () => {
 
@@ -55,7 +55,7 @@ describe('QRCodeGenerator -->', () => {
             const objectQR = QRCodeGenerator.createExportObject(object, networkType, generationHash);
 
             // Assert:
-            expect(objectQR.networkType).to.be.equal(NetworkType.MIJIN_TEST);
+            expect(objectQR.networkType).to.be.equal(NetworkType.TEST_NET);
             expect(objectQR.generationHash).to.not.be.undefined;
             expect(objectQR.generationHash).to.have.lengthOf(64);
         });
@@ -77,14 +77,14 @@ describe('QRCodeGenerator -->', () => {
         it('generate correct Base64 representation for TransferTransaction', async () => {
             // Arrange:
             const transfer = TransferTransaction.create(
-                Deadline.create(),
+                Deadline.create(1),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-                    NetworkType.MIJIN_TEST
+                    NetworkType.TEST_NET
                 ),
                 [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
                 PlainMessage.create('Welcome to NEM!'),
-                NetworkType.MIJIN_TEST
+                NetworkType.TEST_NET
             );
 
             // Act:
@@ -105,7 +105,7 @@ describe('QRCodeGenerator -->', () => {
             const name = 'test-contact-1';
             const account = PublicAccount.createFromPublicKey(
                 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-                NetworkType.MIJIN_TEST
+                NetworkType.TEST_NET
             );
 
             // Act:
@@ -125,7 +125,7 @@ describe('QRCodeGenerator -->', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.MIJIN_TEST
+                NetworkType.TEST_NET
             );
 
             // Act:
@@ -161,14 +161,14 @@ describe('QRCodeGenerator -->', () => {
         it('Populate transaction data given TransactionQR JSON', () => {
             // Arrange:
             const transfer = TransferTransaction.create(
-                Deadline.create(),
+                Deadline.create(1),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-                    NetworkType.MIJIN_TEST
+                    NetworkType.TEST_NET
                 ),
                 [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
                 PlainMessage.create('Welcome to NEM!'),
-                NetworkType.MIJIN_TEST
+                NetworkType.TEST_NET
             );
 
             const requestTx = QRCodeGenerator.createTransactionRequest(transfer, networkType, generationHash);
@@ -211,7 +211,7 @@ describe('QRCodeGenerator -->', () => {
             // Arrange:
             const account = Account.createFromPrivateKey(
                 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                NetworkType.MIJIN_TEST
+                NetworkType.TEST_NET
             );
 
             const exportAccount = QRCodeGenerator.createExportAccount(account.privateKey, networkType, generationHash, 'password');

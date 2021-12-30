@@ -34,10 +34,10 @@ describe('AccountQR -->', () => {
                 // Arrange:
                 const account = Account.createFromPrivateKey(
                     'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                    NetworkType.MIJIN_TEST,
+                    NetworkType.TEST_NET,
                 );
                 // Act:
-                const exportAccount = new AccountQR(account.privateKey, NetworkType.MIJIN_TEST, 'no-chain-id', 'password');
+                const exportAccount = new AccountQR(account.privateKey, NetworkType.TEST_NET, 'no-chain-id', 'password');
                 const actualJSON = exportAccount.toJSON();
                 const actualObject = JSON.parse(actualJSON);
 
@@ -53,11 +53,11 @@ describe('AccountQR -->', () => {
                 // Arrange:
                 const account = Account.createFromPrivateKey(
                     'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                    NetworkType.MIJIN_TEST,
+                    NetworkType.TEST_NET,
                 );
 
                 // Act:
-                const exportAccount = new AccountQR(account.privateKey, NetworkType.MIJIN_TEST, 'no-chain-id', 'password');
+                const exportAccount = new AccountQR(account.privateKey, NetworkType.TEST_NET, 'no-chain-id', 'password');
                 const actualJSON = exportAccount.toJSON();
                 const actualObject = JSON.parse(actualJSON);
 
@@ -69,7 +69,7 @@ describe('AccountQR -->', () => {
 
         describe('fromJSON() should', () => {
 
-            const networkType = NetworkType.MIJIN_TEST;
+            const networkType = NetworkType.TEST_NET;
             it('throw error given wrong password', () => {
                 // Arrange:
                 const account = Account.createFromPrivateKey(
@@ -153,11 +153,11 @@ describe('AccountQR -->', () => {
                 // Arrange:
                 const account = Account.createFromPrivateKey(
                     'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                    NetworkType.MIJIN_TEST,
+                    NetworkType.TEST_NET,
                 );
 
                 // Act:
-                const exportAccount = new AccountQR(account.privateKey, NetworkType.MIJIN_TEST, 'no-chain-id');
+                const exportAccount = new AccountQR(account.privateKey, NetworkType.TEST_NET, 'no-chain-id');
                 const actualJSON = exportAccount.toJSON();
                 const actualObject = JSON.parse(actualJSON);
 
@@ -173,11 +173,11 @@ describe('AccountQR -->', () => {
                 // Arrange:
                 const account = Account.createFromPrivateKey(
                     'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C3177B073906978',
-                    NetworkType.MIJIN_TEST,
+                    NetworkType.TEST_NET,
                 );
 
                 // Act:
-                const exportAccount = new AccountQR(account.privateKey, NetworkType.MIJIN_TEST, 'no-chain-id');
+                const exportAccount = new AccountQR(account.privateKey, NetworkType.TEST_NET, 'no-chain-id');
                 const actualJSON = exportAccount.toJSON();
                 const actualObject = JSON.parse(actualJSON);
 
@@ -188,7 +188,7 @@ describe('AccountQR -->', () => {
 
         describe('fromJSON() should', () => {
 
-            const networkType = NetworkType.MIJIN_TEST;
+            const networkType = NetworkType.TEST_NET;
 
             it('reconstruct account given a private key', () => {
                 // Arrange:
