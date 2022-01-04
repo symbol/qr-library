@@ -1,6 +1,6 @@
 {
   "name": "symbol-qr-library",
-  "version": "0.14.2",
+  "version": "0.14.3",
   "description": "Symbol library to handle QR Codes",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
