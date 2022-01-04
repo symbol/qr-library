@@ -34,7 +34,7 @@ class ExampleRequestTransactionQR extends Example {
      * This example uses an unsigned transfer transaction
      * with following details:
      *    - Recipient: namespaceId "nemtech"
-     *    - Mosaics: 1 mosaic with namespaceId "cat.currency" and absolute amount 1
+     *    - Mosaics: 1 mosaic with namespaceId "symbol.xym" and absolute amount 1
      *    - Message: Empty
      *
      * @return {number}

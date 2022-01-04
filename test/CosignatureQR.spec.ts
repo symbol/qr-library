@@ -44,7 +44,7 @@ const bondedCreationHelper = () => {
             'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
             NetworkType.TEST_NET,
         ),
-        [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
+        [new Mosaic(new NamespaceId('symbol.xym'), UInt64.fromUint(10000000))],
         PlainMessage.create('Welcome to NEM!'),
         NetworkType.TEST_NET,
     );
