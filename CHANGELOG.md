@@ -5,7 +5,9 @@
 - Upgraded symbol-sdk(dev dependency) to v1.0.3
 - Upgraded symbol-hd-wallets to v0.14.2
 - Upgraded other dependencies to latest versions
-
+- `cat.currency` replaced with `symbol.xym`
+- Updated copyrights and README.md
+  
 ## [v0.14.0][v0.14.0] - 22-Dev-2020
 
 - Removed symbol-sdk dependency.

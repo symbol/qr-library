@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 NEM
+ * (C) Symbol Contributors 2022
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ const bondedCreationHelper = () => {
             NetworkType.TEST_NET,
         ),
         [new Mosaic(new NamespaceId('symbol.xym'), UInt64.fromUint(10000000))],
-        PlainMessage.create('Welcome to NEM!'),
+        PlainMessage.create('Welcome to Symbol!'),
         NetworkType.TEST_NET,
     );
     const bonded = AggregateTransaction.createBonded(

@@ -1,12 +1,11 @@
 # Symbol QR Library
 
 [![npm version](https://badge.fury.io/js/symbol-qr-library.svg)](https://badge.fury.io/js/symbol-qr-library)
-[![Build Status](https://travis-ci.com/nemtech/symbol-qr-library.svg?branch=main)](https://travis-ci.com/nemtech/symbol-qr-library)
-[![Slack](https://img.shields.io/badge/chat-on%20slack-green.svg)](https://nem2.slack.com/messages/CB0UU89GS//)
+[![Build Status](https://travis-ci.com/symbol/symbol-qr-library.svg?branch=main)](https://travis-ci.com/symbol/symbol-qr-library.svg?branch=main)
+[![Discord](https://img.shields.io/badge/chat-on%20discord-green.svg)](https://discord.com/invite/xymcity)
+
 
 Library to generate QR codes for Symbol.
-
-This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](https://github.com/nemtech/NIP/issues/3). When stable, the repository will be moved to the [nemtech](https://github.com/nemtech) organization.
 
 **NOTE**: The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.
 
@@ -46,7 +45,7 @@ const transfer = TransferTransaction.create(
     NetworkType.TEST_NET
   ),
   [new Mosaic(new NamespaceId('symbol.xym'), UInt64.fromUint(10000000))],
-  PlainMessage.create('Welcome to NEM!'),
+  PlainMessage.create('Welcome to Symbol!'),
   NetworkType.TEST_NET
 );
 
@@ -172,7 +171,7 @@ const base64 = qrCode.toBase64();
 Use the following available resources to get help:
 
 - [Symbol Documentation][docs]
-- Join the community [slack group (#sig-client)][slack] 
+- Join the community [discord][discord] 
 - If you found a bug, [open a new issue][issues]
 
 ## Contributing
@@ -182,11 +181,11 @@ Check [CONTRIBUTING](CONTRIBUTING.md) for information on how to contribute.
 
 ## License
 
-Copyright 2019-present NEM
+(C) Symbol Contributors 2022
 
 Licensed under the [Apache License 2.0](LICENSE)
 
-[self]: https://github.com/nemtech/symbol-qr-library
-[docs]: https://nemtech.github.io
-[issues]: https://github.com/nemtech/symbol-qr-library/issues
-[slack]: https://join.slack.com/t/nem2/shared_invite/enQtMzY4MDc2NTg0ODgyLWZmZWRiMjViYTVhZjEzOTA0MzUyMTA1NTA5OWQ0MWUzNTA4NjM5OTJhOGViOTBhNjkxYWVhMWRiZDRkOTE0YmU
+[self]: https://github.com/symbol/symbol-qr-library
+[docs]: https://docs.symbolplatform.com/
+[issues]: https://github.com/symbol/symbol-qr-library/issues
+[discord]: https://discord.com/invite/xymcity
