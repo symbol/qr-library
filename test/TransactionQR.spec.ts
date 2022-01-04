@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 NEM
+ * (C) Symbol Contributors 2022
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,14 +37,14 @@ describe('TransactionQR -->', () => {
         it('include mandatory NIP-7 QR Code base fields', () => {
             // Arrange:
             const transfer = TransferTransaction.create(
-                Deadline.create(),
+                Deadline.create(1),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-                    NetworkType.MIJIN_TEST,
+                    NetworkType.TEST_NET,
                 ),
-                [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
-                PlainMessage.create('Welcome to NEM!'),
-                NetworkType.MIJIN_TEST,
+                [new Mosaic(new NamespaceId('symbol.xym'), UInt64.fromUint(10000000))],
+                PlainMessage.create('Welcome to Symbol!'),
+                NetworkType.TEST_NET,
             );
 
             // Act:
@@ -63,14 +63,14 @@ describe('TransactionQR -->', () => {
         it('include specialized schema fields', () => {
             // Arrange:
             const transfer = TransferTransaction.create(
-                Deadline.create(),
+                Deadline.create(1),
                 Address.createFromPublicKey(
                     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-                    NetworkType.MIJIN_TEST,
+                    NetworkType.TEST_NET,
                 ),
-                [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
-                PlainMessage.create('Welcome to NEM!'),
-                NetworkType.MIJIN_TEST,
+                [new Mosaic(new NamespaceId('symbol.xym'), UInt64.fromUint(10000000))],
+                PlainMessage.create('Welcome to Symbol!'),
+                NetworkType.TEST_NET,
             );
 
             // Act:

@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 NEM
+ * (C) Symbol Contributors 2022
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,22 +36,22 @@ import {
 const bondedCreationHelper = () => {
     const account = PublicAccount.createFromPublicKey(
         'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-        NetworkType.MIJIN_TEST,
+        NetworkType.TEST_NET,
     );
     const transfer = TransferTransaction.create(
         Deadline.create(1),
         Address.createFromPublicKey(
             'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-            NetworkType.MIJIN_TEST,
+            NetworkType.TEST_NET,
         ),
-        [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
-        PlainMessage.create('Welcome to NEM!'),
-        NetworkType.MIJIN_TEST,
+        [new Mosaic(new NamespaceId('symbol.xym'), UInt64.fromUint(10000000))],
+        PlainMessage.create('Welcome to Symbol!'),
+        NetworkType.TEST_NET,
     );
     const bonded = AggregateTransaction.createBonded(
         Deadline.create(1),
         [transfer.toAggregate(account)],
-        NetworkType.MIJIN_TEST,
+        NetworkType.TEST_NET,
     );
 
     return bonded;
@@ -99,7 +99,7 @@ describe('CosignatureQR -->', () => {
             const bonded = bondedCreationHelper();
 
             // Act:
-            const exportCosig = new CosignatureQR(bonded, NetworkType.MIJIN_TEST, 'no-chain-id');
+            const exportCosig = new CosignatureQR(bonded, NetworkType.TEST_NET, 'no-chain-id');
             const importCosig = CosignatureQR.fromJSON(exportCosig.toJSON(), TransactionMapping.createFromPayload);
 
             // Assert
@@ -111,7 +111,7 @@ describe('CosignatureQR -->', () => {
             const cosigInfo = {
                 v: 3,
                 type: QRCodeType.RequestCosignature,
-                network_id: NetworkType.MIJIN_TEST,
+                network_id: NetworkType.TEST_NET,
                 chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
                 data: {
                     payload: 'F8000000000000004DD933EBA4A6D891027AFB3924F0C61CD07B5C2FE2A38932'

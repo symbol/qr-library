@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 NEM
+ * (C) Symbol Contributors 2022
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ class ExampleAddContactQR extends Example {
         const contactInfo = {
             v: 3,
             type: QRCodeType.AddContact,
-            network_id: NetworkType.MIJIN_TEST,
+            network_id: NetworkType.TEST_NET,
             chain_id: 'no-chain-id',
             data: {
                 name: 'nemtech',

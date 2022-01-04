@@ -1,12 +1,11 @@
 # Symbol QR Library
 
 [![npm version](https://badge.fury.io/js/symbol-qr-library.svg)](https://badge.fury.io/js/symbol-qr-library)
-[![Build Status](https://travis-ci.com/nemtech/symbol-qr-library.svg?branch=main)](https://travis-ci.com/nemtech/symbol-qr-library)
-[![Slack](https://img.shields.io/badge/chat-on%20slack-green.svg)](https://nem2.slack.com/messages/CB0UU89GS//)
+[![Build Status](https://travis-ci.com/symbol/symbol-qr-library.svg?branch=main)](https://travis-ci.com/symbol/symbol-qr-library.svg?branch=main)
+[![Discord](https://img.shields.io/badge/chat-on%20discord-green.svg)](https://discord.com/invite/xymcity)
+
 
 Library to generate QR codes for Symbol.
-
-This is a PoC to validate the proposed [NIP 7 QR Library Standard Definition](https://github.com/nemtech/NIP/issues/3). When stable, the repository will be moved to the [nemtech](https://github.com/nemtech) organization.
 
 **NOTE**: The author of this package cannot be held responsible for any loss of money or any malintentioned usage forms of this package. Please use this package with caution.
 
@@ -43,18 +42,18 @@ const transfer = TransferTransaction.create(
   Deadline.create(),
   Address.createFromPublicKey(
     'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741998558D268',
-    NetworkType.MIJIN_TEST
+    NetworkType.TEST_NET
   ),
-  [new Mosaic(new NamespaceId('cat.currency'), UInt64.fromUint(10000000))],
-  PlainMessage.create('Welcome to NEM!'),
-  NetworkType.MIJIN_TEST
+  [new Mosaic(new NamespaceId('symbol.xym'), UInt64.fromUint(10000000))],
+  PlainMessage.create('Welcome to Symbol!'),
+  NetworkType.TEST_NET
 );
 
 // generation hash of the connected network
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const qrCode: TransactionQR = QRCodeGenerator.createTransactionRequest(transfer, NetworkType.MIJIN_TEST, generationHash);
+const qrCode: TransactionQR = QRCodeGenerator.createTransactionRequest(transfer, NetworkType.TEST_NET, generationHash);
 
 // get base64 notation for <img> HTML attribute
 const base64 = qrCode.toBase64();
@@ -92,7 +91,7 @@ const accountPublicKey = 'C5C55181284607954E56CD46DE85F4F3EF4CC713CC2B95000FA741
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const qrCode: ContactQR = QRCodeGenerator.createAddContact(name, accountPublicKey, NetworkType.MIJIN_TEST, generationHash);
+const qrCode: ContactQR = QRCodeGenerator.createAddContact(name, accountPublicKey, NetworkType.TEST_NET, generationHash);
 
 // get base64 notation for <img> HTML attribute
 const base64 = qrCode.toBase64();
@@ -113,9 +112,9 @@ const mnemonic = MnemonicPassPhrase.createRandom();
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const encryptedMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, generationHash, 'password');
+const encryptedMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.TEST_NET, generationHash, 'password');
 // or
-const plainMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.MIJIN_TEST, generationHash); // no password
+const plainMnemonicQR: MnemonicQR = new MnemonicQR(mnemonic.plain, NetworkType.TEST_NET, generationHash); // no password
 
 // get base64 notation for <img> HTML attribute
 const base64 = encryptedMnemonicQR.toBase64();
@@ -140,8 +139,8 @@ const accountPrivateKey = 'F97AE23C2A28ECEDE6F8D6C447C0A10B55C92DDE9316CCD36C317
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const encryptedAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.MIJIN_TEST, generationHash, 'password')
-const plainAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.MIJIN_TEST, generationHash) // no password
+const encryptedAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.TEST_NET, generationHash, 'password')
+const plainAccountQR: AccountQR = QRCodeGenerator.createExportAccount(accountPrivateKey, NetworkType.TEST_NET, generationHash) // no password
 
 // get base64 notation for <img> HTML attribute
 const base64 = encryptedAccountQR.toBase64();
@@ -161,7 +160,7 @@ const object = {"obj": "test"};
 const generationHash = 'ACECD90E7B248E012803228ADB4424F0D966D24149B72E58987D2BF2F2AF03C4'
 
 // create QR Code base64
-const qrCode: ObjectQR = QRCodeGenerator.createExportObject(object, NetworkType.MIJIN_TEST, generationHash);
+const qrCode: ObjectQR = QRCodeGenerator.createExportObject(object, NetworkType.TEST_NET, generationHash);
 
 // get base64 notation for <img> HTML attribute
 const base64 = qrCode.toBase64();
@@ -172,7 +171,7 @@ const base64 = qrCode.toBase64();
 Use the following available resources to get help:
 
 - [Symbol Documentation][docs]
-- Join the community [slack group (#sig-client)][slack] 
+- Join the community [discord][discord] 
 - If you found a bug, [open a new issue][issues]
 
 ## Contributing
@@ -182,11 +181,11 @@ Check [CONTRIBUTING](CONTRIBUTING.md) for information on how to contribute.
 
 ## License
 
-Copyright 2019-present NEM
+(C) Symbol Contributors 2022
 
 Licensed under the [Apache License 2.0](LICENSE)
 
-[self]: https://github.com/nemtech/symbol-qr-library
-[docs]: https://nemtech.github.io
-[issues]: https://github.com/nemtech/symbol-qr-library/issues
-[slack]: https://join.slack.com/t/nem2/shared_invite/enQtMzY4MDc2NTg0ODgyLWZmZWRiMjViYTVhZjEzOTA0MzUyMTA1NTA5OWQ0MWUzNTA4NjM5OTJhOGViOTBhNjkxYWVhMWRiZDRkOTE0YmU
+[self]: https://github.com/symbol/symbol-qr-library
+[docs]: https://docs.symbolplatform.com/
+[issues]: https://github.com/symbol/symbol-qr-library/issues
+[discord]: https://discord.com/invite/xymcity

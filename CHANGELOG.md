@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [v0.14.2][v0.14.2] - 30-Dec-2021
+
+- Upgraded symbol-sdk(dev dependency) to v1.0.3
+- Upgraded symbol-hd-wallets to v0.14.2
+- Upgraded other dependencies to latest versions
+- `cat.currency` replaced with `symbol.xym`
+- Updated copyrights and README.md
+  
 ## [v0.14.0][v0.14.0] - 22-Dev-2020
 
 - Removed symbol-sdk dependency.
@@ -120,6 +128,7 @@
 - generate image base64 string by string.
 
 
+[v0.14.2]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.14.0...v0.14.2
 [v0.13.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.12.0...v0.13.0
 [v0.12.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.11.0...v0.12.0
 [v0.11.0]: https://github.com/nemfoundation/symbol-qr-library/compare/v0.10.0...v0.11.0

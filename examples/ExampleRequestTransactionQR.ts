@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 NEM
+ * (C) Symbol Contributors 2022
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ class ExampleRequestTransactionQR extends Example {
      * This example uses an unsigned transfer transaction
      * with following details:
      *    - Recipient: namespaceId "nemtech"
-     *    - Mosaics: 1 mosaic with namespaceId "cat.currency" and absolute amount 1
+     *    - Mosaics: 1 mosaic with namespaceId "symbol.xym" and absolute amount 1
      *    - Message: Empty
      *
      * @return {number}
@@ -44,7 +44,7 @@ class ExampleRequestTransactionQR extends Example {
         const unsignedTransferInfo = {
             v: 3,
             type: QRCodeType.RequestTransaction,
-            network_id: NetworkType.MIJIN_TEST,
+            network_id: NetworkType.TEST_NET,
             chain_id: '9F1979BEBA29C47E59B40393ABB516801A353CFC0C18BC241FEDE41939C907E7',
             data: {
                 payload: 'A500000000000000000000000000000000000000000000000000000000000000'
